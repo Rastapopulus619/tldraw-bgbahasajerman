@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Sidebar } from './Sidebar'
 import { CustomColorPicker } from './components/CustomColorPicker'
 import { CustomShapeRenderer } from './components/CustomShapeRenderer'
+import { RightClickPanHandler } from './components/RightClickPanHandler'
 
 function SwappedZoomPanHandler() {
   const editor = useEditor()
@@ -176,6 +177,7 @@ export default function App() {
           <Tldraw components={components}>
             <PersistenceManager whiteboardId={activeWhiteboardId} />
             <SwappedZoomPanHandler />
+            <RightClickPanHandler />
             <CustomShapeRenderer />
           </Tldraw>
         ) : (
