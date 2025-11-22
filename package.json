@@ -2,12 +2,27 @@
 	"name": "tldraw-vite-example",
 	"private": true,
 	"version": "0.0.0",
-	"author": { "name": "tldraw GB Ltd.", "email": "hello@tldraw.com" },
+	"author": {
+		"name": "tldraw GB Ltd.",
+		"email": "hello@tldraw.com"
+	},
 	"homepage": "https://tldraw.dev",
 	"license": "MIT",
 	"type": "module",
-	"scripts": { "dev": "vite", "build": "tsc && vite build", "preview": "vite preview" },
-	"dependencies": { "react": "^18.3.1", "react-dom": "^18.3.1", "tldraw": "^4.1.2" },
+	"scripts": {
+		"dev": "vite",
+		"api": "node server/index.js",
+		"build": "tsc && vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@tldraw/store": "^4.1.2",
+		"express": "^5.1.0",
+		"react": "^18.3.1",
+		"react-colorful": "^5.6.1",
+		"react-dom": "^18.3.1",
+		"tldraw": "^4.1.2"
+	},
 	"devDependencies": {
 		"@types/react": "^18.3.18",
 		"@types/react-dom": "^18.3.5",

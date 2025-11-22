@@ -2,6 +2,11 @@
 @import url('tldraw/tldraw.css');
 
 body {
-	font-family: 'Inter', sans-serif;
-	overscroll-behavior: none;
+font-family: 'Inter', sans-serif;
+overscroll-behavior: none;
+}
+
+/* Hide the default tldraw 12-color picker while keeping Fill/Dash/Size buttons */
+.tlui-toolbar[aria-label="Color"] {
+display: none !important;
 }
