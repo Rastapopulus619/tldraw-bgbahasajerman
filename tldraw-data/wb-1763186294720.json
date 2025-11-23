@@ -16693,8 +16693,8 @@
         "typeName": "shape"
       },
       "shape:Z90F2dgfF4aAz1A7lDakG": {
-        "x": 10972.152938546003,
-        "y": -2684.949795452684,
+        "x": 11185.616098102424,
+        "y": -2326.1010089196984,
         "rotation": 0,
         "isLocked": false,
         "opacity": 1,
@@ -25353,8 +25353,8 @@
         "typeName": "shape"
       },
       "shape:_KQX-6qcYxiiF_zUaD-GM": {
-        "x": 10827.532615402304,
-        "y": -1923.315635453098,
+        "x": 10780.30729079578,
+        "y": -1804.5949554354027,
         "rotation": 0,
         "isLocked": false,
         "opacity": 1,
@@ -25364,8 +25364,8 @@
         "id": "shape:_KQX-6qcYxiiF_zUaD-GM",
         "type": "geo",
         "props": {
-          "w": 26.09696969655306,
-          "h": 54.98294115253339,
+          "w": 64.68539688185228,
+          "h": 65.61756427424622,
           "geo": "rectangle",
           "dash": "draw",
           "growY": 0,
@@ -33870,6 +33870,45 @@
         "index": "b1vndD94V",
         "typeName": "shape"
       },
+      "shape:_1bY_QmGTtDVhxpRbQzh-": {
+        "x": 10902.500024814199,
+        "y": -1851.091884171055,
+        "rotation": 0,
+        "isLocked": false,
+        "opacity": 1,
+        "meta": {},
+        "id": "shape:_1bY_QmGTtDVhxpRbQzh-",
+        "type": "text",
+        "props": {
+          "color": "black",
+          "size": "m",
+          "w": 63.76666259765625,
+          "font": "draw",
+          "textAlign": "start",
+          "autoSize": true,
+          "scale": 1,
+          "richText": {
+            "type": "doc",
+            "content": [
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "dir": "auto"
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "DAas"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "parentId": "page:page",
+        "index": "b2JWhbARV",
+        "typeName": "shape"
+      },
       "shape:zkZKGFjYe4Z1GF2YiUl2e": {
         "x": 11421.650551027806,
         "y": -1436.1820632880356,
@@ -35433,12 +35472,12 @@
       {
         "pageId": "page:page",
         "camera": {
-          "x": -10718.718141653606,
-          "y": 1980.0122227895138,
-          "z": 4.18158702995395
+          "x": -9848.60805159892,
+          "y": 2309.8263280139968,
+          "z": 1.2662312469779784
         },
         "selectedShapeIds": [
-          "shape:_KQX-6qcYxiiF_zUaD-GM"
+          "shape:EhNVxLmpFN4-EcGK57Cr8"
         ],
         "focusedGroupId": null
       }

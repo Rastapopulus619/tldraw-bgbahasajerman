@@ -112,10 +112,10 @@ export function RightClickPanHandler() {
           if (shape) {
             const currentSelection = editor.getSelectedShapeIds()
             if (!currentSelection.includes(shape.id)) {
-              editor.setSelectedIds([shape.id])
+              editor.select(shape.id)
             }
           } else {
-            editor.setSelectedIds([])
+            editor.selectNone()
           }
           
           // 2. Allow context menu to show naturally
