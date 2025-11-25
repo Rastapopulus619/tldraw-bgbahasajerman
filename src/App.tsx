@@ -92,10 +92,15 @@ function PersistenceManager({ whiteboardId }: { whiteboardId: string | null }) {
     if (!whiteboardId) return
 
     let timeoutId: ReturnType<typeof setTimeout>
+    let isSaving = false
 
     const handleChange = () => {
+      // Don't schedule a new save if one is already in progress
+      if (isSaving) return
+      
       clearTimeout(timeoutId)
       timeoutId = setTimeout(async () => {
+        isSaving = true
         try {
           const snapshot = editor.getSnapshot()
           await fetch(`/api/whiteboards/${whiteboardId}`, {
@@ -106,11 +111,13 @@ function PersistenceManager({ whiteboardId }: { whiteboardId: string | null }) {
           console.log('Auto-saved whiteboard')
         } catch (error) {
           console.error('Failed to save whiteboard:', error)
+        } finally {
+          isSaving = false
         }
-      }, 1000)
+      }, 2500) // Increased from 1000ms to 2500ms to reduce saves during active drawing
     }
 
-    const unsubscribe = editor.store.listen(handleChange)
+    const unsubscribe = editor.store.listen(handleChange, { source: 'user' })
     
     return () => {
       clearTimeout(timeoutId)

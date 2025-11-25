@@ -11,6 +11,11 @@ export const CustomShapeRenderer = track(() => {
     styleEl.id = 'custom-shape-colors'
     document.head.appendChild(styleEl)
     
+    // Track last update time to throttle updates during drawing
+    let lastUpdateTime = 0
+    let updateTimeout: ReturnType<typeof setTimeout> | null = null
+    const MIN_UPDATE_INTERVAL = 100 // ms - only update every 100ms max during active drawing
+    
     // Update styles when shapes change
     const updateStyles = () => {
       const shapes = editor.getCurrentPageShapes()
@@ -74,18 +79,50 @@ export const CustomShapeRenderer = track(() => {
       })
       
       styleEl.textContent = cssRules.join('\n')
+      lastUpdateTime = Date.now()
+    }
+    
+    // Throttled update function
+    const scheduleUpdate = () => {
+      const now = Date.now()
+      const timeSinceLastUpdate = now - lastUpdateTime
+      
+      if (timeSinceLastUpdate >= MIN_UPDATE_INTERVAL) {
+        // Enough time has passed, update immediately
+        updateStyles()
+        if (updateTimeout) {
+          clearTimeout(updateTimeout)
+          updateTimeout = null
+        }
+      } else {
+        // Too soon, schedule for later
+        if (!updateTimeout) {
+          updateTimeout = setTimeout(() => {
+            updateStyles()
+            updateTimeout = null
+          }, MIN_UPDATE_INTERVAL - timeSinceLastUpdate)
+        }
+      }
     }
     
     // Initial update
     updateStyles()
     
-    // Listen for shape changes
-    const unsubscribe = editor.store.listen(() => {
-      updateStyles()
+    // Listen for shape changes ONLY (not pointer/camera changes)
+    const unsubscribe = editor.store.listen((entry) => {
+      // Only update if shapes were actually added, removed, or their metadata changed
+      if (entry.changes.added || entry.changes.removed || 
+          Object.keys(entry.changes.updated).some(key => {
+            const [type] = key.split(':')
+            return type === 'shape'
+          })) {
+        scheduleUpdate()
+      }
     }, { source: 'user', scope: 'document' })
     
     return () => {
       unsubscribe()
+      if (updateTimeout) clearTimeout(updateTimeout)
       styleEl.remove()
     }
   }, [editor])
