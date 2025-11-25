@@ -10,52 +10,33 @@ export function RightClickPanHandler() {
     // State tracking
     let startX = 0
     let startY = 0
-    let startTime = 0
     let lastX = 0
     let lastY = 0
     let isPanning = false
     let previousTool = 'select'
-    let menuIsOpen = false // Track if context menu is currently open
+    let didDrag = false
     
     const DRAG_THRESHOLD = 5 // pixels
-    const CLICK_TIME_THRESHOLD = 200 // milliseconds
 
     function onPointerDown(e: PointerEvent) {
-      if (e.button === 2) { // Right mouse button
-        startX = e.clientX
-        startY = e.clientY
-        lastX = e.clientX
-        lastY = e.clientY
-        startTime = Date.now()
-        isPanning = false
-        
-        // Always prevent browser's default context menu
-        e.preventDefault()
-        
-        // KEY FIX: Only block Tldraw if no menu is currently open
-        if (!menuIsOpen) {
-          // First click - hide from Tldraw
-          e.stopPropagation()
-          try {
-            container.setPointerCapture(e.pointerId)
-          } catch (err) {
-            // Ignore capture errors
-          }
-        } else {
-          // Menu is open - let this click reach Tldraw so it closes the menu
-          // We'll handle the new selection/menu in onPointerUp
-          menuIsOpen = false
-        }
-      }
+      if (e.button !== 2) return
+
+      startX = e.clientX
+      startY = e.clientY
+      lastX = e.clientX
+      lastY = e.clientY
+      isPanning = false
+      didDrag = false
+
+      // MIRO STYLE: Block tldraw from seeing the down event.
+      // We will decide on 'up' whether to show menu or not.
+      e.stopPropagation()
     }
 
     function onPointerMove(e: PointerEvent) {
       if (!(e.buttons & 2)) {
-        // Right button not pressed - stop panning if active
         if (isPanning) {
-          isPanning = false
-          editor.setCurrentTool(previousTool)
-          editor.setCursor({ type: 'default', rotation: 0 })
+          stopPanning()
         }
         return
       }
@@ -67,8 +48,19 @@ export function RightClickPanHandler() {
       // Start panning if threshold exceeded
       if (!isPanning && distance > DRAG_THRESHOLD) {
         isPanning = true
-        menuIsOpen = false // Close any open menu when we start panning
+        didDrag = true
         previousTool = editor.getCurrentToolId()
+        
+        // SAFETY: Dispatch ESC in case a menu opened despite our block
+        const escEvent = new KeyboardEvent('keydown', {
+          key: 'Escape',
+          code: 'Escape',
+          keyCode: 27,
+          bubbles: true,
+          cancelable: true
+        })
+        document.dispatchEvent(escEvent)
+        
         editor.setCurrentTool('hand')
         editor.setCursor({ type: 'grabbing', rotation: 0 })
       }
@@ -86,82 +78,80 @@ export function RightClickPanHandler() {
           y: y + deltaY / z,
           z,
         })
+        // Block tldraw from seeing pan movements
         e.stopPropagation()
       }
+    }
+
+    function stopPanning() {
+      isPanning = false
+      editor.setCurrentTool(previousTool)
+      editor.setCursor({ type: 'default', rotation: 0 })
     }
 
     function onPointerUp(e: PointerEvent) {
-      if (e.button === 2) {
-        const duration = Date.now() - startTime
-        const dx = e.clientX - startX
-        const dy = e.clientY - startY
-        const distance = Math.hypot(dx, dy)
+      if (e.button !== 2) return
+
+      if (isPanning) {
+        stopPanning()
+        e.stopPropagation()
         
-        try {
-          container.releasePointerCapture(e.pointerId)
-        } catch (err) {
-          // Ignore
-        }
+        // USER REQUEST: Dispatch ESC on release to ensure menu is gone
+        const escEvent = new KeyboardEvent('keydown', {
+          key: 'Escape',
+          code: 'Escape',
+          keyCode: 27,
+          bubbles: true,
+          cancelable: true
+        })
+        document.dispatchEvent(escEvent)
         
-        if (isPanning) {
-          // Was panning - restore tool
-          editor.setCurrentTool(previousTool)
-          editor.setCursor({ type: 'default', rotation: 0 })
-          isPanning = false
-          
-          // Suppress context menu
-          e.preventDefault()
-          e.stopPropagation()
-        } else if (duration < CLICK_TIME_THRESHOLD && distance < DRAG_THRESHOLD) {
-          // Was a CLICK - manually trigger context menu
-          
-          // 1. Handle selection
-          const pagePoint = editor.screenToPage({ x: e.clientX, y: e.clientY })
-          const shape = editor.getShapeAtPoint(pagePoint)
-          
-          if (shape) {
-            const currentSelection = editor.getSelectedShapeIds()
-            if (!currentSelection.includes(shape.id)) {
-              editor.select(shape.id)
-            }
-          } else {
-            editor.selectNone()
-          }
-          
-          // 2. Allow context menu to show naturally
-          // We do this by NOT calling preventDefault/stopPropagation
-          // The browser will fire the contextmenu event, which Tldraw will handle
-        } else {
-          // Ambiguous case - suppress menu
-          e.preventDefault()
-          e.stopPropagation()
-        }
+        return
       }
+
+      // If we didn't pan, this was a click!
+      // Since we blocked pointerdown, tldraw didn't see it.
+      // We now need to trigger the context menu.
+      
+      // Dispatch a synthetic contextmenu event
+      const contextMenuEvent = new MouseEvent('contextmenu', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+        button: 2,
+        buttons: 0,
+        clientX: e.clientX,
+        clientY: e.clientY
+      })
+      e.target?.dispatchEvent(contextMenuEvent)
     }
 
     function onContextMenu(e: MouseEvent) {
-      // Always prevent the default browser menu
-      // Tldraw will show its own if appropriate
-      if (isPanning) {
+      // If we dragged, block the native menu
+      if (didDrag) {
         e.preventDefault()
         e.stopPropagation()
-      } else {
-        // Menu is opening
-        menuIsOpen = true
+        return
       }
+      
+      // If we didn't drag, this is either a native event or our synthetic one.
+      // We want tldraw to handle it.
+      // Tldraw listens to 'contextmenu' to show its menu.
+      // So we just let it bubble.
     }
 
-    // Use capture phase to intercept before Tldraw
-    container.addEventListener('pointerdown', onPointerDown, { capture: true })
-    container.addEventListener('pointermove', onPointerMove, { capture: true })
-    container.addEventListener('pointerup', onPointerUp, { capture: true })
-    container.addEventListener('contextmenu', onContextMenu, { capture: true })
+    // Listen in CAPTURE phase for down/move/up to intercept before tldraw
+    container.addEventListener('pointerdown', onPointerDown, true)
+    container.addEventListener('pointermove', onPointerMove, true)
+    container.addEventListener('pointerup', onPointerUp, true)
+    // Listen in CAPTURE phase for contextmenu to block if dragged
+    container.addEventListener('contextmenu', onContextMenu, true)
 
     return () => {
-      container.removeEventListener('pointerdown', onPointerDown, { capture: true })
-      container.removeEventListener('pointermove', onPointerMove, { capture: true })
-      container.removeEventListener('pointerup', onPointerUp, { capture: true })
-      container.removeEventListener('contextmenu', onContextMenu, { capture: true })
+      container.removeEventListener('pointerdown', onPointerDown, true)
+      container.removeEventListener('pointermove', onPointerMove, true)
+      container.removeEventListener('pointerup', onPointerUp, true)
+      container.removeEventListener('contextmenu', onContextMenu, true)
     }
   }, [editor])
 
