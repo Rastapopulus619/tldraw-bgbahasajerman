@@ -15,6 +15,7 @@ export function RightClickPanHandler() {
     let lastY = 0
     let isPanning = false
     let previousTool = 'select'
+    let menuIsOpen = false // Track if context menu is currently open
     
     const DRAG_THRESHOLD = 5 // pixels
     const CLICK_TIME_THRESHOLD = 200 // milliseconds
@@ -28,14 +29,22 @@ export function RightClickPanHandler() {
         startTime = Date.now()
         isPanning = false
         
-        // Prevent default context menu from showing immediately
+        // Always prevent browser's default context menu
         e.preventDefault()
-        e.stopPropagation()
         
-        try {
-          container.setPointerCapture(e.pointerId)
-        } catch (err) {
-          // Ignore capture errors
+        // KEY FIX: Only block Tldraw if no menu is currently open
+        if (!menuIsOpen) {
+          // First click - hide from Tldraw
+          e.stopPropagation()
+          try {
+            container.setPointerCapture(e.pointerId)
+          } catch (err) {
+            // Ignore capture errors
+          }
+        } else {
+          // Menu is open - let this click reach Tldraw so it closes the menu
+          // We'll handle the new selection/menu in onPointerUp
+          menuIsOpen = false
         }
       }
     }
@@ -58,6 +67,7 @@ export function RightClickPanHandler() {
       // Start panning if threshold exceeded
       if (!isPanning && distance > DRAG_THRESHOLD) {
         isPanning = true
+        menuIsOpen = false // Close any open menu when we start panning
         previousTool = editor.getCurrentToolId()
         editor.setCurrentTool('hand')
         editor.setCursor({ type: 'grabbing', rotation: 0 })
@@ -135,6 +145,9 @@ export function RightClickPanHandler() {
       if (isPanning) {
         e.preventDefault()
         e.stopPropagation()
+      } else {
+        // Menu is opening
+        menuIsOpen = true
       }
     }
 
