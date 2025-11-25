@@ -14,7 +14,7 @@ export const CustomShapeRenderer = track(() => {
     // Track last update time to throttle updates during drawing
     let lastUpdateTime = 0
     let updateTimeout: ReturnType<typeof setTimeout> | null = null
-    const MIN_UPDATE_INTERVAL = 100 // ms - only update every 100ms max during active drawing
+    const MIN_UPDATE_INTERVAL = 100 // ms
     
     // Update styles when shapes change
     const updateStyles = () => {
@@ -88,14 +88,12 @@ export const CustomShapeRenderer = track(() => {
       const timeSinceLastUpdate = now - lastUpdateTime
       
       if (timeSinceLastUpdate >= MIN_UPDATE_INTERVAL) {
-        // Enough time has passed, update immediately
         updateStyles()
         if (updateTimeout) {
           clearTimeout(updateTimeout)
           updateTimeout = null
         }
       } else {
-        // Too soon, schedule for later
         if (!updateTimeout) {
           updateTimeout = setTimeout(() => {
             updateStyles()
@@ -108,14 +106,20 @@ export const CustomShapeRenderer = track(() => {
     // Initial update
     updateStyles()
     
-    // Listen for shape changes ONLY (not pointer/camera changes)
+    // Listen for shape changes
     const unsubscribe = editor.store.listen((entry) => {
-      // Only update if shapes were actually added, removed, or their metadata changed
-      if (entry.changes.added || entry.changes.removed || 
-          Object.keys(entry.changes.updated).some(key => {
-            const [type] = key.split(':')
-            return type === 'shape'
-          })) {
+      const { changes } = entry
+      
+      // Check for added/removed shapes
+      const hasAddedOrRemoved = Object.keys(changes.added).length > 0 || Object.keys(changes.removed).length > 0
+      
+      // Check for updated shapes where customColor changed
+      const hasColorChange = Object.values(changes.updated).some((update: any) => {
+        const [from, to] = update
+        return from.meta?.customColor !== to.meta?.customColor
+      })
+
+      if (hasAddedOrRemoved || hasColorChange) {
         scheduleUpdate()
       }
     }, { source: 'user', scope: 'document' })
@@ -129,32 +133,33 @@ export const CustomShapeRenderer = track(() => {
   
   // Also intercept shape creation to apply custom color from editor instance
   useEffect(() => {
-    const handleShapeCreate = () => {
+    const handleShapeCreate = (entry: any) => {
+      const { changes } = entry
+      const addedShapes = Object.values(changes.added)
+      
+      if (addedShapes.length === 0) return
+
       const customColor = (editor as any)._customHexColor
-      if (customColor) {
-        // Wait for next tick to ensure shape is created
-        setTimeout(() => {
-          const allShapes = editor.getCurrentPageShapes()
-          const newShapes = allShapes.slice(-5) // Check last 5 shapes for newly created ones
-          
-          newShapes.forEach(shape => {
-            if (!shape.meta?.customColor) {
-              editor.updateShapes([{
-                id: shape.id,
-                type: shape.type,
-                meta: {
-                  ...shape.meta,
-                  customColor: customColor
-                }
-              }])
-            }
-          })
-        }, 10)
+      if (!customColor) return
+
+      const shapesToUpdate: any[] = []
+      
+      addedShapes.forEach((shape: any) => {
+        if (shape.typeName === 'shape' && !shape.meta?.customColor) {
+           shapesToUpdate.push({
+             id: shape.id,
+             type: shape.type,
+             meta: { ...shape.meta, customColor }
+           })
+        }
+      })
+
+      if (shapesToUpdate.length > 0) {
+        editor.updateShapes(shapesToUpdate)
       }
     }
     
     const unsubscribe = editor.store.listen(handleShapeCreate, { source: 'user' })
-    
     return () => {
       unsubscribe()
     }
