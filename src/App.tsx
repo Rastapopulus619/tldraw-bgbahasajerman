@@ -1,10 +1,11 @@
 import { Tldraw, useEditor, TLComponents, DefaultStylePanel, TLUiStylePanelProps, DefaultStylePanelContent } from 'tldraw'
 import 'tldraw/tldraw.css'
 import { useEffect, useState } from 'react'
-import { Sidebar } from './Sidebar'
+import FileExplorer from './components/FileExplorer'
 import { CustomColorPicker } from './components/CustomColorPicker'
 import { CustomShapeRenderer } from './components/CustomShapeRenderer'
 import { RightClickPanHandler } from './components/RightClickPanHandler'
+import { useUserPreferences } from './hooks/useUserPreferences'
 
 function SwappedZoomPanHandler() {
   const editor = useEditor()
@@ -37,7 +38,6 @@ function SwappedZoomPanHandler() {
         const delta = -e.deltaY
         const zoomFactor = delta > 0 ? 1.1 : 0.9
         const newZoom = Math.max(0.01, Math.min(8, currentZoom * zoomFactor))
-
         const pageXBefore = screenX / currentZoom - camX
         const pageYBefore = screenY / currentZoom - camY
         const newCamX = screenX / newZoom - pageXBefore
@@ -53,7 +53,6 @@ function SwappedZoomPanHandler() {
 
     const container = editor.getContainer()
     container.addEventListener('wheel', handleWheel, { passive: false, capture: true })
-
     return () => {
       container.removeEventListener('wheel', handleWheel, { capture: true })
     }
@@ -62,20 +61,20 @@ function SwappedZoomPanHandler() {
   return null
 }
 
-function PersistenceManager({ whiteboardId }: { whiteboardId: string | null }) {
+function PersistenceManager({ whiteboardPath }: { whiteboardPath: string | null }) {
   const editor = useEditor()
 
   useEffect(() => {
-    if (!whiteboardId) return
+    if (!whiteboardPath) return
 
     async function loadData() {
       try {
-        const response = await fetch(`/api/whiteboards/${whiteboardId}`)
+        const response = await fetch(`/api/whiteboards/${whiteboardPath}`)
         const data = await response.json()
         
         if (data && Object.keys(data).length > 0) {
           editor.loadSnapshot(data)
-          console.log(`Loaded whiteboard: ${whiteboardId}`)
+          console.log(`Loaded whiteboard: ${whiteboardPath}`)
         } else {
           editor.selectAll()
           editor.deleteShapes(editor.getSelectedShapeIds())
@@ -86,16 +85,15 @@ function PersistenceManager({ whiteboardId }: { whiteboardId: string | null }) {
     }
     
     loadData()
-  }, [editor, whiteboardId])
+  }, [editor, whiteboardPath])
 
   useEffect(() => {
-    if (!whiteboardId) return
+    if (!whiteboardPath) return
 
     let timeoutId: ReturnType<typeof setTimeout>
     let isSaving = false
 
     const handleChange = () => {
-      // Don't schedule a new save if one is already in progress
       if (isSaving) return
       
       clearTimeout(timeoutId)
@@ -103,7 +101,7 @@ function PersistenceManager({ whiteboardId }: { whiteboardId: string | null }) {
         isSaving = true
         try {
           const snapshot = editor.getSnapshot()
-          await fetch(`/api/whiteboards/${whiteboardId}`, {
+          await fetch(`/api/whiteboards/${whiteboardPath}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(snapshot),
@@ -114,16 +112,15 @@ function PersistenceManager({ whiteboardId }: { whiteboardId: string | null }) {
         } finally {
           isSaving = false
         }
-      }, 2500) // Increased from 1000ms to 2500ms to reduce saves during active drawing
+      }, 2500)
     }
 
     const unsubscribe = editor.store.listen(handleChange, { source: 'user' })
-    
     return () => {
       clearTimeout(timeoutId)
       unsubscribe()
     }
-  }, [editor, whiteboardId])
+  }, [editor, whiteboardPath])
 
   return null
 }
@@ -142,54 +139,44 @@ const components: TLComponents = {
 }
 
 export default function App() {
-  const [activeWhiteboardId, setActiveWhiteboardId] = useState<string | null>(null)
+  const { preferences, setLastOpened, setDefaultBoard, getStartupBoard } = useUserPreferences();
+  const [activeWhiteboardPath, setActiveWhiteboardPath] = useState<string | null>(null);
 
+  // Auto-load startup board on mount
   useEffect(() => {
-    async function initialize() {
-      try {
-        const response = await fetch('/api/whiteboards')
-        const data = await response.json()
-        
-        if (data.whiteboards && data.whiteboards.length > 0) {
-          setActiveWhiteboardId(data.whiteboards[0].id)
-        } else {
-          const createResponse = await fetch('/api/whiteboards', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: 'My First Whiteboard' })
-          })
-          const result = await createResponse.json()
-          if (result.success) {
-            setActiveWhiteboardId(result.id)
-          }
-        }
-      } catch (error) {
-        console.error('Failed to initialize:', error)
-      }
+    const startupBoard = getStartupBoard();
+    if (startupBoard) {
+      setActiveWhiteboardPath(startupBoard);
     }
-    
-    initialize()
-  }, [])
+  }, []); // Empty deps - only run once on mount
+
+  // Track last opened board when user switches
+  useEffect(() => {
+    if (activeWhiteboardPath) {
+      setLastOpened(activeWhiteboardPath);
+    }
+  }, [activeWhiteboardPath, setLastOpened]);
 
   return (
     <div style={{ position: 'fixed', inset: 0, display: 'flex' }}>
-      <Sidebar
-        activeWhiteboardId={activeWhiteboardId}
-        onSelectWhiteboard={setActiveWhiteboardId}
-        onCreateWhiteboard={(name) => {}}
-        onDeleteWhiteboard={(id) => {}}
+      <FileExplorer
+        currentPath={activeWhiteboardPath || ''}
+        onSelectFile={setActiveWhiteboardPath}
+        onSetDefaultBoard={setDefaultBoard}
+        defaultBoard={preferences.defaultWhiteboard}
       />
       <div style={{ flex: 1 }}>
-        {activeWhiteboardId ? (
-          <Tldraw components={components}>
-            <PersistenceManager whiteboardId={activeWhiteboardId} />
+        {activeWhiteboardPath ? (
+          <Tldraw components={components} key={activeWhiteboardPath}>
+            <PersistenceManager whiteboardPath={activeWhiteboardPath} />
             <SwappedZoomPanHandler />
             <RightClickPanHandler />
             <CustomShapeRenderer />
           </Tldraw>
         ) : (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-            <p>Loading...</p>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', flexDirection: 'column', color: '#666' }}>
+            <h2>Select a whiteboard to start</h2>
+            <p>Use the explorer on the left to create or open a file.</p>
           </div>
         )}
       </div>

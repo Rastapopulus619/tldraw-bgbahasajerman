@@ -1,11 +1,12 @@
 import express from 'express';
 import {
-  listWhiteboards,
+  listContents,
+  createDirectory,
+  createWhiteboard,
+  deleteItem,
+  renameItem,
   loadWhiteboard,
   saveWhiteboard,
-  createWhiteboard,
-  deleteWhiteboard,
-  renameWhiteboard,
   loadColorPalette,
   saveColorPalette
 } from './storage.js';
@@ -13,21 +14,76 @@ import {
 const app = express();
 app.use(express.json({ limit: '50mb' }));
 
-// List all whiteboards
-app.get('/api/whiteboards', async (req, res) => {
+// --- File System API ---
+
+// List contents
+app.get('/api/fs/list', async (req, res) => {
   try {
-    const data = await listWhiteboards();
-    res.json(data);
+    const path = req.query.path || '';
+    const contents = await listContents(path);
+    res.json({ contents });
   } catch (error) {
-    console.error('Error listing whiteboards:', error);
-    res.status(500).json({ error: 'Failed to list whiteboards' });
+    console.error('Error listing contents:', error);
+    res.status(500).json({ error: 'Failed to list contents' });
   }
 });
 
-// Load a specific whiteboard
-app.get('/api/whiteboards/:id', async (req, res) => {
+// Create directory
+app.post('/api/fs/directory', async (req, res) => {
   try {
-    const data = await loadWhiteboard(req.params.id);
+    const { path } = req.body;
+    const result = await createDirectory(path);
+    res.json(result);
+  } catch (error) {
+    console.error('Error creating directory:', error);
+    res.status(500).json({ error: 'Failed to create directory' });
+  }
+});
+
+// Create whiteboard file
+app.post('/api/fs/file', async (req, res) => {
+  try {
+    const { path, name } = req.body;
+    const result = await createWhiteboard(path, name);
+    res.json(result);
+  } catch (error) {
+    console.error('Error creating file:', error);
+    res.status(500).json({ error: 'Failed to create file' });
+  }
+});
+
+// Delete item
+app.delete('/api/fs/item', async (req, res) => {
+  try {
+    const path = req.query.path;
+    const result = await deleteItem(path);
+    res.json(result);
+  } catch (error) {
+    console.error('Error deleting item:', error);
+    res.status(500).json({ error: 'Failed to delete item' });
+  }
+});
+
+// Rename/Move item
+app.patch('/api/fs/rename', async (req, res) => {
+  try {
+    const { oldPath, newPath } = req.body;
+    const result = await renameItem(oldPath, newPath);
+    res.json(result);
+  } catch (error) {
+    console.error('Error renaming item:', error);
+    res.status(500).json({ error: 'Failed to rename item' });
+  }
+});
+
+// --- Whiteboard Data API ---
+
+// Load whiteboard data (supports paths)
+// Using regex to match everything after /api/whiteboards/
+app.get(/\/api\/whiteboards\/(.*)/, async (req, res) => {
+  try {
+    const path = req.params[0]; // Captures the wildcard part
+    const data = await loadWhiteboard(path);
     res.json(data || {});
   } catch (error) {
     console.error('Error loading whiteboard:', error);
@@ -35,22 +91,11 @@ app.get('/api/whiteboards/:id', async (req, res) => {
   }
 });
 
-// Create a new whiteboard
-app.post('/api/whiteboards', async (req, res) => {
-  try {
-    const { name } = req.body;
-    const result = await createWhiteboard(name);
-    res.json(result);
-  } catch (error) {
-    console.error('Error creating whiteboard:', error);
-    res.status(500).json({ error: 'Failed to create whiteboard' });
-  }
-});
-
 // Save whiteboard data
-app.post('/api/whiteboards/:id', async (req, res) => {
+app.post(/\/api\/whiteboards\/(.*)/, async (req, res) => {
   try {
-    const result = await saveWhiteboard(req.params.id, req.body);
+    const path = req.params[0];
+    const result = await saveWhiteboard(path, req.body);
     res.json(result);
   } catch (error) {
     console.error('Error saving whiteboard:', error);
@@ -58,7 +103,8 @@ app.post('/api/whiteboards/:id', async (req, res) => {
   }
 });
 
-// Get color palette
+// --- Color Palette API ---
+
 app.get('/api/colors', async (req, res) => {
   try {
     const data = await loadColorPalette();
@@ -69,7 +115,6 @@ app.get('/api/colors', async (req, res) => {
   }
 });
 
-// Save color palette
 app.post('/api/colors', async (req, res) => {
   try {
     const { colors } = req.body;
@@ -78,52 +123,6 @@ app.post('/api/colors', async (req, res) => {
   } catch (error) {
     console.error('Error saving color palette:', error);
     res.status(500).json({ error: 'Failed to save color palette' });
-  }
-});
-
-// Delete a whiteboard
-app.delete('/api/whiteboards/:id', async (req, res) => {
-  try {
-    const result = await deleteWhiteboard(req.params.id);
-    res.json(result);
-  } catch (error) {
-    console.error('Error deleting whiteboard:', error);
-    res.status(500).json({ error: 'Failed to delete whiteboard' });
-  }
-});
-
-// Rename a whiteboard
-app.patch('/api/whiteboards/:id', async (req, res) => {
-  try {
-    const { name } = req.body;
-    const result = await renameWhiteboard(req.params.id, name);
-    res.json(result);
-  } catch (error) {
-    console.error('Error renaming whiteboard:', error);
-    res.status(500).json({ error: 'Failed to rename whiteboard' });
-  }
-});
-
-// Legacy endpoints for backward compatibility
-app.get('/api/load', async (req, res) => {
-  const data = await listWhiteboards();
-  if (data.whiteboards.length > 0) {
-    const firstId = data.whiteboards[0].id;
-    const whiteboardData = await loadWhiteboard(firstId);
-    res.json(whiteboardData || {});
-  } else {
-    res.json({});
-  }
-});
-
-app.post('/api/save', async (req, res) => {
-  const data = await listWhiteboards();
-  if (data.whiteboards.length > 0) {
-    const firstId = data.whiteboards[0].id;
-    const result = await saveWhiteboard(firstId, req.body);
-    res.json(result);
-  } else {
-    res.json({ success: false, error: 'No whiteboard exists' });
   }
 });
 

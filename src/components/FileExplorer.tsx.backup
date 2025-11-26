@@ -1,0 +1,268 @@
+import React, { useState, useEffect, useCallback } from 'react';
+
+// Types
+interface FileSystemItem {
+  name: string;
+  path: string;
+  type: 'file' | 'directory';
+  children?: FileSystemItem[];
+}
+
+interface FileExplorerProps {
+  onSelectFile: (path: string) => void;
+  currentPath: string;
+}
+
+const FileExplorer: React.FC<FileExplorerProps> = ({ onSelectFile, currentPath }) => {
+  const [files, setFiles] = useState<FileSystemItem[]>([]);
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
+  const [newItemName, setNewItemName] = useState('');
+  const [creatingType, setCreatingType] = useState<'file' | 'directory' | null>(null);
+  const [creatingInPath, setCreatingInPath] = useState<string | null>(null);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; item: FileSystemItem | null } | null>(null);
+
+  const fetchFiles = useCallback(async (path: string = '') => {
+    try {
+      const res = await fetch(`/api/fs/list?path=${encodeURIComponent(path)}`);
+      const data = await res.json();
+      return data.contents;
+    } catch (error) {
+      console.error('Error fetching files:', error);
+      return [];
+    }
+  }, []);
+
+  const loadAllFiles = useCallback(async () => {
+    // Initial load of root
+    const rootFiles = await fetchFiles('');
+    
+    // Helper to recursively load expanded folders
+    const loadRecursive = async (items: FileSystemItem[]): Promise<FileSystemItem[]> => {
+      return Promise.all(items.map(async (item) => {
+        if (item.type === 'directory' && expandedFolders.has(item.path)) {
+          const children = await fetchFiles(item.path);
+          const processedChildren = await loadRecursive(children);
+          return { ...item, children: processedChildren };
+        }
+        return item;
+      }));
+    };
+
+    const processedRoot = await loadRecursive(rootFiles);
+    setFiles(processedRoot);
+  }, [fetchFiles, expandedFolders]);
+
+  useEffect(() => {
+    loadAllFiles();
+  }, [loadAllFiles]);
+
+  const toggleFolder = (path: string) => {
+    const newExpanded = new Set(expandedFolders);
+    if (newExpanded.has(path)) {
+      newExpanded.delete(path);
+    } else {
+      newExpanded.add(path);
+    }
+    setExpandedFolders(newExpanded);
+  };
+
+  const handleCreate = async () => {
+    if (!newItemName || !creatingType) return;
+    
+    const basePath = creatingInPath ? creatingInPath : '';
+    
+    try {
+      if (creatingType === 'directory') {
+        const fullPath = basePath ? `${basePath}/${newItemName}` : newItemName;
+        await fetch('/api/fs/directory', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: fullPath }),
+        });
+      } else {
+        await fetch('/api/fs/file', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: basePath, name: newItemName }),
+        });
+      }
+      
+      setCreatingType(null);
+      setNewItemName('');
+      setCreatingInPath(null);
+      loadAllFiles();
+    } catch (error) {
+      console.error('Error creating item:', error);
+    }
+  };
+
+  const handleDelete = async (path: string) => {
+    if (!confirm(`Are you sure you want to delete ${path}?`)) return;
+    try {
+      await fetch(`/api/fs/item?path=${encodeURIComponent(path)}`, {
+        method: 'DELETE',
+      });
+      loadAllFiles();
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  };
+
+  // Recursive renderer
+  const renderTree = (items: FileSystemItem[], level = 0) => {
+    return items.map((item) => (
+      <div key={item.path} style={{ paddingLeft: `${level * 12}px` }}>
+        <div 
+          className={`file-item ${currentPath === item.path ? 'active' : ''}`}
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            padding: '4px', 
+            cursor: 'pointer',
+            backgroundColor: currentPath === item.path ? '#e0e0e0' : 'transparent'
+          }}
+          onClick={() => {
+            if (item.type === 'directory') {
+              toggleFolder(item.path);
+            } else {
+              onSelectFile(item.path);
+            }
+          }}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            setContextMenu({ x: e.clientX, y: e.clientY, item });
+          }}
+        >
+          <span style={{ marginRight: '5px' }}>
+            {item.type === 'directory' ? (expandedFolders.has(item.path) ? '📂' : '📁') : '📄'}
+          </span>
+          {item.name}
+        </div>
+        
+        {item.type === 'directory' && expandedFolders.has(item.path) && item.children && (
+          <div>
+            {renderTree(item.children, level + 1)}
+          </div>
+        )}
+      </div>
+    ));
+  };
+
+  return (
+    <div className="file-explorer" style={{ 
+      width: '250px', 
+      height: '100%', 
+      borderRight: '1px solid #ccc', 
+      display: 'flex', 
+      flexDirection: 'column',
+      backgroundColor: '#f5f5f5'
+    }}>
+      <div style={{ padding: '10px', borderBottom: '1px solid #ddd', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <strong>Explorer</strong>
+        <div>
+          <button onClick={() => { setCreatingType('file'); setCreatingInPath(''); }} title="New File">📄+</button>
+          <button onClick={() => { setCreatingType('directory'); setCreatingInPath(''); }} title="New Folder">📁+</button>
+          <button onClick={() => loadAllFiles()} title="Refresh">🔄</button>
+        </div>
+      </div>
+
+      {creatingType && (
+        <div style={{ padding: '10px', borderBottom: '1px solid #ddd', backgroundColor: '#fff' }}>
+          <div style={{ fontSize: '12px', marginBottom: '5px' }}>
+            New {creatingType} in {creatingInPath || 'root'}:
+          </div>
+          <input 
+            type="text" 
+            value={newItemName} 
+            onChange={(e) => setNewItemName(e.target.value)}
+            placeholder="Name..."
+            style={{ width: '100%', marginBottom: '5px' }}
+            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleCreate();
+              if (e.key === 'Escape') setCreatingType(null);
+            }}
+          />
+          <div style={{ display: 'flex', gap: '5px' }}>
+            <button onClick={handleCreate} style={{ flex: 1 }}>Create</button>
+            <button onClick={() => setCreatingType(null)} style={{ flex: 1 }}>Cancel</button>
+          </div>
+        </div>
+      )}
+
+      <div style={{ flex: 1, overflowY: 'auto', padding: '5px' }}>
+        {renderTree(files)}
+      </div>
+
+      {contextMenu && (
+        <div 
+          style={{ 
+            position: 'fixed', 
+            top: contextMenu.y, 
+            left: contextMenu.x, 
+            backgroundColor: 'white', 
+            border: '1px solid #ccc', 
+            boxShadow: '2px 2px 5px rgba(0,0,0,0.2)',
+            zIndex: 1000,
+            padding: '5px 0',
+            minWidth: '120px'
+          }}
+          onMouseLeave={() => setContextMenu(null)}
+        >
+          {contextMenu.item?.type === 'directory' && (
+            <>
+              <div 
+                className="context-menu-item"
+                onClick={() => {
+                  setCreatingType('file');
+                  setCreatingInPath(contextMenu.item!.path);
+                  setContextMenu(null);
+                  if (!expandedFolders.has(contextMenu.item!.path)) {
+                    toggleFolder(contextMenu.item!.path);
+                  }
+                }}
+              >
+                New File
+              </div>
+              <div 
+                className="context-menu-item"
+                onClick={() => {
+                  setCreatingType('directory');
+                  setCreatingInPath(contextMenu.item!.path);
+                  setContextMenu(null);
+                  if (!expandedFolders.has(contextMenu.item!.path)) {
+                    toggleFolder(contextMenu.item!.path);
+                  }
+                }}
+              >
+                New Folder
+              </div>
+              <hr style={{ margin: '5px 0', border: 'none', borderTop: '1px solid #eee' }} />
+            </>
+          )}
+          <div 
+            className="context-menu-item"
+            onClick={() => {
+              if (contextMenu.item) handleDelete(contextMenu.item.path);
+              setContextMenu(null);
+            }}
+            style={{ color: 'red' }}
+          >
+            Delete
+          </div>
+        </div>
+      )}
+      <style>{`
+        .context-menu-item {
+          padding: 5px 15px;
+          cursor: pointer;
+        }
+        .context-menu-item:hover {
+          background-color: #f0f0f0;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default FileExplorer;
