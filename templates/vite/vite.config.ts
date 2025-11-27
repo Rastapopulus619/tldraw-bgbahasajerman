@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+	server: { port: 5180 },
 	plugins: [
 		react(
 			/* EXCLUDE_FROM_TEMPLATE_EXPORT_START */
