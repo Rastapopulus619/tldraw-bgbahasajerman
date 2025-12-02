@@ -14,6 +14,22 @@ export const FocusColorSchema = z.enum([
 	'light-violet',
 	'grey',
 	'white',
+	// Extended colors
+	'dark-blue',
+	'teal',
+	'cyan',
+	'lime',
+	'dark-green',
+	'brown',
+	'tan',
+	'pink',
+	'magenta',
+	'purple',
+	'indigo',
+	'dark-red',
+	'maroon',
+	'gold',
+	'silver',
 ])
 
 export type FocusColor = z.infer<typeof FocusColorSchema>

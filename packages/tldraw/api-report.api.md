@@ -5273,6 +5273,9 @@ export function useCurrentTranslation(): TLUiTranslation;
 
 // @public (undocumented)
 export function useDefaultColorTheme(): {
+    "dark-blue": TLDefaultColorThemeColor;
+    "dark-green": TLDefaultColorThemeColor;
+    "dark-red": TLDefaultColorThemeColor;
     "light-blue": TLDefaultColorThemeColor;
     "light-green": TLDefaultColorThemeColor;
     "light-red": TLDefaultColorThemeColor;
@@ -5280,12 +5283,24 @@ export function useDefaultColorTheme(): {
     background: string;
     black: TLDefaultColorThemeColor;
     blue: TLDefaultColorThemeColor;
+    brown: TLDefaultColorThemeColor;
+    cyan: TLDefaultColorThemeColor;
+    gold: TLDefaultColorThemeColor;
     green: TLDefaultColorThemeColor;
     grey: TLDefaultColorThemeColor;
     id: "dark" | "light";
+    indigo: TLDefaultColorThemeColor;
+    lime: TLDefaultColorThemeColor;
+    magenta: TLDefaultColorThemeColor;
+    maroon: TLDefaultColorThemeColor;
     orange: TLDefaultColorThemeColor;
+    pink: TLDefaultColorThemeColor;
+    purple: TLDefaultColorThemeColor;
     red: TLDefaultColorThemeColor;
+    silver: TLDefaultColorThemeColor;
     solid: string;
+    tan: TLDefaultColorThemeColor;
+    teal: TLDefaultColorThemeColor;
     text: string;
     violet: TLDefaultColorThemeColor;
     white: TLDefaultColorThemeColor;

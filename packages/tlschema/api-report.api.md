@@ -173,10 +173,10 @@ export const defaultBindingSchemas: {
 };
 
 // @public
-export const defaultColorNames: readonly ["black", "grey", "light-violet", "violet", "blue", "light-blue", "yellow", "orange", "green", "light-green", "light-red", "red", "white"];
+export const defaultColorNames: readonly ["black", "grey", "light-violet", "violet", "blue", "light-blue", "yellow", "orange", "green", "light-green", "light-red", "red", "white", "dark-blue", "teal", "cyan", "lime", "dark-green", "brown", "tan", "pink", "magenta", "purple", "indigo", "dark-red", "maroon", "gold", "silver"];
 
 // @public
-export const DefaultColorStyle: EnumStyleProp<"black" | "blue" | "green" | "grey" | "light-blue" | "light-green" | "light-red" | "light-violet" | "orange" | "red" | "violet" | "white" | "yellow">;
+export const DefaultColorStyle: EnumStyleProp<"black" | "blue" | "brown" | "cyan" | "dark-blue" | "dark-green" | "dark-red" | "gold" | "green" | "grey" | "indigo" | "light-blue" | "light-green" | "light-red" | "light-violet" | "lime" | "magenta" | "maroon" | "orange" | "pink" | "purple" | "red" | "silver" | "tan" | "teal" | "violet" | "white" | "yellow">;
 
 // @public
 export const DefaultColorThemePalette: {
@@ -205,7 +205,7 @@ export const DefaultFontStyle: EnumStyleProp<"draw" | "mono" | "sans" | "serif">
 export const DefaultHorizontalAlignStyle: EnumStyleProp<"end-legacy" | "end" | "middle-legacy" | "middle" | "start-legacy" | "start">;
 
 // @public
-export const DefaultLabelColorStyle: EnumStyleProp<"black" | "blue" | "green" | "grey" | "light-blue" | "light-green" | "light-red" | "light-violet" | "orange" | "red" | "violet" | "white" | "yellow">;
+export const DefaultLabelColorStyle: EnumStyleProp<"black" | "blue" | "brown" | "cyan" | "dark-blue" | "dark-green" | "dark-red" | "gold" | "green" | "grey" | "indigo" | "light-blue" | "light-green" | "light-red" | "light-violet" | "lime" | "magenta" | "maroon" | "orange" | "pink" | "purple" | "red" | "silver" | "tan" | "teal" | "violet" | "white" | "yellow">;
 
 // @public
 export const defaultShapeSchemas: {
