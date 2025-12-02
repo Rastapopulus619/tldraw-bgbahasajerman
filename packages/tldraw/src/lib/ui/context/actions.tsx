@@ -25,6 +25,7 @@ import * as React from 'react'
 import { createBookmarkFromUrl } from '../../shapes/bookmark/bookmarks'
 import { fitFrameToContent, removeFrame } from '../../utils/frames/frames'
 import { generateShapeAnnouncementMessage } from '../components/A11y'
+import { ColorPaletteConfirmDialog } from '../components/ColorPaletteConfirmDialog'
 import { EditLinkDialog } from '../components/EditLinkDialog'
 import { EmbedDialog } from '../components/EmbedDialog'
 import { DefaultKeyboardShortcutsDialog } from '../components/KeyboardShortcutsDialog/DefaultKeyboardShortcutsDialog'
@@ -1752,34 +1753,85 @@ export function ActionsProvider({ overrides, children }: ActionsProviderProps) {
 				id: 'save-palette-as-default',
 				readonlyOk: true,
 				onSelect: async () => {
-					try {
-						const response = await fetch('http://localhost:3001/api/colors/save-as-default', {
-							method: 'POST',
+					const shouldContinue = await new Promise<boolean>((resolve) => {
+						helpers.addDialog({
+							component: ({ onClose }) => (
+								<ColorPaletteConfirmDialog
+									title="Save palette as default"
+									description="This will overwrite the default color palette with your current colors. All future new documents will use these colors. Are you sure you want to continue?"
+									confirmLabel="Save as default"
+									onConfirm={async () => {
+										try {
+											const response = await fetch(
+												'http://localhost:3001/api/colors/save-as-default',
+												{
+													method: 'POST',
+												}
+											)
+											if (response.ok) {
+												resolve(true)
+												// Force a page reload to apply the new defaults
+												window.location.reload()
+											} else {
+												resolve(false)
+											}
+										} catch (error) {
+											console.error('Failed to save palette as default:', error)
+											resolve(false)
+										}
+									}}
+									onClose={() => {
+										resolve(false)
+										onClose()
+									}}
+								/>
+							),
+							onClose: () => {
+								resolve(false)
+							},
 						})
-						if (response.ok) {
-							// Force a page reload to apply the new defaults
-							window.location.reload()
-						}
-					} catch (error) {
-						console.error('Failed to save palette as default:', error)
-					}
+					})
 				},
 			},
 			{
 				id: 'reset-palette-to-default',
 				readonlyOk: true,
 				onSelect: async () => {
-					try {
-						const response = await fetch('http://localhost:3001/api/colors/reset', {
-							method: 'POST',
+					const shouldContinue = await new Promise<boolean>((resolve) => {
+						helpers.addDialog({
+							component: ({ onClose }) => (
+								<ColorPaletteConfirmDialog
+									title="Reset palette to default"
+									description="This will reset your current color palette to the factory default colors. All custom color changes will be lost. Are you sure you want to continue?"
+									confirmLabel="Reset to default"
+									onConfirm={async () => {
+										try {
+											const response = await fetch('http://localhost:3001/api/colors/reset', {
+												method: 'POST',
+											})
+											if (response.ok) {
+												resolve(true)
+												// Force a page reload to apply the reset
+												window.location.reload()
+											} else {
+												resolve(false)
+											}
+										} catch (error) {
+											console.error('Failed to reset palette:', error)
+											resolve(false)
+										}
+									}}
+									onClose={() => {
+										resolve(false)
+										onClose()
+									}}
+								/>
+							),
+							onClose: () => {
+								resolve(false)
+							},
 						})
-						if (response.ok) {
-							// Force a page reload to apply the reset
-							window.location.reload()
-						}
-					} catch (error) {
-						console.error('Failed to reset palette:', error)
-					}
+					})
 				},
 			},
 		]
