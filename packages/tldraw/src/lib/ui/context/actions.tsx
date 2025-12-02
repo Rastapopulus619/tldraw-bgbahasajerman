@@ -1748,6 +1748,40 @@ export function ActionsProvider({ overrides, children }: ActionsProviderProps) {
 					trackEvent('download-original', { source })
 				},
 			},
+			{
+				id: 'save-palette-as-default',
+				readonlyOk: true,
+				onSelect: async () => {
+					try {
+						const response = await fetch('http://localhost:3001/api/colors/save-as-default', {
+							method: 'POST',
+						})
+						if (response.ok) {
+							// Force a page reload to apply the new defaults
+							window.location.reload()
+						}
+					} catch (error) {
+						console.error('Failed to save palette as default:', error)
+					}
+				},
+			},
+			{
+				id: 'reset-palette-to-default',
+				readonlyOk: true,
+				onSelect: async () => {
+					try {
+						const response = await fetch('http://localhost:3001/api/colors/reset', {
+							method: 'POST',
+						})
+						if (response.ok) {
+							// Force a page reload to apply the reset
+							window.location.reload()
+						}
+					} catch (error) {
+						console.error('Failed to reset palette:', error)
+					}
+				},
+			},
 		]
 
 		if (showCollaborationUi) {

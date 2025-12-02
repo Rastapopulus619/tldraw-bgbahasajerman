@@ -1,5 +1,6 @@
 import { useCanRedo, useCanUndo } from '../../hooks/menu-hooks'
 import { AccessibilityMenu } from '../AccessibilityMenu'
+import { ColorPaletteMenu } from '../ColorPaletteMenu'
 import { ColorSchemeMenu } from '../ColorSchemeMenu'
 import { KeyboardShortcutsMenuItem } from '../HelpMenu/DefaultHelpMenuContent'
 import { InputModeMenu } from '../InputModeMenu'
@@ -168,6 +169,7 @@ export function PreferencesGroup() {
 				<TldrawUiMenuGroup id="user-interface-submenus">
 					<InputModeMenu />
 					<ColorSchemeMenu />
+					<ColorPaletteMenu />
 					<AccessibilityMenu />
 				</TldrawUiMenuGroup>
 			</TldrawUiMenuSubmenu>
