@@ -15,19 +15,19 @@ describe('TLColorStyle', () => {
 	describe('defaultColorNames', () => {
 		it('should contain expected default colors', () => {
 			expect(defaultColorNames).toEqual([
-				'black',
-				'grey',
-				'light-violet',
-				'violet',
-				'blue',
-				'light-blue',
-				'yellow',
-				'orange',
-				'green',
-				'light-green',
-				'light-red',
-				'red',
-				'white',
+				'color1_R1C1',
+				'color2_R1C2',
+				'color3_R1C3',
+				'color4_R1C4',
+				'color5_R2C1',
+				'color6_R2C2',
+				'color7_R2C3',
+				'color8_R2C4',
+				'color9_R3C1',
+				'color10_R3C2',
+				'color11_R3C3',
+				'color12_R3C4',
+				'color13_R4C1',
 			])
 		})
 	})
@@ -65,7 +65,7 @@ describe('TLColorStyle', () => {
 		})
 
 		it('should reject invalid color names', () => {
-			const invalidColors = ['invalid', 'pink', 'purple', 'cyan', '']
+			const invalidColors = ['invalid', 'color21_R6C1', 'color23_R6C3', 'color16_R4C4', '']
 
 			invalidColors.forEach((color) => {
 				expect(() => DefaultColorStyle.validate(color)).toThrow()
@@ -76,7 +76,7 @@ describe('TLColorStyle', () => {
 	describe('DefaultLabelColorStyle', () => {
 		it('should be a StyleProp with correct configuration', () => {
 			expect(DefaultLabelColorStyle.id).toBe('tldraw:labelColor')
-			expect(DefaultLabelColorStyle.defaultValue).toBe('black')
+			expect(DefaultLabelColorStyle.defaultValue).toBe('color1_R1C1')
 		})
 
 		it('should validate all default color names', () => {
@@ -87,7 +87,7 @@ describe('TLColorStyle', () => {
 		})
 
 		it('should reject invalid color names', () => {
-			const invalidColors = ['invalid', 'pink', 'purple', 'cyan', '']
+			const invalidColors = ['invalid', 'color21_R6C1', 'color23_R6C3', 'color16_R4C4', '']
 
 			invalidColors.forEach((color) => {
 				expect(() => DefaultLabelColorStyle.validate(color)).toThrow()
@@ -107,11 +107,11 @@ describe('TLColorStyle', () => {
 			const originalColorDefault = DefaultColorStyle.defaultValue
 			const originalLabelDefault = DefaultLabelColorStyle.defaultValue
 
-			DefaultColorStyle.setDefaultValue('red')
-			DefaultLabelColorStyle.setDefaultValue('blue')
+			DefaultColorStyle.setDefaultValue('color12_R3C4')
+			DefaultLabelColorStyle.setDefaultValue('color5_R2C1')
 
-			expect(DefaultColorStyle.defaultValue).toBe('red')
-			expect(DefaultLabelColorStyle.defaultValue).toBe('blue')
+			expect(DefaultColorStyle.defaultValue).toBe('color12_R3C4')
+			expect(DefaultLabelColorStyle.defaultValue).toBe('color5_R2C1')
 			expect(DefaultColorStyle.defaultValue).not.toBe(DefaultLabelColorStyle.defaultValue)
 
 			// Restore originals
@@ -128,7 +128,14 @@ describe('TLColorStyle', () => {
 		})
 
 		it('should return false for invalid color names', () => {
-			const invalidColors = ['invalid', 'pink', 'purple', 'cyan', '', 'custom-color']
+			const invalidColors = [
+				'invalid',
+				'color21_R6C1',
+				'color23_R6C3',
+				'color16_R4C4',
+				'',
+				'custom-color',
+			]
 
 			invalidColors.forEach((color) => {
 				expect(isDefaultThemeColor(color as TLDefaultColorStyle)).toBe(false)
@@ -145,7 +152,7 @@ describe('TLColorStyle', () => {
 
 		it('should return false for CSS color names not in defaults', () => {
 			// Use CSS color names that are NOT in the default color list
-			const cssColors = ['aqua', 'fuchsia', 'lime', 'navy', 'silver']
+			const cssColors = ['aqua', 'fuchsia', 'color17_R5C1', 'navy', 'color28_R7C4']
 
 			cssColors.forEach((color) => {
 				expect(isDefaultThemeColor(color as TLDefaultColorStyle)).toBe(false)
@@ -166,7 +173,7 @@ describe('TLColorStyle', () => {
 		})
 
 		it('should work as a type guard', () => {
-			const color: TLDefaultColorStyle = 'red'
+			const color: TLDefaultColorStyle = 'color12_R3C4'
 
 			if (isDefaultThemeColor(color)) {
 				// TypeScript should narrow the type here
@@ -180,9 +187,9 @@ describe('TLColorStyle', () => {
 		const darkTheme = DefaultColorThemePalette.darkMode
 
 		it('should return correct color values for default colors', () => {
-			expect(getColorValue(lightTheme, 'red', 'solid')).toBe('#e03131')
-			expect(getColorValue(lightTheme, 'blue', 'fill')).toBe('#4465e9')
-			expect(getColorValue(lightTheme, 'black', 'solid')).toBe('#1d1d1d')
+			expect(getColorValue(lightTheme, 'color12_R3C4', 'solid')).toBe('#e03131')
+			expect(getColorValue(lightTheme, 'color5_R2C1', 'fill')).toBe('#4465e9')
+			expect(getColorValue(lightTheme, 'color1_R1C1', 'solid')).toBe('#1d1d1d')
 		})
 
 		it('should work with different variants', () => {
@@ -203,20 +210,20 @@ describe('TLColorStyle', () => {
 			]
 
 			variants.forEach((variant) => {
-				const result = getColorValue(lightTheme, 'red', variant)
+				const result = getColorValue(lightTheme, 'color12_R3C4', variant)
 				expect(typeof result).toBe('string')
 				expect(result.length).toBeGreaterThan(0)
-				expect(result).toBe(lightTheme.red[variant])
+				expect(result).toBe(lightTheme.color12_R3C4[variant])
 			})
 		})
 
 		it('should return different values for light and dark themes', () => {
 			// Use colors/variants that actually differ between themes
-			expect(getColorValue(lightTheme, 'black', 'solid')).not.toBe(
-				getColorValue(darkTheme, 'black', 'solid')
+			expect(getColorValue(lightTheme, 'color1_R1C1', 'solid')).not.toBe(
+				getColorValue(darkTheme, 'color1_R1C1', 'solid')
 			)
-			expect(getColorValue(lightTheme, 'white', 'solid')).not.toBe(
-				getColorValue(darkTheme, 'white', 'solid')
+			expect(getColorValue(lightTheme, 'color13_R4C1', 'solid')).not.toBe(
+				getColorValue(darkTheme, 'color13_R4C1', 'solid')
 			)
 		})
 
@@ -251,7 +258,7 @@ describe('TLColorStyle', () => {
 		})
 
 		it('should work consistently across all variants for a color', () => {
-			const color = 'blue'
+			const color = 'color5_R2C1'
 			const variants: (keyof TLDefaultColorThemeColor)[] = [
 				'solid',
 				'semi',
@@ -300,26 +307,26 @@ describe('TLColorStyle', () => {
 	describe('type safety and integration', () => {
 		it('should have proper TypeScript types', () => {
 			// Test that TLDefaultColorStyle is properly typed
-			const validColor: TLDefaultColorStyle = 'red'
-			expect(DefaultColorStyle.validate(validColor)).toBe('red')
+			const validColor: TLDefaultColorStyle = 'color12_R3C4'
+			expect(DefaultColorStyle.validate(validColor)).toBe('color12_R3C4')
 		})
 
 		it('should work with both color style props', () => {
-			const colorValue: TLDefaultColorStyle = 'blue'
-			const labelColorValue: TLDefaultColorStyle = 'white'
+			const colorValue: TLDefaultColorStyle = 'color5_R2C1'
+			const labelColorValue: TLDefaultColorStyle = 'color13_R4C1'
 
-			expect(DefaultColorStyle.validate(colorValue)).toBe('blue')
-			expect(DefaultLabelColorStyle.validate(labelColorValue)).toBe('white')
+			expect(DefaultColorStyle.validate(colorValue)).toBe('color5_R2C1')
+			expect(DefaultLabelColorStyle.validate(labelColorValue)).toBe('color13_R4C1')
 		})
 
 		it('should integrate properly with theme system', () => {
 			const theme = getDefaultColorTheme({ isDarkMode: false })
-			const color: TLDefaultColorStyle = 'red'
+			const color: TLDefaultColorStyle = 'color12_R3C4'
 
 			if (isDefaultThemeColor(color)) {
 				const colorValue = getColorValue(theme, color, 'solid')
 				expect(typeof colorValue).toBe('string')
-				expect(colorValue).toBe(theme.red.solid)
+				expect(colorValue).toBe(theme.color12_R3C4.solid)
 			}
 		})
 
@@ -347,14 +354,14 @@ describe('TLColorStyle', () => {
 			// Create a partial theme for testing edge cases
 			const partialTheme = {
 				...DefaultColorThemePalette.lightMode,
-				red: {
-					...DefaultColorThemePalette.lightMode.red,
+				color12_R3C4: {
+					...DefaultColorThemePalette.lightMode.color12_R3C4,
 					solid: undefined,
 				} as any,
 			}
 
 			// getColorValue should still work but return undefined for this case
-			expect(getColorValue(partialTheme, 'red', 'solid')).toBe(undefined)
+			expect(getColorValue(partialTheme, 'color12_R3C4', 'solid')).toBe(undefined)
 		})
 
 		it('should handle very large color names', () => {

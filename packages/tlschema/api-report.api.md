@@ -101,7 +101,7 @@ export const boxModelValidator: T.ObjectValidator<BoxModel>;
 export const CameraRecordType: RecordType<TLCamera, never>;
 
 // @public
-export const canvasUiColorTypeValidator: T.Validator<"accent" | "black" | "laser" | "muted-1" | "selection-fill" | "selection-stroke" | "white">;
+export const canvasUiColorTypeValidator: T.Validator<"accent" | "color1_R1C1" | "color13_R4C1" | "laser" | "muted-1" | "selection-fill" | "selection-stroke">;
 
 // @public
 export function createAssetValidator<Type extends string, Props extends JsonObject>(type: Type, props: T.Validator<Props>): T.ObjectValidator<Expand<    { [P in "id" | "meta" | "typeName" | (undefined extends Props ? never : "props") | (undefined extends Type ? never : "type")]: {
@@ -173,10 +173,10 @@ export const defaultBindingSchemas: {
 };
 
 // @public
-export const defaultColorNames: readonly ["black", "grey", "light-violet", "violet", "blue", "light-blue", "yellow", "orange", "green", "light-green", "light-red", "red", "white", "dark-blue", "teal", "cyan", "lime", "dark-green", "brown", "tan", "pink", "magenta", "purple", "indigo", "dark-red", "maroon", "gold", "silver"];
+export const defaultColorNames: readonly ["color1_R1C1", "color2_R1C2", "color3_R1C3", "color4_R1C4", "color5_R2C1", "color6_R2C2", "color7_R2C3", "color8_R2C4", "color9_R3C1", "color10_R3C2", "color11_R3C3", "color12_R3C4", "color13_R4C1", "color14_R4C2", "color15_R4C3", "color16_R4C4", "color17_R5C1", "color18_R5C2", "color19_R5C3", "color20_R5C4", "color21_R6C1", "color22_R6C2", "color23_R6C3", "color24_R6C4", "color25_R7C1", "color26_R7C2", "color27_R7C3", "color28_R7C4"];
 
 // @public
-export const DefaultColorStyle: EnumStyleProp<"black" | "blue" | "brown" | "cyan" | "dark-blue" | "dark-green" | "dark-red" | "gold" | "green" | "grey" | "indigo" | "light-blue" | "light-green" | "light-red" | "light-violet" | "lime" | "magenta" | "maroon" | "orange" | "pink" | "purple" | "red" | "silver" | "tan" | "teal" | "violet" | "white" | "yellow">;
+export const DefaultColorStyle: EnumStyleProp<"color1_R1C1" | "color10_R3C2" | "color11_R3C3" | "color12_R3C4" | "color13_R4C1" | "color14_R4C2" | "color15_R4C3" | "color16_R4C4" | "color17_R5C1" | "color18_R5C2" | "color19_R5C3" | "color2_R1C2" | "color20_R5C4" | "color21_R6C1" | "color22_R6C2" | "color23_R6C3" | "color24_R6C4" | "color25_R7C1" | "color26_R7C2" | "color27_R7C3" | "color28_R7C4" | "color3_R1C3" | "color4_R1C4" | "color5_R2C1" | "color6_R2C2" | "color7_R2C3" | "color8_R2C4" | "color9_R3C1">;
 
 // @public
 export const DefaultColorThemePalette: {
@@ -205,7 +205,7 @@ export const DefaultFontStyle: EnumStyleProp<"draw" | "mono" | "sans" | "serif">
 export const DefaultHorizontalAlignStyle: EnumStyleProp<"end-legacy" | "end" | "middle-legacy" | "middle" | "start-legacy" | "start">;
 
 // @public
-export const DefaultLabelColorStyle: EnumStyleProp<"black" | "blue" | "brown" | "cyan" | "dark-blue" | "dark-green" | "dark-red" | "gold" | "green" | "grey" | "indigo" | "light-blue" | "light-green" | "light-red" | "light-violet" | "lime" | "magenta" | "maroon" | "orange" | "pink" | "purple" | "red" | "silver" | "tan" | "teal" | "violet" | "white" | "yellow">;
+export const DefaultLabelColorStyle: EnumStyleProp<"color1_R1C1" | "color10_R3C2" | "color11_R3C3" | "color12_R3C4" | "color13_R4C1" | "color14_R4C2" | "color15_R4C3" | "color16_R4C4" | "color17_R5C1" | "color18_R5C2" | "color19_R5C3" | "color2_R1C2" | "color20_R5C4" | "color21_R6C1" | "color22_R6C2" | "color23_R6C3" | "color24_R6C4" | "color25_R7C1" | "color26_R7C2" | "color27_R7C3" | "color28_R7C4" | "color3_R1C3" | "color4_R1C4" | "color5_R2C1" | "color6_R2C2" | "color7_R2C3" | "color8_R2C4" | "color9_R3C1">;
 
 // @public
 export const defaultShapeSchemas: {
@@ -676,7 +676,7 @@ export const textShapeMigrations: TLPropsMigrations;
 export const textShapeProps: RecordProps<TLTextShape>;
 
 // @public
-export const TL_CANVAS_UI_COLOR_TYPES: Set<"accent" | "black" | "laser" | "muted-1" | "selection-fill" | "selection-stroke" | "white">;
+export const TL_CANVAS_UI_COLOR_TYPES: Set<"accent" | "color1_R1C1" | "color13_R4C1" | "laser" | "muted-1" | "selection-fill" | "selection-stroke">;
 
 // @public
 export const TL_CURSOR_TYPES: Set<string>;

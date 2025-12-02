@@ -21,35 +21,34 @@ import { StyleProp } from './StyleProp'
  * @public
  */
 export const defaultColorNames = [
-	'black',
-	'grey',
-	'light-violet',
-	'violet',
-	'blue',
-	'light-blue',
-	'yellow',
-	'orange',
-	'green',
-	'light-green',
-	'light-red',
-	'red',
-	'white',
-	// Extended color palette (15 additional colors)
-	'dark-blue',
-	'teal',
-	'cyan',
-	'lime',
-	'dark-green',
-	'brown',
-	'tan',
-	'pink',
-	'magenta',
-	'purple',
-	'indigo',
-	'dark-red',
-	'maroon',
-	'gold',
-	'silver',
+	'color1_R1C1',
+	'color2_R1C2',
+	'color3_R1C3',
+	'color4_R1C4',
+	'color5_R2C1',
+	'color6_R2C2',
+	'color7_R2C3',
+	'color8_R2C4',
+	'color9_R3C1',
+	'color10_R3C2',
+	'color11_R3C3',
+	'color12_R3C4',
+	'color13_R4C1',
+	'color14_R4C2',
+	'color15_R4C3',
+	'color16_R4C4',
+	'color17_R5C1',
+	'color18_R5C2',
+	'color19_R5C3',
+	'color20_R5C4',
+	'color21_R6C1',
+	'color22_R6C2',
+	'color23_R6C3',
+	'color24_R6C4',
+	'color25_R7C1',
+	'color26_R7C2',
+	'color27_R7C3',
+	'color28_R7C4',
 ] as const
 
 /**
@@ -103,7 +102,7 @@ export interface TLDefaultColorThemeColor {
  *   text: '#000000',
  *   background: '#ffffff',
  *   solid: '#fcfffe',
- *   black: { solid: '#000000', semi: '#cccccc', ... },
+ *   'color1_R1C1': { solid: '#000000', semi: '#cccccc', ... },
  *   // ... other colors
  * }
  * ```
@@ -148,7 +147,7 @@ export const DefaultColorThemePalette: {
 		text: '#000000',
 		background: '#f9fafb',
 		solid: '#fcfffe',
-		black: {
+		'color1_R1C1': {
 			solid: '#1d1d1d',
 			fill: '#1d1d1d',
 			linedFill: '#363636',
@@ -164,7 +163,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#fddd00',
 			highlightP3: 'color(display-p3 0.972 0.8205 0.05)',
 		},
-		blue: {
+		'color5_R2C1': {
 			solid: '#4465e9',
 			fill: '#4465e9',
 			linedFill: '#6580ec',
@@ -180,7 +179,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#10acff',
 			highlightP3: 'color(display-p3 0.308 0.6632 0.9996)',
 		},
-		green: {
+		'color9_R3C1': {
 			solid: '#099268',
 			fill: '#099268',
 			linedFill: '#0bad7c',
@@ -196,7 +195,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#00ffc8',
 			highlightP3: 'color(display-p3 0.2536 0.984 0.7981)',
 		},
-		grey: {
+		'color2_R1C2': {
 			solid: '#9fa8b2',
 			fill: '#9fa8b2',
 			linedFill: '#bbc1c9',
@@ -212,7 +211,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#cbe7f1',
 			highlightP3: 'color(display-p3 0.8163 0.9023 0.9416)',
 		},
-		'light-blue': {
+		'color6_R2C2': {
 			solid: '#4ba1f1',
 			fill: '#4ba1f1',
 			linedFill: '#7abaf5',
@@ -228,7 +227,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#00f4ff',
 			highlightP3: 'color(display-p3 0.1512 0.9414 0.9996)',
 		},
-		'light-green': {
+		'color10_R3C2': {
 			solid: '#4cb05e',
 			fill: '#4cb05e',
 			linedFill: '#7ec88c',
@@ -244,7 +243,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#65f641',
 			highlightP3: 'color(display-p3 0.563 0.9495 0.3857)',
 		},
-		'light-red': {
+		'color11_R3C3': {
 			solid: '#f87777',
 			fill: '#f87777',
 			linedFill: '#f99a9a',
@@ -260,7 +259,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#ff7fa3',
 			highlightP3: 'color(display-p3 0.9988 0.5301 0.6397)',
 		},
-		'light-violet': {
+		'color3_R1C3': {
 			solid: '#e085f4',
 			fill: '#e085f4',
 			linedFill: '#e9abf7',
@@ -276,7 +275,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#ff88ff',
 			highlightP3: 'color(display-p3 0.9676 0.5652 0.9999)',
 		},
-		orange: {
+		'color8_R2C4': {
 			solid: '#e16919',
 			fill: '#e16919',
 			linedFill: '#ea8643',
@@ -292,7 +291,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#ffa500',
 			highlightP3: 'color(display-p3 0.9988 0.6905 0.266)',
 		},
-		red: {
+		'color12_R3C4': {
 			solid: '#e03131',
 			fill: '#e03131',
 			linedFill: '#e75f5f',
@@ -308,7 +307,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#ff636e',
 			highlightP3: 'color(display-p3 0.9992 0.4376 0.45)',
 		},
-		violet: {
+		'color4_R1C4': {
 			solid: '#ae3ec9',
 			fill: '#ae3ec9',
 			linedFill: '#be68d4',
@@ -324,7 +323,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#c77cff',
 			highlightP3: 'color(display-p3 0.7469 0.5089 0.9995)',
 		},
-		yellow: {
+		'color7_R2C3': {
 			solid: '#f1ac4b',
 			fill: '#f1ac4b',
 			linedFill: '#f5c27a',
@@ -340,7 +339,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#fddd00',
 			highlightP3: 'color(display-p3 0.972 0.8705 0.05)',
 		},
-		white: {
+		'color13_R4C1': {
 			solid: '#f3f3f3',
 			fill: '#f3f3f3',
 			linedFill: '#f3f3f3',
@@ -357,7 +356,7 @@ export const DefaultColorThemePalette: {
 			highlightP3: 'color(display-p3 0.95 0.95 0.95)',
 		},
 		// Extended colors (placeholders - will be customizable)
-		'dark-blue': {
+		'color14_R4C2': {
 			solid: '#1e3a8a',
 			fill: '#1e3a8a',
 			linedFill: '#2563eb',
@@ -373,7 +372,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#0066ff',
 			highlightP3: 'color(display-p3 0.2 0.4 0.9)',
 		},
-		teal: {
+		'color15_R4C3': {
 			solid: '#14b8a6',
 			fill: '#14b8a6',
 			linedFill: '#2dd4bf',
@@ -389,7 +388,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#00d9d9',
 			highlightP3: 'color(display-p3 0.1 0.8 0.8)',
 		},
-		cyan: {
+		'color16_R4C4': {
 			solid: '#06b6d4',
 			fill: '#06b6d4',
 			linedFill: '#22d3ee',
@@ -405,7 +404,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#00e5ff',
 			highlightP3: 'color(display-p3 0.1 0.85 0.95)',
 		},
-		lime: {
+		'color17_R5C1': {
 			solid: '#84cc16',
 			fill: '#84cc16',
 			linedFill: '#a3e635',
@@ -421,7 +420,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#99ff00',
 			highlightP3: 'color(display-p3 0.6 0.95 0.2)',
 		},
-		'dark-green': {
+		'color18_R5C2': {
 			solid: '#047857',
 			fill: '#047857',
 			linedFill: '#059669',
@@ -437,7 +436,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#00a86b',
 			highlightP3: 'color(display-p3 0.15 0.65 0.42)',
 		},
-		brown: {
+		'color19_R5C3': {
 			solid: '#92400e',
 			fill: '#92400e',
 			linedFill: '#b45309',
@@ -453,7 +452,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#a0522d',
 			highlightP3: 'color(display-p3 0.55 0.32 0.18)',
 		},
-		tan: {
+		'color20_R5C4': {
 			solid: '#d4a574',
 			fill: '#d4a574',
 			linedFill: '#ddb892',
@@ -469,7 +468,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#d2b48c',
 			highlightP3: 'color(display-p3 0.78 0.68 0.55)',
 		},
-		pink: {
+		'color21_R6C1': {
 			solid: '#ec4899',
 			fill: '#ec4899',
 			linedFill: '#f472b6',
@@ -485,7 +484,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#ff69b4',
 			highlightP3: 'color(display-p3 0.95 0.42 0.7)',
 		},
-		magenta: {
+		'color22_R6C2': {
 			solid: '#d946ef',
 			fill: '#d946ef',
 			linedFill: '#e879f9',
@@ -501,7 +500,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#ff00ff',
 			highlightP3: 'color(display-p3 0.9 0.3 0.95)',
 		},
-		purple: {
+		'color23_R6C3': {
 			solid: '#9333ea',
 			fill: '#9333ea',
 			linedFill: '#a855f7',
@@ -517,7 +516,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#9400d3',
 			highlightP3: 'color(display-p3 0.58 0.0 0.83)',
 		},
-		indigo: {
+		'color24_R6C4': {
 			solid: '#4f46e5',
 			fill: '#4f46e5',
 			linedFill: '#6366f1',
@@ -533,7 +532,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#4b0082',
 			highlightP3: 'color(display-p3 0.29 0.0 0.51)',
 		},
-		'dark-red': {
+		'color25_R7C1': {
 			solid: '#b91c1c',
 			fill: '#b91c1c',
 			linedFill: '#dc2626',
@@ -549,7 +548,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#8b0000',
 			highlightP3: 'color(display-p3 0.54 0.0 0.0)',
 		},
-		maroon: {
+		'color26_R7C2': {
 			solid: '#831843',
 			fill: '#831843',
 			linedFill: '#9f1239',
@@ -565,7 +564,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#800000',
 			highlightP3: 'color(display-p3 0.5 0.0 0.0)',
 		},
-		gold: {
+		'color27_R7C3': {
 			solid: '#d97706',
 			fill: '#d97706',
 			linedFill: '#f59e0b',
@@ -581,7 +580,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#ffd700',
 			highlightP3: 'color(display-p3 0.95 0.84 0.0)',
 		},
-		silver: {
+		'color28_R7C4': {
 			solid: '#94a3b8',
 			fill: '#94a3b8',
 			linedFill: '#cbd5e1',
@@ -604,7 +603,7 @@ export const DefaultColorThemePalette: {
 		background: 'hsl(240, 5%, 6.5%)',
 		solid: '#010403',
 
-		black: {
+		'color1_R1C1': {
 			solid: '#1d1d1d',
 			fill: '#1d1d1d',
 			linedFill: '#363636',
@@ -620,7 +619,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#fddd00',
 			highlightP3: 'color(display-p3 0.972 0.8205 0.05)',
 		},
-		blue: {
+		'color5_R2C1': {
 			solid: '#4f72fc', // 3c60f0
 			fill: '#4f72fc',
 			linedFill: '#3c5cdd',
@@ -636,7 +635,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#0079d2',
 			highlightP3: 'color(display-p3 0.0032 0.4655 0.7991)',
 		},
-		green: {
+		'color9_R3C1': {
 			solid: '#099268',
 			fill: '#099268',
 			linedFill: '#087856',
@@ -652,7 +651,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#009774',
 			highlightP3: 'color(display-p3 0.0085 0.582 0.4604)',
 		},
-		grey: {
+		'color2_R1C2': {
 			solid: '#9398b0',
 			fill: '#9398b0',
 			linedFill: '#8388a5',
@@ -668,7 +667,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#9cb4cb',
 			highlightP3: 'color(display-p3 0.6299 0.7012 0.7856)',
 		},
-		'light-blue': {
+		'color6_R2C2': {
 			solid: '#4dabf7',
 			fill: '#4dabf7',
 			linedFill: '#2793ec',
@@ -684,7 +683,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#00bdc8',
 			highlightP3: 'color(display-p3 0.0023 0.7259 0.7735)',
 		},
-		'light-green': {
+		'color10_R3C2': {
 			solid: '#40c057',
 			fill: '#40c057',
 			linedFill: '#37a44b',
@@ -700,7 +699,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#00a000',
 			highlightP3: 'color(display-p3 0.2711 0.6172 0.0195)',
 		},
-		'light-red': {
+		'color11_R3C3': {
 			solid: '#ff8787',
 			fill: '#ff8787',
 			linedFill: '#ff6666',
@@ -716,7 +715,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#db005b',
 			highlightP3: 'color(display-p3 0.7849 0.0585 0.3589)',
 		},
-		'light-violet': {
+		'color3_R1C3': {
 			solid: '#e599f7',
 			fill: '#e599f7',
 			linedFill: '#dc71f4',
@@ -732,7 +731,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#c400c7',
 			highlightP3: 'color(display-p3 0.7024 0.0403 0.753)',
 		},
-		orange: {
+		'color8_R2C4': {
 			solid: '#f76707',
 			fill: '#f76707',
 			linedFill: '#f54900',
@@ -748,7 +747,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#d07a00',
 			highlightP3: 'color(display-p3 0.7699 0.4937 0.0085)',
 		},
-		red: {
+		'color12_R3C4': {
 			solid: '#e03131',
 			fill: '#e03131',
 			linedFill: '#c31d1d',
@@ -764,7 +763,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#de002c',
 			highlightP3: 'color(display-p3 0.7978 0.0509 0.2035)',
 		},
-		violet: {
+		'color4_R1C4': {
 			solid: '#ae3ec9',
 			fill: '#ae3ec9',
 			linedFill: '#8f2fa7',
@@ -780,7 +779,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#9e00ee',
 			highlightP3: 'color(display-p3 0.5651 0.0079 0.8986)',
 		},
-		yellow: {
+		'color7_R2C3': {
 			solid: '#ffc034',
 			fill: '#ffc034',
 			linedFill: '#ffae00',
@@ -796,7 +795,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#d2b700',
 			highlightP3: 'color(display-p3 0.8078 0.7225 0.0312)',
 		},
-		white: {
+		'color13_R4C1': {
 			solid: '#f3f3f3',
 			fill: '#f3f3f3',
 			linedFill: '#f3f3f3',
@@ -813,7 +812,7 @@ export const DefaultColorThemePalette: {
 			highlightP3: 'color(display-p3 1 1 1)',
 		},
 		// Extended colors - dark mode (placeholders - will be customizable)
-		'dark-blue': {
+		'color14_R4C2': {
 			solid: '#3b82f6',
 			fill: '#3b82f6',
 			linedFill: '#2563eb',
@@ -829,7 +828,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#0066ff',
 			highlightP3: 'color(display-p3 0.3 0.5 0.95)',
 		},
-		teal: {
+		'color15_R4C3': {
 			solid: '#2dd4bf',
 			fill: '#2dd4bf',
 			linedFill: '#14b8a6',
@@ -845,7 +844,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#00d9d9',
 			highlightP3: 'color(display-p3 0.2 0.85 0.85)',
 		},
-		cyan: {
+		'color16_R4C4': {
 			solid: '#22d3ee',
 			fill: '#22d3ee',
 			linedFill: '#06b6d4',
@@ -861,7 +860,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#00e5ff',
 			highlightP3: 'color(display-p3 0.15 0.88 0.98)',
 		},
-		lime: {
+		'color17_R5C1': {
 			solid: '#a3e635',
 			fill: '#a3e635',
 			linedFill: '#84cc16',
@@ -877,7 +876,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#99ff00',
 			highlightP3: 'color(display-p3 0.65 0.97 0.25)',
 		},
-		'dark-green': {
+		'color18_R5C2': {
 			solid: '#10b981',
 			fill: '#10b981',
 			linedFill: '#059669',
@@ -893,7 +892,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#00a86b',
 			highlightP3: 'color(display-p3 0.2 0.7 0.47)',
 		},
-		brown: {
+		'color19_R5C3': {
 			solid: '#d97706',
 			fill: '#d97706',
 			linedFill: '#b45309',
@@ -909,7 +908,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#a0522d',
 			highlightP3: 'color(display-p3 0.6 0.37 0.23)',
 		},
-		tan: {
+		'color20_R5C4': {
 			solid: '#e8d5b7',
 			fill: '#e8d5b7',
 			linedFill: '#d4a574',
@@ -925,7 +924,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#d2b48c',
 			highlightP3: 'color(display-p3 0.82 0.72 0.6)',
 		},
-		pink: {
+		'color21_R6C1': {
 			solid: '#f472b6',
 			fill: '#f472b6',
 			linedFill: '#ec4899',
@@ -941,7 +940,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#ff69b4',
 			highlightP3: 'color(display-p3 0.97 0.47 0.75)',
 		},
-		magenta: {
+		'color22_R6C2': {
 			solid: '#e879f9',
 			fill: '#e879f9',
 			linedFill: '#d946ef',
@@ -957,7 +956,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#ff00ff',
 			highlightP3: 'color(display-p3 0.92 0.35 0.97)',
 		},
-		purple: {
+		'color23_R6C3': {
 			solid: '#a855f7',
 			fill: '#a855f7',
 			linedFill: '#9333ea',
@@ -973,7 +972,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#9400d3',
 			highlightP3: 'color(display-p3 0.62 0.05 0.86)',
 		},
-		indigo: {
+		'color24_R6C4': {
 			solid: '#6366f1',
 			fill: '#6366f1',
 			linedFill: '#4f46e5',
@@ -989,7 +988,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#4b0082',
 			highlightP3: 'color(display-p3 0.34 0.05 0.56)',
 		},
-		'dark-red': {
+		'color25_R7C1': {
 			solid: '#ef4444',
 			fill: '#ef4444',
 			linedFill: '#dc2626',
@@ -1005,7 +1004,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#8b0000',
 			highlightP3: 'color(display-p3 0.59 0.05 0.05)',
 		},
-		maroon: {
+		'color26_R7C2': {
 			solid: '#e11d48',
 			fill: '#e11d48',
 			linedFill: '#be123c',
@@ -1021,7 +1020,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#800000',
 			highlightP3: 'color(display-p3 0.55 0.05 0.05)',
 		},
-		gold: {
+		'color27_R7C3': {
 			solid: '#fbbf24',
 			fill: '#fbbf24',
 			linedFill: '#f59e0b',
@@ -1037,7 +1036,7 @@ export const DefaultColorThemePalette: {
 			highlightSrgb: '#ffd700',
 			highlightP3: 'color(display-p3 0.97 0.87 0.05)',
 		},
-		silver: {
+		'color28_R7C4': {
 			solid: '#cbd5e1',
 			fill: '#cbd5e1',
 			linedFill: '#94a3b8',
@@ -1102,7 +1101,7 @@ export function getDefaultColorTheme(opts: { isDarkMode: boolean }): TLDefaultCo
  * const shape = {
  *   // ... other properties
  *   props: {
- *     color: 'red' as const,
+ *     color: 'color12_R3C4' as const,
  *     // ... other props
  *   }
  * }
@@ -1111,7 +1110,7 @@ export function getDefaultColorTheme(opts: { isDarkMode: boolean }): TLDefaultCo
  * @public
  */
 export const DefaultColorStyle = StyleProp.defineEnum('tldraw:color', {
-	defaultValue: 'black',
+	defaultValue: 'color1_R1C1',
 	values: defaultColorNames,
 })
 
@@ -1134,8 +1133,8 @@ export const DefaultColorStyle = StyleProp.defineEnum('tldraw:color', {
  * const shape = {
  *   // ... other properties
  *   props: {
- *     color: 'blue' as const,
- *     labelColor: 'white' as const,
+ *     color: 'color5_R2C1' as const,
+ *     labelColor: 'color13_R4C1' as const,
  *     // ... other props
  *   }
  * }
@@ -1144,7 +1143,7 @@ export const DefaultColorStyle = StyleProp.defineEnum('tldraw:color', {
  * @public
  */
 export const DefaultLabelColorStyle = StyleProp.defineEnum('tldraw:labelColor', {
-	defaultValue: 'black',
+	defaultValue: 'color1_R1C1',
 	values: defaultColorNames,
 })
 
@@ -1157,12 +1156,12 @@ export const DefaultLabelColorStyle = StyleProp.defineEnum('tldraw:labelColor', 
  * import { TLDefaultColorStyle } from '@tldraw/tlschema'
  *
  * // Valid color values
- * const redColor: TLDefaultColorStyle = 'red'
- * const blueColor: TLDefaultColorStyle = 'blue'
+ * const redColor: TLDefaultColorStyle = 'color12_R3C4'
+ * const blueColor: TLDefaultColorStyle = 'color5_R2C1'
  *
  * // Type guard usage
  * function isValidColor(color: string): color is TLDefaultColorStyle {
- *   return ['black', 'red', 'blue'].includes(color as TLDefaultColorStyle)
+ *   return ['color1_R1C1', 'color12_R3C4', 'color5_R2C1'].includes(color as TLDefaultColorStyle)
  * }
  * ```
  *
@@ -1183,7 +1182,7 @@ const defaultColorNamesSet = new Set(defaultColorNames)
  * ```ts
  * import { isDefaultThemeColor, TLDefaultColorStyle } from '@tldraw/tlschema'
  *
- * const color: TLDefaultColorStyle = 'red'
+ * const color: TLDefaultColorStyle = 'color12_R3C4'
  *
  * if (isDefaultThemeColor(color)) {
  *   // color is guaranteed to be a default theme color
@@ -1218,10 +1217,10 @@ export function isDefaultThemeColor(
  * const theme = getDefaultColorTheme({ isDarkMode: false })
  *
  * // Get the solid variant of red
- * const redSolid = getColorValue(theme, 'red', 'solid') // '#e03131'
+ * const redSolid = getColorValue(theme, 'color12_R3C4', 'solid') // '#e03131'
  *
  * // Get the fill variant of blue
- * const blueFill = getColorValue(theme, 'blue', 'fill') // '#4465e9'
+ * const blueFill = getColorValue(theme, 'color5_R2C1', 'fill') // '#4465e9'
  *
  * // Custom color passes through unchanged
  * const customColor = getColorValue(theme, '#ff0000', 'solid') // '#ff0000'

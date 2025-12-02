@@ -78,7 +78,7 @@ import { TLClickEventInfo } from '@tldraw/editor';
 import { TLContent } from '@tldraw/editor';
 import { TLCropInfo } from '@tldraw/editor';
 import { TLDefaultColorStyle } from '@tldraw/editor';
-import { TLDefaultColorThemeColor } from '@tldraw/editor';
+import { TLDefaultColorTheme } from '@tldraw/editor';
 import { TLDefaultDashStyle } from '@tldraw/editor';
 import { TLDefaultFillStyle } from '@tldraw/editor';
 import { TLDefaultFontStyle } from '@tldraw/editor';
@@ -4843,29 +4843,29 @@ export interface TLV1Bounds {
 // @internal (undocumented)
 export enum TLV1ColorStyle {
     // (undocumented)
-    Black = "black",
+    Black = "color1_R1C1",
     // (undocumented)
-    Blue = "blue",
+    Blue = "color5_R2C1",
     // (undocumented)
-    Cyan = "cyan",
+    Cyan = "color16_R4C4",
     // (undocumented)
     Gray = "gray",
     // (undocumented)
-    Green = "green",
+    Green = "color9_R3C1",
     // (undocumented)
-    Indigo = "indigo",
+    Indigo = "color24_R6C4",
     // (undocumented)
     LightGray = "lightGray",
     // (undocumented)
-    Orange = "orange",
+    Orange = "color8_R2C4",
     // (undocumented)
-    Red = "red",
+    Red = "color12_R3C4",
     // (undocumented)
-    Violet = "violet",
+    Violet = "color4_R1C4",
     // (undocumented)
-    White = "white",
+    White = "color13_R4C1",
     // (undocumented)
-    Yellow = "yellow"
+    Yellow = "color7_R2C3"
 }
 
 // @internal (undocumented)
@@ -5271,41 +5271,8 @@ export function useCopyAs(): (ids: TLShapeId[], format?: TLCopyType) => void;
 // @public (undocumented)
 export function useCurrentTranslation(): TLUiTranslation;
 
-// @public (undocumented)
-export function useDefaultColorTheme(): {
-    "dark-blue": TLDefaultColorThemeColor;
-    "dark-green": TLDefaultColorThemeColor;
-    "dark-red": TLDefaultColorThemeColor;
-    "light-blue": TLDefaultColorThemeColor;
-    "light-green": TLDefaultColorThemeColor;
-    "light-red": TLDefaultColorThemeColor;
-    "light-violet": TLDefaultColorThemeColor;
-    background: string;
-    black: TLDefaultColorThemeColor;
-    blue: TLDefaultColorThemeColor;
-    brown: TLDefaultColorThemeColor;
-    cyan: TLDefaultColorThemeColor;
-    gold: TLDefaultColorThemeColor;
-    green: TLDefaultColorThemeColor;
-    grey: TLDefaultColorThemeColor;
-    id: "dark" | "light";
-    indigo: TLDefaultColorThemeColor;
-    lime: TLDefaultColorThemeColor;
-    magenta: TLDefaultColorThemeColor;
-    maroon: TLDefaultColorThemeColor;
-    orange: TLDefaultColorThemeColor;
-    pink: TLDefaultColorThemeColor;
-    purple: TLDefaultColorThemeColor;
-    red: TLDefaultColorThemeColor;
-    silver: TLDefaultColorThemeColor;
-    solid: string;
-    tan: TLDefaultColorThemeColor;
-    teal: TLDefaultColorThemeColor;
-    text: string;
-    violet: TLDefaultColorThemeColor;
-    white: TLDefaultColorThemeColor;
-    yellow: TLDefaultColorThemeColor;
-};
+// @public
+export function useDefaultColorTheme(): TLDefaultColorTheme;
 
 // @public (undocumented)
 export function useDefaultHelpers(): {
