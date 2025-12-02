@@ -49,7 +49,32 @@
 - ✅ Tooltips simplified
 - ✅ File-based persistence working
 - ✅ Servers running: API (port 3001), Vite (port 5424)
+- ✅ Save/Reset palette buttons in hamburger menu
 - ⚠️ **KNOWN ISSUE:** Colors change retroactively when palette changes (deferred for later fix)
+
+---
+
+## Phase 6: Hamburger menu save/reset buttons (COMPLETED ✅)
+
+1. **Added two palette management actions:**
+   - `save-palette-as-default` - Saves current palette as new default
+   - `reset-palette-to-default` - Resets palette to defaults
+
+2. **Created ColorPaletteMenu component:**
+   - New submenu under Preferences in hamburger menu
+   - Two buttons: "Save palette as default" and "Reset palette to default"
+   - Integrated alongside ColorScheme and Accessibility menus
+
+3. **Wired to existing backend APIs:**
+   - Calls `POST /api/colors/save-as-default`
+   - Calls `POST /api/colors/reset`
+   - Page reloads after operation to apply changes
+
+### Files modified:
+
+- Actions: `packages/tldraw/src/lib/ui/context/actions.tsx`
+- Menu: `packages/tldraw/src/lib/ui/components/MainMenu/DefaultMainMenuContent.tsx`
+- Component: `packages/tldraw/src/lib/ui/components/ColorPaletteMenu.tsx` (new file)
 
 ---
 
