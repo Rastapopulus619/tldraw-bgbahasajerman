@@ -16,7 +16,7 @@ import { TLBaseShape } from './TLBaseShape'
  * @example
  * ```ts
  * const textProps: TLTextShapeProps = {
- *   color: 'black',
+ *   color: 'color1_R1C1',
  *   size: 'm',
  *   font: 'draw',
  *   textAlign: 'start',
@@ -58,7 +58,7 @@ export interface TLTextShapeProps {
  *   isLocked: false,
  *   opacity: 1,
  *   props: {
- *     color: 'black',
+ *     color: 'color1_R1C1',
  *     size: 'm',
  *     font: 'draw',
  *     textAlign: 'start',

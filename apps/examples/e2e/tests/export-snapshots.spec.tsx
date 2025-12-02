@@ -79,11 +79,11 @@ const snapshots: Snapshots = {
 		DefaultFillStyle.values.map((fill) => [
 			`fill=${fill}`,
 			{
-				geo: <TL.geo dash="solid" fill={fill} color="green" w={100} h={100} />,
+				geo: <TL.geo dash="solid" fill={fill} color="color9_R3C1" w={100} h={100} />,
 				arrow: (
 					<TL.arrow
 						fill={fill}
-						color="light-green"
+						color="color10_R3C2"
 						arrowheadStart="square"
 						arrowheadEnd="dot"
 						start={{ x: 0, y: 0 }}
@@ -94,7 +94,7 @@ const snapshots: Snapshots = {
 				draw: (
 					<TL.draw
 						fill={fill}
-						color="light-violet"
+						color="color3_R1C3"
 						segments={[
 							{ type: 'straight', points: [{ x: 0, y: 0 }] },
 							{
@@ -141,7 +141,7 @@ const snapshots: Snapshots = {
 				arrow: (
 					<TL.arrow
 						font={font}
-						color="blue"
+						color="color5_R2C1"
 						fill="solid"
 						arrowheadStart="square"
 						arrowheadEnd="arrow"
@@ -151,8 +151,8 @@ const snapshots: Snapshots = {
 						richText={toRichText('test')}
 					/>
 				),
-				note: <TL.note font={font} color="violet" richText={toRichText('test')} />,
-				text: <TL.text font={font} color="red" richText={toRichText('test')} />,
+				note: <TL.note font={font} color="color4_R1C4" richText={toRichText('test')} />,
+				text: <TL.text font={font} color="color12_R3C4" richText={toRichText('test')} />,
 			},
 		])
 	),
@@ -186,7 +186,7 @@ const snapshots: Snapshots = {
 			),
 			nested: (
 				<TL.frame w={200} h={100} name="tilted" rotation={degreesToRadians(10)}>
-					<TL.geo dash="solid" x={-10} y={-10} w={220} h={120} fill="solid" color="light-blue" />
+					<TL.geo dash="solid" x={-10} y={-10} w={220} h={120} fill="solid" color="color6_R2C2" />
 					{frameContent}
 					<TL.frame
 						x={140}
@@ -196,7 +196,7 @@ const snapshots: Snapshots = {
 						name="ttiilltteedd"
 						rotation={degreesToRadians(10)}
 					>
-						<TL.geo dash="solid" x={-10} y={-10} w={220} h={120} fill="solid" color="light-green" />
+						<TL.geo dash="solid" x={-10} y={-10} w={220} h={120} fill="solid" color="color10_R3C2" />
 						{frameContent}
 					</TL.frame>
 				</TL.frame>

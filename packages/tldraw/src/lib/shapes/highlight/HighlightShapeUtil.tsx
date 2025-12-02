@@ -65,7 +65,7 @@ export class HighlightShapeUtil extends ShapeUtil<TLHighlightShape> {
 	override getDefaultProps(): TLHighlightShape['props'] {
 		return {
 			segments: [],
-			color: 'black',
+			color: 'color1_R1C1',
 			size: 'm',
 			isComplete: false,
 			isPen: false,

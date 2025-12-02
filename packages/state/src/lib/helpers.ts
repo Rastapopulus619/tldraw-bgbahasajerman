@@ -149,13 +149,13 @@ export function equals(a: any, b: any): boolean {
  * @throws Always at runtime because the identifier is undefined
  * @example
  * ```ts
- * type Color = 'red' | 'blue'
+ * type Color = 'color12_R3C4' | 'color5_R2C1'
  *
  * function handleColor(color: Color) {
  *   switch (color) {
- *     case 'red':
+ *     case 'color12_R3C4':
  *       return 'Stop'
- *     case 'blue':
+ *     case 'color5_R2C1':
  *       return 'Go'
  *     default:
  *       return assertNever(color) // TypeScript error if not all cases handled

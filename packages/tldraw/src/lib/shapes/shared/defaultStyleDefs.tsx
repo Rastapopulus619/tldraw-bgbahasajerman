@@ -37,8 +37,8 @@ function HashPatternForExport() {
 	return (
 		<>
 			<mask id={maskId}>
-				<rect x="0" y="0" width="8" height="8" fill="white" />
-				<g strokeLinecap="round" stroke="black">
+				<rect x="0" y="0" width="8" height="8" fill="color13_R4C1" />
+				<g strokeLinecap="round" stroke="color1_R1C1">
 					<line x1={t * 1} y1={t * 3} x2={t * 3} y2={t * 1} />
 					<line x1={t * 5} y1={t * 7} x2={t * 7} y2={t * 5} />
 					<line x1={t * 9} y1={t * 11} x2={t * 11} y2={t * 9} />

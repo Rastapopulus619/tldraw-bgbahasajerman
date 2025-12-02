@@ -49,7 +49,7 @@ export const TL_SCRIBBLE_STATES = new Set(['starting', 'paused', 'active', 'stop
  *     { x: 20, y: 10, z: 0.6 }
  *   ],
  *   size: 4,
- *   color: 'black',
+ *   color: 'color1_R1C1',
  *   opacity: 0.8,
  *   state: 'active',
  *   delay: 0,
@@ -111,7 +111,7 @@ export interface TLScribble {
  *     id: 'scribble-1',
  *     points: [{ x: 0, y: 0, z: 1 }, { x: 10, y: 10, z: 1 }],
  *     size: 3,
- *     color: 'black',
+ *     color: 'color1_R1C1',
  *     opacity: 0.8,
  *     state: 'active',
  *     delay: 0,

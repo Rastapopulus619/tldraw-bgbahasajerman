@@ -82,7 +82,7 @@ const oldArrow: TLBaseShape<'arrow', Omit<TLArrowShapeProps, 'labelColor'>> = {
 		dash: 'draw',
 		size: 'm',
 		fill: 'none',
-		color: 'black',
+		color: 'color1_R1C1',
 		bend: 0,
 		start: { x: 0, y: 0 },
 		end: { x: 0, y: 0 },
@@ -176,7 +176,7 @@ describe('TLSyncRoom', () => {
 
 		const arrow = room.getSnapshot().documents.find((r) => r.state.id === oldArrow.id)
 			?.state as TLArrowShape
-		expect(arrow.props.labelColor).toBe('black')
+		expect(arrow.props.labelColor).toBe('color1_R1C1')
 	})
 
 	it('filters out instance state records', () => {

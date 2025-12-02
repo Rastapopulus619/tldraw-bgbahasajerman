@@ -48,7 +48,7 @@ describe('FontManager', () => {
 		isLocked: false,
 		meta: {},
 		props: {
-			color: 'black',
+			color: 'color1_R1C1',
 			size: 'xl',
 			font: 'serif',
 			textAlign: 'middle',

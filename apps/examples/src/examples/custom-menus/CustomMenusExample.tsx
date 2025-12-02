@@ -197,7 +197,7 @@ function CustomStylePanel(props: TLUiStylePanelProps) {
 				<TldrawUiButton
 					type="menu"
 					onClick={() => {
-						editor.setStyleForSelectedShapes(DefaultColorStyle, 'red')
+						editor.setStyleForSelectedShapes(DefaultColorStyle, 'color12_R3C4')
 					}}
 				>
 					<TldrawUiButtonLabel>Red</TldrawUiButtonLabel>
@@ -207,7 +207,7 @@ function CustomStylePanel(props: TLUiStylePanelProps) {
 				<TldrawUiButton
 					type="menu"
 					onClick={() => {
-						editor.setStyleForSelectedShapes(DefaultColorStyle, 'green')
+						editor.setStyleForSelectedShapes(DefaultColorStyle, 'color9_R3C1')
 					}}
 				>
 					<TldrawUiButtonLabel>Green</TldrawUiButtonLabel>

@@ -12,7 +12,7 @@ export const frameContent = (
 			y={50}
 			rotation={degreesToRadians(35)}
 			fill="solid"
-			color="orange"
+			color="color8_R2C4"
 		/>
 		<TL.arrow start={{ x: 50, y: 50 }} end={{ x: 50, y: 20 }} />
 	</>
@@ -137,7 +137,7 @@ export const convexDrawShape = (
 		x={0.62}
 		y={0}
 		ref="convex"
-		color="black"
+		color="color1_R1C1"
 		fill="none"
 		isClosed={false}
 		isComplete={true}
@@ -234,7 +234,7 @@ export const heyDrawShape = (
 		x={0}
 		y={39.65841178508872}
 		ref="hey"
-		color="black"
+		color="color1_R1C1"
 		fill="none"
 		isClosed={false}
 		isComplete={true}

@@ -38,14 +38,14 @@ export function ElbowArrowDebug({ arrow }: { arrow: TLArrowShape }) {
 				<DebugLine
 					a={{ x: info.midX, y: fullBox.minY }}
 					b={{ x: info.midX, y: fullBox.maxY }}
-					stroke="red"
+					stroke="color12_R3C4"
 				/>
 			)}
 			{info.midY !== null && (
 				<DebugLine
 					a={{ x: fullBox.minX, y: info.midY }}
 					b={{ x: fullBox.maxX, y: info.midY }}
-					stroke="blue"
+					stroke="color5_R2C1"
 				/>
 			)}
 
@@ -53,7 +53,7 @@ export function ElbowArrowDebug({ arrow }: { arrow: TLArrowShape }) {
 				<DebugLine
 					a={{ x: info.midXRange.lo, y: midPoint.point.y }}
 					b={{ x: info.midXRange.hi, y: midPoint.point.y }}
-					stroke="red"
+					stroke="color12_R3C4"
 					strokeDasharray={'0 2'}
 				/>
 			)}
@@ -62,16 +62,16 @@ export function ElbowArrowDebug({ arrow }: { arrow: TLArrowShape }) {
 				<DebugLine
 					a={{ x: midPoint.point.x, y: info.midYRange.lo }}
 					b={{ x: midPoint.point.x, y: info.midYRange.hi }}
-					stroke="blue"
+					stroke="color5_R2C1"
 					strokeDasharray={'0 2'}
 				/>
 			)}
 
-			<DebugBox box={info.A.original} stroke="orange" />
-			<DebugBox box={info.A.expanded} stroke="orange" strokeWidth={0.5} />
+			<DebugBox box={info.A.original} stroke="color8_R2C4" />
+			<DebugBox box={info.A.expanded} stroke="color8_R2C4" strokeWidth={0.5} />
 			<DebugBox
 				box={info.A.original.clone().expandBy(info.options.minElbowLegLength)}
-				stroke="orange"
+				stroke="color8_R2C4"
 				strokeWidth={0.5}
 			/>
 			<DebugBox box={info.B.original} stroke="lightskyblue" />
@@ -82,13 +82,13 @@ export function ElbowArrowDebug({ arrow }: { arrow: TLArrowShape }) {
 				strokeWidth={0.5}
 			/>
 
-			<DebugEdge edge={info.A.edges.top} axis="x" stroke="orange" />
+			<DebugEdge edge={info.A.edges.top} axis="x" stroke="color8_R2C4" />
 			<DebugEdge edge={info.B.edges.top} axis="x" stroke="lightskyblue" />
-			<DebugEdge edge={info.A.edges.right} axis="y" stroke="orange" />
+			<DebugEdge edge={info.A.edges.right} axis="y" stroke="color8_R2C4" />
 			<DebugEdge edge={info.B.edges.right} axis="y" stroke="lightskyblue" />
-			<DebugEdge edge={info.A.edges.bottom} axis="x" stroke="orange" />
+			<DebugEdge edge={info.A.edges.bottom} axis="x" stroke="color8_R2C4" />
 			<DebugEdge edge={info.B.edges.bottom} axis="x" stroke="lightskyblue" />
-			<DebugEdge edge={info.A.edges.left} axis="y" stroke="orange" />
+			<DebugEdge edge={info.A.edges.left} axis="y" stroke="color8_R2C4" />
 			<DebugEdge edge={info.B.edges.left} axis="y" stroke="lightskyblue" />
 
 			{info.route && <DebugRoute route={info.route.points} strokeWidth={10} />}
@@ -97,7 +97,7 @@ export function ElbowArrowDebug({ arrow }: { arrow: TLArrowShape }) {
 				x={fullBox.minX + 5}
 				y={fullBox.minY - 3}
 				fontSize={10}
-				fill="black"
+				fill="color1_R1C1"
 				stroke="var(--tl-color-background)"
 				strokeWidth={2}
 				paintOrder="stroke"
@@ -108,7 +108,7 @@ export function ElbowArrowDebug({ arrow }: { arrow: TLArrowShape }) {
 				x={info.A.expanded.x}
 				y={info.A.expanded.y}
 				fontSize={10}
-				fill="black"
+				fill="color1_R1C1"
 				stroke="var(--tl-color-background)"
 				strokeWidth={2}
 				paintOrder="stroke"
@@ -120,7 +120,7 @@ export function ElbowArrowDebug({ arrow }: { arrow: TLArrowShape }) {
 				x={info.B.expanded.x}
 				y={info.B.expanded.y}
 				fontSize={10}
-				fill="black"
+				fill="color1_R1C1"
 				stroke="var(--tl-color-background)"
 				strokeWidth={2}
 				paintOrder="stroke"
@@ -138,7 +138,7 @@ function DebugLine({ a, b, ...props }: { a: VecLike; b: VecLike } & SVGProps<SVG
 			fill="none"
 			strokeWidth={1}
 			strokeDasharray="4,4"
-			stroke="green"
+			stroke="color9_R3C1"
 			x1={a.x}
 			y1={a.y}
 			x2={b.x}

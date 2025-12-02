@@ -10,7 +10,7 @@ describe('TLFrameShape', () => {
 				w: 400,
 				h: 300,
 				name: 'Test Frame',
-				color: 'blue' as const,
+				color: 'color5_R2C1' as const,
 			}
 
 			const validator = T.object(frameShapeProps)
@@ -33,7 +33,7 @@ describe('TLFrameShape', () => {
 	describe('AddColorProp migration', () => {
 		const { up, down } = getTestMigration(frameShapeVersions.AddColorProp)
 
-		it('should add color property with default value "black"', () => {
+		it('should add color property with default value "color1_R1C1"', () => {
 			const oldRecord = {
 				id: 'shape:frame1',
 				props: {
@@ -44,7 +44,7 @@ describe('TLFrameShape', () => {
 			}
 
 			const result = up(oldRecord)
-			expect(result.props.color).toBe('black')
+			expect(result.props.color).toBe('color1_R1C1')
 			expect(result.props.w).toBe(400)
 			expect(result.props.h).toBe(300)
 			expect(result.props.name).toBe('Test Frame')
@@ -57,7 +57,7 @@ describe('TLFrameShape', () => {
 					w: 400,
 					h: 300,
 					name: 'Test Frame',
-					color: 'blue',
+					color: 'color5_R2C1',
 				},
 			}
 

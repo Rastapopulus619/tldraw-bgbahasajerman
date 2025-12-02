@@ -65,7 +65,7 @@ function SaveButton() {
 				padding: '8px 16px',
 				marginTop: '6px',
 				backgroundColor: hasUnsavedChanges ? '#2d7d32' : '#ccc',
-				color: hasUnsavedChanges ? 'white' : '#666',
+				color: hasUnsavedChanges ? 'color13_R4C1' : '#666',
 				border: 'none',
 				borderRadius: '4px',
 				cursor: hasUnsavedChanges ? 'pointer' : 'not-allowed',

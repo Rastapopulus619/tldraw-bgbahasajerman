@@ -185,7 +185,7 @@ const CameraOptionsControlPanel = track(() => {
 				top: 50,
 				left: 0,
 				padding: 4,
-				background: 'white',
+				background: 'color13_R4C1',
 				zIndex: 100,
 			}}
 		>

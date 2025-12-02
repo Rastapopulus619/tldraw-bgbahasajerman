@@ -8641,8 +8641,8 @@ export class Editor extends EventEmitter<TLEventMap> {
 	 *
 	 * @example
 	 * ```ts
-	 * editor.setStyleForNextShapes(DefaultColorStyle, 'red')
-	 * editor.setStyleForNextShapes(DefaultColorStyle, 'red', { ephemeral: true })
+	 * editor.setStyleForNextShapes(DefaultColorStyle, 'color12_R3C4')
+	 * editor.setStyleForNextShapes(DefaultColorStyle, 'color12_R3C4', { ephemeral: true })
 	 * ```
 	 *
 	 * @param style - The style to set.
@@ -8671,7 +8671,7 @@ export class Editor extends EventEmitter<TLEventMap> {
 	 *
 	 * @example
 	 * ```ts
-	 * editor.setStyleForSelectedShapes(DefaultColorStyle, 'red')
+	 * editor.setStyleForSelectedShapes(DefaultColorStyle, 'color12_R3C4')
 	 * ```
 	 *
 	 * @param style - The style to set.

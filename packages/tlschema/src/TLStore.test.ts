@@ -82,7 +82,7 @@ describe('TLStore utility functions', () => {
 				x: 100,
 				y: 200,
 				props: {
-					color: 'red',
+					color: 'color12_R3C4',
 					size: 'medium',
 				},
 			}

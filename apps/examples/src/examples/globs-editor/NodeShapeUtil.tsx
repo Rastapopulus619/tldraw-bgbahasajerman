@@ -127,7 +127,7 @@ export class NodeShapeUtil extends ShapeUtil<NodeShape> {
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const theme = useDefaultColorTheme()
-		const blue = getColorValue(theme, 'blue', 'solid')
+		const blue = getColorValue(theme, 'color5_R2C1', 'solid')
 
 		return <circle r={shape.props.radius} strokeWidth={1 / zoom} stroke={blue} fill="none" />
 	}
@@ -189,12 +189,12 @@ function NodeComponent({
 			<g opacity={shape.props.opacity}>
 				<circle
 					r={radius}
-					stroke={'black'}
+					stroke={'color1_R1C1'}
 					strokeDasharray={isSingleNode ? 'none' : dashArray}
 					strokeWidth={1 / zoom}
-					fill={fillNode ? 'black' : 'white'}
+					fill={fillNode ? 'color1_R1C1' : 'color13_R4C1'}
 				/>
-				<circle x={0} y={0} r={1 / zoom} stroke="black" strokeWidth={1 / zoom} fill="black" />
+				<circle x={0} y={0} r={1 / zoom} stroke="color1_R1C1" strokeWidth={1 / zoom} fill="color1_R1C1" />
 			</g>
 		</SVGContainer>
 	)

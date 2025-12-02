@@ -49,7 +49,7 @@ describe('instancePresenceValidator', () => {
 					id: 'scribble:1',
 					points: [{ x: 0, y: 0, z: 0.5 }],
 					size: 4,
-					color: 'black',
+					color: 'color1_R1C1',
 					opacity: 1,
 					state: 'starting',
 					delay: 0,
@@ -98,7 +98,7 @@ describe('instancePresenceMigrations', () => {
 		)!
 
 		const oldRecordWithScribble: any = {
-			scribble: { points: [], size: 4, color: 'black' },
+			scribble: { points: [], size: 4, color: 'color1_R1C1' },
 		}
 		migration.up(oldRecordWithScribble)
 		expect(oldRecordWithScribble.scribble.delay).toBe(0)

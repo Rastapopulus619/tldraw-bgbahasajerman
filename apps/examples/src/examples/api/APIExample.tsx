@@ -31,7 +31,7 @@ export default function APIExample() {
 					w: 120,
 					h: 100,
 					dash: 'draw',
-					color: 'blue',
+					color: 'color5_R2C1',
 					size: 'm',
 				},
 			},
@@ -79,8 +79,8 @@ const InsideOfEditorContext = () => {
 		const interval = setInterval(() => {
 			const selection = [...editor.getSelectedShapeIds()]
 			editor.selectAll()
-			editor.setStyleForSelectedShapes(DefaultColorStyle, i % 2 ? 'blue' : 'light-blue')
-			editor.setStyleForNextShapes(DefaultColorStyle, i % 2 ? 'blue' : 'light-blue')
+			editor.setStyleForSelectedShapes(DefaultColorStyle, i % 2 ? 'color5_R2C1' : 'color6_R2C2')
+			editor.setStyleForNextShapes(DefaultColorStyle, i % 2 ? 'color5_R2C1' : 'color6_R2C2')
 			editor.setSelectedShapes(selection)
 			i++
 		}, 1000)

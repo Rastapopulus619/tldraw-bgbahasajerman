@@ -74,7 +74,7 @@ export function addAgentToDummyProject(agentId: string) {
 				id: 'dummy',
 				title: 'Dummy Project',
 				description: 'A dummy project for testing',
-				color: 'violet',
+				color: 'color4_R1C4',
 				members: [{ id: agentId, role: 'orchestrator' }],
 				plan: 'idk!!',
 			}

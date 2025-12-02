@@ -18,7 +18,7 @@ function WelcomeScreen() {
 					padding: 32,
 					borderRadius: 20,
 					boxShadow: '2px 2px 12px rgba(0,0,0,.2)',
-					backgroundColor: 'white',
+					backgroundColor: 'color13_R4C1',
 					pointerEvents: 'all', // [2]
 					width: 400,
 				}}

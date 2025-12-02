@@ -131,7 +131,7 @@ export interface TLGeoShapeProps {
  *     geo: 'rectangle',
  *     w: 200,
  *     h: 100,
- *     color: 'black',
+ *     color: 'color1_R1C1',
  *     fill: 'solid',
  *     dash: 'solid',
  *     size: 'm',
@@ -139,7 +139,7 @@ export interface TLGeoShapeProps {
  *     align: 'middle',
  *     verticalAlign: 'middle',
  *     richText: toRichText('Hello World'),
- *     labelColor: 'black',
+ *     labelColor: 'color1_R1C1',
  *     url: '',
  *     growY: 0,
  *     scale: 1
@@ -221,7 +221,7 @@ export const geoShapeMigrations = createShapePropsMigrationSequence({
 		{
 			id: geoShapeVersions.AddLabelColor,
 			up: (props) => {
-				props.labelColor = 'black'
+				props.labelColor = 'color1_R1C1'
 			},
 			down: 'retired',
 		},

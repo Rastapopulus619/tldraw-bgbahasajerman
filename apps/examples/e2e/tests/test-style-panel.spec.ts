@@ -53,7 +53,7 @@ test.describe('Style selection behaviour', () => {
 		}
 		await page.mouse.click(150, 150)
 		const shapes1 = await page.evaluate(() => editor.getSelectedShapes())
-		expect(shapes1.every((s: any) => s.props.color === 'blue' && s.props.fill === 'none')).toBe(
+		expect(shapes1.every((s: any) => s.props.color === 'color5_R2C1' && s.props.fill === 'none')).toBe(
 			true
 		)
 		if (isMobile) {
@@ -67,7 +67,7 @@ test.describe('Style selection behaviour', () => {
 		await page.mouse.move(400, 400)
 		await page.mouse.up()
 		const shapes2 = await page.evaluate(() => editor.getSelectedShapes())
-		expect(shapes2.every((s: any) => s.props.color === 'blue' && s.props.fill === 'pattern')).toBe(
+		expect(shapes2.every((s: any) => s.props.color === 'color5_R2C1' && s.props.fill === 'pattern')).toBe(
 			true
 		)
 	})

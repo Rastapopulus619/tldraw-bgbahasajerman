@@ -86,7 +86,7 @@ class FuzzTestInstance extends RandomSource {
 				computed('', () => ({
 					id: this.id,
 					name: 'test',
-					color: 'red',
+					color: 'color12_R3C4',
 					locale: 'en',
 				}))
 			)(this.store),

@@ -86,16 +86,16 @@ describe('TLGeoShape', () => {
 	describe('geoShapeMigrations - AddLabelColor migration', () => {
 		const { up } = getTestMigration(geoShapeVersions.AddLabelColor)
 
-		it('should add labelColor property with default value "black"', () => {
+		it('should add labelColor property with default value "color1_R1C1"', () => {
 			const oldRecord = {
 				props: {
 					geo: 'triangle',
-					color: 'blue',
+					color: 'color5_R2C1',
 				},
 			}
 
 			const result = up(oldRecord)
-			expect(result.props.labelColor).toBe('black')
+			expect(result.props.labelColor).toBe('color1_R1C1')
 		})
 	})
 

@@ -3,7 +3,7 @@ import { FairyLegsSpritePart } from './parts/FairyLegsSpritePart'
 
 export function WritingSprite({
 	bodyColor = 'var(--tl-color-fairy-light)',
-	hatColor = 'white',
+	hatColor = 'color13_R4C1',
 }: {
 	bodyColor?: string
 	hatColor?: string

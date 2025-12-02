@@ -137,7 +137,7 @@ export const bindingIdValidator = idValidator<TLBindingId>('binding')
  *   toId: 'shape:def',
  *   props: {
  *     strength: 0.8,
- *     color: 'red',
+ *     color: 'color12_R3C4',
  *     enabled: true
  *   },
  *   meta: {

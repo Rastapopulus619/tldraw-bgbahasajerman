@@ -14,7 +14,7 @@ import { DrawShapeSegment, TLDrawShapeSegment } from './TLDrawShape'
  * @example
  * ```ts
  * const highlightProps: TLHighlightShapeProps = {
- *   color: 'yellow',
+ *   color: 'color7_R2C3',
  *   size: 'm',
  *   segments: [{ type: 'straight', points: [{ x: 0, y: 0, z: 0.5 }] }],
  *   isComplete: true,
@@ -56,7 +56,7 @@ export interface TLHighlightShapeProps {
  *   isLocked: false,
  *   opacity: 0.7,
  *   props: {
- *     color: 'yellow',
+ *     color: 'color7_R2C3',
  *     size: 'l',
  *     segments: [],
  *     isComplete: false,

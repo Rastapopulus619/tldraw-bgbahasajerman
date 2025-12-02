@@ -27,8 +27,8 @@ import { TLBaseShape } from './TLBaseShape'
  * @example
  * ```ts
  * const noteProps: TLNoteShapeProps = {
- *   color: 'yellow',
- *   labelColor: 'black',
+ *   color: 'color7_R2C3',
+ *   labelColor: 'color1_R1C1',
  *   size: 'm',
  *   font: 'draw',
  *   fontSizeAdjustment: 0,
@@ -85,8 +85,8 @@ export interface TLNoteShapeProps {
  *   isLocked: false,
  *   opacity: 1,
  *   props: {
- *     color: 'light-blue',
- *     labelColor: 'black',
+ *     color: 'color6_R2C2',
+ *     labelColor: 'color1_R1C1',
  *     size: 's',
  *     font: 'sans',
  *     fontSizeAdjustment: 2,
@@ -234,7 +234,7 @@ export const noteShapeMigrations = createShapePropsMigrationSequence({
 		{
 			id: Versions.AddLabelColor,
 			up: (props) => {
-				props.labelColor = 'black'
+				props.labelColor = 'color1_R1C1'
 			},
 			down: (props) => {
 				delete props.labelColor

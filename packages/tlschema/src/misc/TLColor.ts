@@ -21,8 +21,8 @@ import { SetValue } from '../util-types'
  */
 export const TL_CANVAS_UI_COLOR_TYPES = new Set([
 	'accent',
-	'white',
-	'black',
+	'color13_R4C1',
+	'color1_R1C1',
 	'selection-stroke',
 	'selection-fill',
 	'laser',
@@ -40,7 +40,7 @@ export const TL_CANVAS_UI_COLOR_TYPES = new Set([
  * ```ts
  * const selectionColor: TLCanvasUiColor = 'selection-stroke'
  * const accentColor: TLCanvasUiColor = 'accent'
- * const backgroundColor: TLCanvasUiColor = 'white'
+ * const backgroundColor: TLCanvasUiColor = 'color13_R4C1'
  * ```
  *
  * @public

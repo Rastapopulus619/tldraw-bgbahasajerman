@@ -15,7 +15,7 @@ export default function EasterEggStylesExample() {
 								geo: 'rectangle',
 								w: 250,
 								h: 250,
-								color: 'blue',
+								color: 'color5_R2C1',
 								fill: 'fill', // Easter egg: Fill style (keyboard shortcut: Option+F)
 								richText: toRichText('Fill\n(Option+F)'),
 							},
@@ -28,7 +28,7 @@ export default function EasterEggStylesExample() {
 								geo: 'rectangle',
 								w: 250,
 								h: 250,
-								color: 'blue',
+								color: 'color5_R2C1',
 								fill: 'lined-fill', // Easter egg: Lined fill style (keyboard shortcut: Option+Shift+F)
 								richText: toRichText('Lined fill\n(Option+Shift+F)'),
 							},
@@ -41,7 +41,7 @@ export default function EasterEggStylesExample() {
 								geo: 'rectangle',
 								w: 250,
 								h: 250,
-								color: 'white', // Easter egg: White color (keyboard shortcut: Option+T)
+								color: 'color13_R4C1', // Easter egg: White color (keyboard shortcut: Option+T)
 								fill: 'fill',
 								richText: toRichText('White \n(Option+T)'),
 							},
@@ -54,9 +54,9 @@ export default function EasterEggStylesExample() {
 								geo: 'rectangle',
 								w: 250,
 								h: 250,
-								color: 'blue',
+								color: 'color5_R2C1',
 								richText: toRichText('Label color'),
-								labelColor: 'red', // Separate label color
+								labelColor: 'color12_R3C4', // Separate label color
 							},
 						},
 						{
@@ -67,7 +67,7 @@ export default function EasterEggStylesExample() {
 								geo: 'rectangle',
 								w: 250,
 								h: 250,
-								color: 'blue',
+								color: 'color5_R2C1',
 								scale: 2.5,
 								richText: toRichText('Scale'), // Scale (available via the Dynamic size preference)
 							},

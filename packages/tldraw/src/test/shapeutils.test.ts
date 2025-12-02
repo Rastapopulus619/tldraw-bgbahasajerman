@@ -423,7 +423,7 @@ describe('When interacting with a shape...', () => {
 			props: {
 				dash: 'draw',
 				size: 'm',
-				color: 'black',
+				color: 'color1_R1C1',
 				spline: 'line',
 				scale: 1,
 				points: {
@@ -506,7 +506,7 @@ describe('When interacting with a shape...', () => {
 			props: {
 				dash: 'draw',
 				size: 'm',
-				color: 'black',
+				color: 'color1_R1C1',
 				spline: 'line',
 				scale: 1,
 				points: {

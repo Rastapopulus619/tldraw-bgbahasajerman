@@ -14,8 +14,8 @@ import {
 // Mock style prop for testing
 const mockColorStyle = {
 	type: 'color',
-	defaultValue: 'black',
-	getDefaultValue: () => 'black',
+	defaultValue: 'color1_R1C1',
+	getDefaultValue: () => 'color1_R1C1',
 } as unknown as StyleProp<string>
 
 const mockStylesMap = new Map([['color', mockColorStyle]])
@@ -161,14 +161,14 @@ describe('instanceMigrations', () => {
 			typeName: 'instance',
 			propsForNextShape: {
 				opacity: '0.5',
-				color: 'red',
+				color: 'color12_R3C4',
 			},
 		}
 		const result = migration.up(oldRecord)
 
 		expect((result as any).opacityForNextShape).toBe(0.5)
 		expect((result as any).propsForNextShape.opacity).toBeUndefined()
-		expect((result as any).propsForNextShape.color).toBe('red')
+		expect((result as any).propsForNextShape.color).toBe('color12_R3C4')
 	})
 
 	it('should migrate RemoveDialog correctly', () => {

@@ -10,43 +10,43 @@ import { FocusColor } from '@tldraw/fairy-shared'
  */
 export function getProjectColor(color: FocusColor | string): string {
 	switch (color) {
-		case 'red': {
+		case 'color12_R3C4': {
 			return 'var(--tl-color-fairy-rose)'
 		}
-		case 'light-red': {
+		case 'color11_R3C3': {
 			return 'var(--tl-color-fairy-coral)'
 		}
-		case 'green': {
+		case 'color9_R3C1': {
 			return 'var(--tl-color-fairy-green)'
 		}
-		case 'light-green': {
+		case 'color10_R3C2': {
 			return 'var(--tl-color-fairy-teal)'
 		}
-		case 'blue': {
+		case 'color5_R2C1': {
 			return 'var(--tl-color-fairy-pink)'
 		}
-		case 'light-blue': {
+		case 'color6_R2C2': {
 			return 'var(--tl-color-fairy-purple)'
 		}
-		case 'orange': {
+		case 'color8_R2C4': {
 			return 'var(--tl-color-fairy-gold)'
 		}
-		case 'yellow': {
+		case 'color7_R2C3': {
 			return 'var(--tl-color-fairy-peach)'
 		}
-		case 'black': {
+		case 'color1_R1C1': {
 			return 'var(--tl-color-fairy-green)'
 		}
-		case 'violet': {
+		case 'color4_R1C4': {
 			return 'var(--tl-color-fairy-purple)'
 		}
-		case 'light-violet': {
+		case 'color3_R1C3': {
 			return 'var(--tl-color-fairy-purple)'
 		}
-		case 'grey': {
+		case 'color2_R1C2': {
 			return 'var(--tl-color-fairy-gold)'
 		}
-		case 'white': {
+		case 'color13_R4C1': {
 			return 'var(--tl-color-fairy-white)'
 		}
 	}

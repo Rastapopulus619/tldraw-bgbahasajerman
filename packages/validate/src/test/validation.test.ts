@@ -71,11 +71,11 @@ describe('validations', () => {
 				'shape',
 				T.object({
 					id: T.string,
-					color: T.setEnum(new Set(['red', 'green', 'blue'])),
+					color: T.setEnum(new Set(['color12_R3C4', 'color9_R3C1', 'color5_R2C1'])),
 				})
 			).validate({ id: 'abc13', color: 'rubbish' })
 		).toThrowErrorMatchingInlineSnapshot(
-			`[ValidationError: At shape.color: Expected "red" or "green" or "blue", got rubbish]`
+			`[ValidationError: At shape.color: Expected "color12_R3C4" or "color9_R3C1" or "color5_R2C1", got rubbish]`
 		)
 	})
 

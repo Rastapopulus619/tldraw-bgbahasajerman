@@ -8,7 +8,7 @@ function ZoomToBoundsButton({ box, color }: { box: Box; color: string }) {
 			style={{
 				padding: '8px 12px',
 				border: '1px solid #ccc',
-				color: 'white',
+				color: 'color13_R4C1',
 				cursor: 'pointer',
 				pointerEvents: 'all',
 				backgroundColor: color,
@@ -39,7 +39,7 @@ export default function ZoomToBoundsExample() {
 							props: {
 								w: zoomBox1.w,
 								h: zoomBox1.h,
-								color: 'violet',
+								color: 'color4_R1C4',
 							},
 						},
 						{
@@ -51,7 +51,7 @@ export default function ZoomToBoundsExample() {
 							props: {
 								w: zoomBox2.w,
 								h: zoomBox2.h,
-								color: 'blue',
+								color: 'color5_R2C1',
 							},
 						},
 					])
@@ -59,8 +59,8 @@ export default function ZoomToBoundsExample() {
 				components={{
 					TopPanel: () => (
 						<>
-							<ZoomToBoundsButton box={zoomBox1} color="purple" />
-							<ZoomToBoundsButton box={zoomBox2} color="blue" />
+							<ZoomToBoundsButton box={zoomBox1} color="color23_R6C3" />
+							<ZoomToBoundsButton box={zoomBox2} color="color5_R2C1" />
 						</>
 					),
 				}}

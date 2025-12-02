@@ -347,8 +347,8 @@ export const rootShapeMigrations = createRecordMigrationSequence({
 				// noop
 			},
 			down: (record: any) => {
-				if (record.props.color === 'white') {
-					record.props.color = 'black'
+				if (record.props.color === 'color13_R4C1') {
+					record.props.color = 'color1_R1C1'
 				}
 			},
 		},

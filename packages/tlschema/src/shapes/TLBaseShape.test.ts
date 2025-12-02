@@ -85,7 +85,7 @@ describe('TLBaseShape', () => {
 				props: {
 					width: 150,
 					height: 100,
-					color: 'blue',
+					color: 'color5_R2C1',
 				},
 				meta: {},
 			}

@@ -20,8 +20,8 @@ describe('TLNoteShape', () => {
 	describe('TLNoteShapeProps interface', () => {
 		it('should represent valid note shape properties', () => {
 			const validProps: TLNoteShapeProps = {
-				color: 'yellow',
-				labelColor: 'black',
+				color: 'color7_R2C3',
+				labelColor: 'color1_R1C1',
 				size: 'm',
 				font: 'draw',
 				fontSizeAdjustment: 0,
@@ -33,8 +33,8 @@ describe('TLNoteShape', () => {
 				scale: 1,
 			}
 
-			expect(validProps.color).toBe('yellow')
-			expect(validProps.labelColor).toBe('black')
+			expect(validProps.color).toBe('color7_R2C3')
+			expect(validProps.labelColor).toBe('color1_R1C1')
 			expect(validProps.size).toBe('m')
 			expect(validProps.font).toBe('draw')
 			expect(validProps.fontSizeAdjustment).toBe(0)
@@ -48,11 +48,11 @@ describe('TLNoteShape', () => {
 
 		it('should support different color combinations', () => {
 			const colorCombinations = [
-				{ color: 'black' as const, labelColor: 'white' as const },
-				{ color: 'red' as const, labelColor: 'black' as const },
-				{ color: 'blue' as const, labelColor: 'yellow' as const },
-				{ color: 'green' as const, labelColor: 'red' as const },
-				{ color: 'light-blue' as const, labelColor: 'black' as const },
+				{ color: 'color1_R1C1' as const, labelColor: 'color13_R4C1' as const },
+				{ color: 'color12_R3C4' as const, labelColor: 'color1_R1C1' as const },
+				{ color: 'color5_R2C1' as const, labelColor: 'color7_R2C3' as const },
+				{ color: 'color9_R3C1' as const, labelColor: 'color12_R3C4' as const },
+				{ color: 'color6_R2C2' as const, labelColor: 'color1_R1C1' as const },
 			]
 
 			colorCombinations.forEach(({ color, labelColor }) => {
@@ -183,8 +183,8 @@ describe('TLNoteShape', () => {
 				isLocked: false,
 				opacity: 1,
 				props: {
-					color: 'yellow',
-					labelColor: 'black',
+					color: 'color7_R2C3',
+					labelColor: 'color1_R1C1',
 					size: 's',
 					font: 'sans',
 					fontSizeAdjustment: 2,
@@ -200,8 +200,8 @@ describe('TLNoteShape', () => {
 
 			expect(validNoteShape.type).toBe('note')
 			expect(validNoteShape.typeName).toBe('shape')
-			expect(validNoteShape.props.color).toBe('yellow')
-			expect(validNoteShape.props.labelColor).toBe('black')
+			expect(validNoteShape.props.color).toBe('color7_R2C3')
+			expect(validNoteShape.props.labelColor).toBe('color1_R1C1')
 			expect(validNoteShape.props.size).toBe('s')
 			expect(validNoteShape.props.font).toBe('sans')
 		})
@@ -209,8 +209,8 @@ describe('TLNoteShape', () => {
 		it('should support different note configurations', () => {
 			const configurations = [
 				{
-					color: 'light-blue' as const,
-					labelColor: 'black' as const,
+					color: 'color6_R2C2' as const,
+					labelColor: 'color1_R1C1' as const,
 					size: 's' as const,
 					font: 'draw' as const,
 					fontSizeAdjustment: 0,
@@ -220,8 +220,8 @@ describe('TLNoteShape', () => {
 					scale: 1,
 				},
 				{
-					color: 'red' as const,
-					labelColor: 'white' as const,
+					color: 'color12_R3C4' as const,
+					labelColor: 'color13_R4C1' as const,
 					size: 'l' as const,
 					font: 'serif' as const,
 					fontSizeAdjustment: 5,
@@ -231,8 +231,8 @@ describe('TLNoteShape', () => {
 					scale: 1.5,
 				},
 				{
-					color: 'green' as const,
-					labelColor: 'black' as const,
+					color: 'color9_R3C1' as const,
+					labelColor: 'color1_R1C1' as const,
 					size: 'xl' as const,
 					font: 'mono' as const,
 					fontSizeAdjustment: -1,
@@ -301,8 +301,8 @@ describe('TLNoteShape', () => {
 					isLocked: false,
 					opacity: 1,
 					props: {
-						color: 'yellow',
-						labelColor: 'black',
+						color: 'color7_R2C3',
+						labelColor: 'color1_R1C1',
 						size: 'm',
 						font: 'draw',
 						fontSizeAdjustment: 0,
@@ -334,8 +334,8 @@ describe('TLNoteShape', () => {
 				isLocked: true,
 				opacity: 0.5,
 				props: {
-					color: 'red',
-					labelColor: 'white',
+					color: 'color12_R3C4',
+					labelColor: 'color13_R4C1',
 					size: 'l',
 					font: 'serif',
 					fontSizeAdjustment: 3,
@@ -359,8 +359,8 @@ describe('TLNoteShape', () => {
 	describe('noteShapeProps validation schema', () => {
 		it('should validate all note shape properties', () => {
 			const validProps = {
-				color: 'blue',
-				labelColor: 'red',
+				color: 'color5_R2C1',
+				labelColor: 'color12_R3C4',
 				size: 'l',
 				font: 'sans',
 				fontSizeAdjustment: 3,
@@ -392,8 +392,8 @@ describe('TLNoteShape', () => {
 			const fullValidator = T.object(noteShapeProps)
 
 			const validPropsObject = {
-				color: 'green' as const,
-				labelColor: 'black' as const,
+				color: 'color9_R3C1' as const,
+				labelColor: 'color1_R1C1' as const,
 				size: 's' as const,
 				font: 'mono' as const,
 				fontSizeAdjustment: 2,
@@ -632,8 +632,8 @@ describe('TLNoteShape', () => {
 					isLocked: false,
 					opacity: 1,
 					props: {
-						color: 'yellow',
-						labelColor: 'black',
+						color: 'color7_R2C3',
+						labelColor: 'color1_R1C1',
 						size: 'm',
 					},
 					meta: {},
@@ -641,15 +641,15 @@ describe('TLNoteShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.url).toBe('')
-				expect(result.props.color).toBe('yellow') // Preserve other props
+				expect(result.props.color).toBe('color7_R2C3') // Preserve other props
 			})
 
 			it('should preserve all existing properties during migration', () => {
 				const oldRecord = {
 					id: 'shape:note2',
 					props: {
-						color: 'blue',
-						labelColor: 'red',
+						color: 'color5_R2C1',
+						labelColor: 'color12_R3C4',
 						size: 'l',
 						font: 'sans',
 						fontSizeAdjustment: 2,
@@ -662,8 +662,8 @@ describe('TLNoteShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.url).toBe('')
-				expect(result.props.color).toBe('blue')
-				expect(result.props.labelColor).toBe('red')
+				expect(result.props.color).toBe('color5_R2C1')
+				expect(result.props.labelColor).toBe('color12_R3C4')
 				expect(result.props.size).toBe('l')
 				expect(result.props.fontSizeAdjustment).toBe(2)
 			})
@@ -686,15 +686,15 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						align: 'justify',
-						labelColor: 'black',
+						labelColor: 'color1_R1C1',
 					},
 				}
 
 				const result = up(oldRecord)
 				expect(result.props.align).toBe('start')
-				expect(result.props.color).toBe('yellow') // Preserve other props
+				expect(result.props.color).toBe('color7_R2C3') // Preserve other props
 			})
 
 			it('should preserve non-justify alignments', () => {
@@ -704,9 +704,9 @@ describe('TLNoteShape', () => {
 					const oldRecord = {
 						id: 'shape:note1',
 						props: {
-							color: 'red',
+							color: 'color12_R3C4',
 							align,
-							labelColor: 'black',
+							labelColor: 'color1_R1C1',
 						},
 					}
 
@@ -719,9 +719,9 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'green',
+						color: 'color9_R3C1',
 						align: 'justify',
-						labelColor: 'white',
+						labelColor: 'color13_R4C1',
 						size: 'l',
 						font: 'serif',
 						fontSizeAdjustment: 1,
@@ -733,8 +733,8 @@ describe('TLNoteShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.align).toBe('start')
-				expect(result.props.color).toBe('green')
-				expect(result.props.labelColor).toBe('white')
+				expect(result.props.color).toBe('color9_R3C1')
+				expect(result.props.labelColor).toBe('color13_R4C1')
 				expect(result.props.size).toBe('l')
 				expect(result.props.font).toBe('serif')
 			})
@@ -757,7 +757,7 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						align: 'start',
 						verticalAlign: 'middle',
 					},
@@ -772,7 +772,7 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'blue',
+						color: 'color5_R2C1',
 						align: 'end',
 						verticalAlign: 'start',
 					},
@@ -787,7 +787,7 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'red',
+						color: 'color12_R3C4',
 						align: 'middle',
 						verticalAlign: 'end',
 					},
@@ -802,7 +802,7 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'green',
+						color: 'color9_R3C1',
 						align: 'unknown-align',
 						verticalAlign: 'middle',
 					},
@@ -816,10 +816,10 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'purple',
+						color: 'color23_R6C3',
 						align: 'start',
 						verticalAlign: 'middle',
-						labelColor: 'white',
+						labelColor: 'color13_R4C1',
 						size: 's',
 						font: 'mono',
 						fontSizeAdjustment: 3,
@@ -831,8 +831,8 @@ describe('TLNoteShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.align).toBe('start-legacy')
-				expect(result.props.color).toBe('purple')
-				expect(result.props.labelColor).toBe('white')
+				expect(result.props.color).toBe('color23_R6C3')
+				expect(result.props.labelColor).toBe('color13_R4C1')
 				expect(result.props.fontSizeAdjustment).toBe(3)
 			})
 		})
@@ -854,9 +854,9 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						align: 'start-legacy',
-						labelColor: 'black',
+						labelColor: 'color1_R1C1',
 					},
 				}
 
@@ -869,9 +869,9 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'red',
+						color: 'color12_R3C4',
 						align: 'middle-legacy',
-						labelColor: 'white',
+						labelColor: 'color13_R4C1',
 						size: 'xl',
 						font: 'draw',
 						fontSizeAdjustment: 0,
@@ -883,7 +883,7 @@ describe('TLNoteShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.verticalAlign).toBe('middle')
-				expect(result.props.color).toBe('red')
+				expect(result.props.color).toBe('color12_R3C4')
 				expect(result.props.align).toBe('middle-legacy')
 				expect(result.props.size).toBe('xl')
 			})
@@ -906,7 +906,7 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						url: 'invalid-url',
 						align: 'start-legacy',
 						verticalAlign: 'middle',
@@ -915,7 +915,7 @@ describe('TLNoteShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.url).toBe('')
-				expect(result.props.color).toBe('yellow') // Preserve other props
+				expect(result.props.color).toBe('color7_R2C3') // Preserve other props
 			})
 
 			it('should preserve valid URLs', () => {
@@ -930,7 +930,7 @@ describe('TLNoteShape', () => {
 					const oldRecord = {
 						id: 'shape:note1',
 						props: {
-							color: 'blue',
+							color: 'color5_R2C1',
 							url,
 							align: 'middle-legacy',
 							verticalAlign: 'start',
@@ -946,11 +946,11 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'green',
+						color: 'color9_R3C1',
 						url: 'not-valid',
 						align: 'end-legacy',
 						verticalAlign: 'end',
-						labelColor: 'red',
+						labelColor: 'color12_R3C4',
 						size: 'm',
 						font: 'sans',
 						fontSizeAdjustment: 2,
@@ -961,7 +961,7 @@ describe('TLNoteShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.url).toBe('')
-				expect(result.props.color).toBe('green')
+				expect(result.props.color).toBe('color9_R3C1')
 				expect(result.props.align).toBe('end-legacy')
 				expect(result.props.verticalAlign).toBe('end')
 			})
@@ -972,7 +972,7 @@ describe('TLNoteShape', () => {
 				const newRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						url: 'https://example.com',
 						align: 'start-legacy',
 						verticalAlign: 'middle',
@@ -993,7 +993,7 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						url: 'https://example.com',
 						align: 'start-legacy',
 						verticalAlign: 'middle',
@@ -1002,18 +1002,18 @@ describe('TLNoteShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.fontSizeAdjustment).toBe(0)
-				expect(result.props.color).toBe('yellow') // Preserve other props
+				expect(result.props.color).toBe('color7_R2C3') // Preserve other props
 			})
 
 			it('should preserve all existing properties during migration', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'red',
+						color: 'color12_R3C4',
 						url: '',
 						align: 'middle-legacy',
 						verticalAlign: 'start',
-						labelColor: 'white',
+						labelColor: 'color13_R4C1',
 						size: 'l',
 						font: 'serif',
 						growY: 35,
@@ -1023,7 +1023,7 @@ describe('TLNoteShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.fontSizeAdjustment).toBe(0)
-				expect(result.props.color).toBe('red')
+				expect(result.props.color).toBe('color12_R3C4')
 				expect(result.props.align).toBe('middle-legacy')
 				expect(result.props.size).toBe('l')
 			})
@@ -1034,7 +1034,7 @@ describe('TLNoteShape', () => {
 				const newRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						url: 'https://example.com',
 						align: 'start-legacy',
 						verticalAlign: 'middle',
@@ -1044,7 +1044,7 @@ describe('TLNoteShape', () => {
 
 				const result = down(newRecord)
 				expect(result.props.fontSizeAdjustment).toBeUndefined()
-				expect(result.props.color).toBe('yellow') // Preserve other props
+				expect(result.props.color).toBe('color7_R2C3') // Preserve other props
 			})
 		})
 	})
@@ -1057,7 +1057,7 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						url: 'https://example.com',
 						align: 'start-legacy',
 						verticalAlign: 'middle',
@@ -1067,18 +1067,18 @@ describe('TLNoteShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.scale).toBe(1)
-				expect(result.props.color).toBe('yellow') // Preserve other props
+				expect(result.props.color).toBe('color7_R2C3') // Preserve other props
 			})
 
 			it('should preserve all existing properties during migration', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'blue',
+						color: 'color5_R2C1',
 						url: '',
 						align: 'end-legacy',
 						verticalAlign: 'end',
-						labelColor: 'black',
+						labelColor: 'color1_R1C1',
 						size: 's',
 						font: 'mono',
 						fontSizeAdjustment: 3,
@@ -1088,7 +1088,7 @@ describe('TLNoteShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.scale).toBe(1)
-				expect(result.props.color).toBe('blue')
+				expect(result.props.color).toBe('color5_R2C1')
 				expect(result.props.fontSizeAdjustment).toBe(3)
 				expect(result.props.growY).toBe(60)
 			})
@@ -1099,7 +1099,7 @@ describe('TLNoteShape', () => {
 				const newRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						url: 'https://example.com',
 						align: 'start-legacy',
 						verticalAlign: 'middle',
@@ -1110,7 +1110,7 @@ describe('TLNoteShape', () => {
 
 				const result = down(newRecord)
 				expect(result.props.scale).toBeUndefined()
-				expect(result.props.color).toBe('yellow') // Preserve other props
+				expect(result.props.color).toBe('color7_R2C3') // Preserve other props
 			})
 		})
 	})
@@ -1119,11 +1119,11 @@ describe('TLNoteShape', () => {
 		const { up, down } = getTestMigration(noteShapeVersions.AddLabelColor)
 
 		describe('AddLabelColor up migration', () => {
-			it('should add labelColor property with default value "black"', () => {
+			it('should add labelColor property with default value "color1_R1C1"', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						url: 'https://example.com',
 						align: 'start-legacy',
 						verticalAlign: 'middle',
@@ -1133,15 +1133,15 @@ describe('TLNoteShape', () => {
 				}
 
 				const result = up(oldRecord)
-				expect(result.props.labelColor).toBe('black')
-				expect(result.props.color).toBe('yellow') // Preserve other props
+				expect(result.props.labelColor).toBe('color1_R1C1')
+				expect(result.props.color).toBe('color7_R2C3') // Preserve other props
 			})
 
 			it('should preserve all existing properties during migration', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'red',
+						color: 'color12_R3C4',
 						url: '',
 						align: 'middle-legacy',
 						verticalAlign: 'start',
@@ -1154,8 +1154,8 @@ describe('TLNoteShape', () => {
 				}
 
 				const result = up(oldRecord)
-				expect(result.props.labelColor).toBe('black')
-				expect(result.props.color).toBe('red')
+				expect(result.props.labelColor).toBe('color1_R1C1')
+				expect(result.props.color).toBe('color12_R3C4')
 				expect(result.props.size).toBe('xl')
 				expect(result.props.fontSizeAdjustment).toBe(2)
 			})
@@ -1166,8 +1166,8 @@ describe('TLNoteShape', () => {
 				const newRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
-						labelColor: 'white',
+						color: 'color7_R2C3',
+						labelColor: 'color13_R4C1',
 						url: 'https://example.com',
 						align: 'start-legacy',
 						verticalAlign: 'middle',
@@ -1178,7 +1178,7 @@ describe('TLNoteShape', () => {
 
 				const result = down(newRecord)
 				expect(result.props.labelColor).toBeUndefined()
-				expect(result.props.color).toBe('yellow') // Preserve other props
+				expect(result.props.color).toBe('color7_R2C3') // Preserve other props
 			})
 		})
 	})
@@ -1191,8 +1191,8 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'yellow',
-						labelColor: 'black',
+						color: 'color7_R2C3',
+						labelColor: 'color1_R1C1',
 						text: 'Simple note content',
 						url: 'https://example.com',
 						align: 'start-legacy',
@@ -1205,15 +1205,15 @@ describe('TLNoteShape', () => {
 				const result = up(oldRecord)
 				expect(result.props.richText).toBeDefined()
 				expect(result.props.text).toBeUndefined()
-				expect(result.props.color).toBe('yellow') // Preserve other props
+				expect(result.props.color).toBe('color7_R2C3') // Preserve other props
 			})
 
 			it('should handle empty text', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'blue',
-						labelColor: 'white',
+						color: 'color5_R2C1',
+						labelColor: 'color13_R4C1',
 						text: '',
 						url: '',
 						align: 'middle-legacy',
@@ -1232,8 +1232,8 @@ describe('TLNoteShape', () => {
 				const oldRecord = {
 					id: 'shape:note1',
 					props: {
-						color: 'green',
-						labelColor: 'red',
+						color: 'color9_R3C1',
+						labelColor: 'color12_R3C4',
 						text: 'Multi-line\nnote content',
 						url: 'https://test.com',
 						align: 'end-legacy',
@@ -1249,8 +1249,8 @@ describe('TLNoteShape', () => {
 				const result = up(oldRecord)
 				expect(result.props.richText).toBeDefined()
 				expect(result.props.text).toBeUndefined()
-				expect(result.props.color).toBe('green')
-				expect(result.props.labelColor).toBe('red')
+				expect(result.props.color).toBe('color9_R3C1')
+				expect(result.props.labelColor).toBe('color12_R3C4')
 				expect(result.props.size).toBe('l')
 				expect(result.props.fontSizeAdjustment).toBe(3)
 			})
@@ -1289,8 +1289,8 @@ describe('TLNoteShape', () => {
 				isLocked: false,
 				opacity: 0.8,
 				props: {
-					color: 'light-blue' as const,
-					labelColor: 'black' as const,
+					color: 'color6_R2C2' as const,
+					labelColor: 'color1_R1C1' as const,
 					size: 'l' as const,
 					font: 'sans' as const,
 					fontSizeAdjustment: 2,
@@ -1320,8 +1320,8 @@ describe('TLNoteShape', () => {
 				isLocked: true,
 				opacity: 0.5,
 				props: {
-					color: 'red',
-					labelColor: 'white',
+					color: 'color12_R3C4',
+					labelColor: 'color13_R4C1',
 					size: 's',
 					font: 'mono',
 					fontSizeAdjustment: 1,
@@ -1381,8 +1381,8 @@ describe('TLNoteShape', () => {
 			// Partial props should throw for missing required fields
 			expect(() =>
 				fullValidator.validate({
-					color: 'yellow',
-					labelColor: 'black',
+					color: 'color7_R2C3',
+					labelColor: 'color1_R1C1',
 					// Missing other required properties
 				})
 			).toThrow()
@@ -1390,8 +1390,8 @@ describe('TLNoteShape', () => {
 			// Extra unexpected properties should throw
 			expect(() =>
 				fullValidator.validate({
-					color: 'yellow',
-					labelColor: 'black',
+					color: 'color7_R2C3',
+					labelColor: 'color1_R1C1',
 					size: 'm',
 					font: 'draw',
 					fontSizeAdjustment: 0,
@@ -1409,8 +1409,8 @@ describe('TLNoteShape', () => {
 		it('should handle boundary values for numeric properties', () => {
 			// Test extreme but valid values
 			const extremeProps = {
-				color: 'yellow' as const,
-				labelColor: 'black' as const,
+				color: 'color7_R2C3' as const,
+				labelColor: 'color1_R1C1' as const,
 				size: 'm' as const,
 				font: 'draw' as const,
 				fontSizeAdjustment: 0, // Minimum positive number
@@ -1489,32 +1489,32 @@ describe('TLNoteShape', () => {
 		it('should handle all style property combinations', () => {
 			const styleVariations = [
 				{
-					color: 'black' as const,
-					labelColor: 'white' as const,
+					color: 'color1_R1C1' as const,
+					labelColor: 'color13_R4C1' as const,
 					size: 's' as const,
 					font: 'draw' as const,
 					align: 'start' as const,
 					verticalAlign: 'start' as const,
 				},
 				{
-					color: 'red' as const,
-					labelColor: 'black' as const,
+					color: 'color12_R3C4' as const,
+					labelColor: 'color1_R1C1' as const,
 					size: 'm' as const,
 					font: 'sans' as const,
 					align: 'middle' as const,
 					verticalAlign: 'middle' as const,
 				},
 				{
-					color: 'blue' as const,
-					labelColor: 'yellow' as const,
+					color: 'color5_R2C1' as const,
+					labelColor: 'color7_R2C3' as const,
 					size: 'l' as const,
 					font: 'serif' as const,
 					align: 'end' as const,
 					verticalAlign: 'end' as const,
 				},
 				{
-					color: 'green' as const,
-					labelColor: 'red' as const,
+					color: 'color9_R3C1' as const,
+					labelColor: 'color12_R3C4' as const,
 					size: 'xl' as const,
 					font: 'mono' as const,
 					align: 'start-legacy' as const,

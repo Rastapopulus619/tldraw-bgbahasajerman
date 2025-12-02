@@ -68,7 +68,7 @@ class HouseShapeUtil extends ShapeUtil<HouseShape> {
 		const doorPathData = 'M' + doorVertices[0] + 'L' + doorVertices.slice(1) + 'Z'
 		return (
 			<svg className="tl-svg-container">
-				<path strokeWidth={3} stroke="black" d={housePathData + doorPathData} fill="none" />
+				<path strokeWidth={3} stroke="color1_R1C1" d={housePathData + doorPathData} fill="none" />
 			</svg>
 		)
 	}

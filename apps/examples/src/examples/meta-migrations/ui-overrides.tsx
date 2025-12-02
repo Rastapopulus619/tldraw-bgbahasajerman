@@ -31,9 +31,9 @@ export const components: TLComponents = {
 					}}
 				>
 					<option value="none">None</option>
-					<option value="red">Red</option>
-					<option value="blue">Blue</option>
-					<option value="green">Green</option>
+					<option value="color12_R3C4">Red</option>
+					<option value="color5_R2C1">Blue</option>
+					<option value="color9_R3C1">Green</option>
 				</select>
 			</span>
 		)

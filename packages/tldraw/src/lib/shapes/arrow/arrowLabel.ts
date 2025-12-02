@@ -150,7 +150,7 @@ function getLabelToArrowPadding(shape: TLArrowShape) {
 function getArrowLabelRange(editor: Editor, shape: TLArrowShape, info: TLArrowInfo) {
 	const bodyGeom = getArrowBodyGeometry(editor, shape)
 	const dbgPoints: VecLike[] = []
-	const dbg: Geometry2d[] = [new Group2d({ children: [bodyGeom], debugColor: 'lime' })]
+	const dbg: Geometry2d[] = [new Group2d({ children: [bodyGeom], debugColor: 'color17_R5C1' })]
 
 	const labelSize = getArrowLabelSize(editor, shape)
 	const labelToArrowPadding = getLabelToArrowPadding(shape)
@@ -197,7 +197,7 @@ function getArrowLabelRange(editor: Editor, shape: TLArrowShape, info: TLArrowIn
 				y: pt.y - 3,
 				radius: 3,
 				isFilled: false,
-				debugColor: 'magenta',
+				debugColor: 'color22_R6C2',
 				ignore: true,
 			})
 		)
@@ -205,13 +205,13 @@ function getArrowLabelRange(editor: Editor, shape: TLArrowShape, info: TLArrowIn
 	dbg.push(
 		new Polygon2d({
 			points: startBox.corners,
-			debugColor: 'lime',
+			debugColor: 'color17_R5C1',
 			isFilled: false,
 			ignore: true,
 		}),
 		new Polygon2d({
 			points: endBox.corners,
-			debugColor: 'lime',
+			debugColor: 'color17_R5C1',
 			isFilled: false,
 			ignore: true,
 		})

@@ -34,7 +34,7 @@ export function Button({
 	arrow?: 'left' | 'right'
 	className?: string
 	size?: 'xs' | 'sm' | 'base' | 'lg'
-	type?: 'primary' | 'secondary' | 'tertiary' | 'black'
+	type?: 'primary' | 'secondary' | 'tertiary' | 'color1_R1C1'
 	darkRingOffset?: boolean
 	loading?: boolean
 }) {
@@ -48,7 +48,7 @@ export function Button({
 		size === 'base' && 'h-9 px-4 gap-2.5 rounded-lg text-base',
 		size === 'lg' && 'h-11 px-5 gap-3 rounded-xl text-lg',
 		type === 'primary' && 'bg-blue-500 text-white hover:bg-blue-600 dark:hover:bg-blue-400',
-		type === 'black' &&
+		type === 'color1_R1C1' &&
 			'bg-black text-white dark:text-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100',
 		type === 'secondary' &&
 			'bg-zinc-100 text-zinc-800 dark:text-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700',
@@ -94,7 +94,7 @@ export function Button({
 						className={cn(
 							'absolute inset-0 flex items-center justify-center',
 							type === 'primary' && 'bg-blue-500',
-							type === 'black' && 'bg-black',
+							type === 'color1_R1C1' && 'bg-black',
 							type === 'secondary' && 'bg-zinc-100'
 						)}
 					>
@@ -122,7 +122,7 @@ export function Button({
 						className={cn(
 							'absolute inset-0 flex items-center justify-center',
 							type === 'primary' && 'bg-blue-500',
-							type === 'black' && 'bg-black dark:bg-white',
+							type === 'color1_R1C1' && 'bg-black dark:bg-white',
 							type === 'secondary' && 'bg-zinc-100 dark:bg-zinc-800'
 						)}
 					>

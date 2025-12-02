@@ -132,7 +132,7 @@ export default function CustomClippingExample() {
 							w: 200,
 							h: 100,
 							fill: 'solid',
-							color: 'blue',
+							color: 'color5_R2C1',
 							richText: toRichText('Oops you found me!'),
 						} satisfies Partial<TLGeoShapeProps>,
 					})

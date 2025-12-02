@@ -27,7 +27,7 @@ describe('TLLineShape', () => {
 		it('should validate complete props object', () => {
 			const fullValidator = T.object(lineShapeProps)
 			const validProps = {
-				color: 'red' as const,
+				color: 'color12_R3C4' as const,
 				dash: 'dotted' as const,
 				size: 's' as const,
 				spline: 'line' as const,
@@ -225,7 +225,7 @@ describe('TLLineShape', () => {
 			const oldRecord = {
 				id: 'shape:line1',
 				props: {
-					color: 'blue',
+					color: 'color5_R2C1',
 					points: {
 						a1: { id: 'a1', index: 'a1' as IndexKey, x: 0, y: 0 },
 					},
@@ -234,14 +234,14 @@ describe('TLLineShape', () => {
 
 			const result = up(oldRecord)
 			expect(result.props.scale).toBe(1)
-			expect(result.props.color).toBe('blue')
+			expect(result.props.color).toBe('color5_R2C1')
 		})
 
 		it('should remove scale property in down migration', () => {
 			const newRecord = {
 				id: 'shape:line1',
 				props: {
-					color: 'blue',
+					color: 'color5_R2C1',
 					scale: 1.5,
 					points: {},
 				},
@@ -249,7 +249,7 @@ describe('TLLineShape', () => {
 
 			const result = down(newRecord)
 			expect(result.props.scale).toBeUndefined()
-			expect(result.props.color).toBe('blue')
+			expect(result.props.color).toBe('color5_R2C1')
 		})
 	})
 

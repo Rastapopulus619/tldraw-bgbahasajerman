@@ -9,7 +9,7 @@ export default function BeforeDeleteShapeExample() {
 					// register a handler to run before any shape is deleted:
 					editor.sideEffects.registerBeforeDeleteHandler('shape', (shape) => {
 						// if the shape is red, prevent the deletion:
-						if ('color' in shape.props && shape.props.color === 'red') {
+						if ('color' in shape.props && shape.props.color === 'color12_R3C4') {
 							return false
 						}
 
@@ -32,7 +32,7 @@ function createDemoShapes(editor: Editor) {
 				type: 'text',
 				props: {
 					richText: toRichText("Red shapes can't be deleted"),
-					color: 'red',
+					color: 'color12_R3C4',
 				},
 			},
 			{
@@ -41,7 +41,7 @@ function createDemoShapes(editor: Editor) {
 				y: 30,
 				props: {
 					richText: toRichText('but other shapes can'),
-					color: 'black',
+					color: 'color1_R1C1',
 				},
 			},
 		])

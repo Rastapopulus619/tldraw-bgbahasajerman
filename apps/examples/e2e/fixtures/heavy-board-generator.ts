@@ -108,13 +108,13 @@ export class HeavyBoardGenerator {
 									h: height,
 									geo: random.choice(geoTypes),
 									color: random.choice([
-										'black',
-										'blue',
-										'green',
-										'red',
-										'yellow',
-										'orange',
-										'violet',
+										'color1_R1C1',
+										'color5_R2C1',
+										'color9_R3C1',
+										'color12_R3C4',
+										'color7_R2C3',
+										'color8_R2C4',
+										'color4_R1C4',
 									]),
 									fill: random.choice(['none', 'semi', 'solid']),
 									size: random.choice(['s', 'm', 'l', 'xl']),
@@ -146,7 +146,7 @@ export class HeavyBoardGenerator {
 											points,
 										},
 									],
-									color: random.choice(['black', 'blue', 'green', 'red']),
+									color: random.choice(['color1_R1C1', 'color5_R2C1', 'color9_R3C1', 'color12_R3C4']),
 									size: random.choice(['s', 'm', 'l']),
 								},
 							}
@@ -170,7 +170,7 @@ export class HeavyBoardGenerator {
 								y,
 								props: {
 									richText: tldrawApi.toRichText(random.choice(textSamples)),
-									color: random.choice(['black', 'blue', 'green', 'red']),
+									color: random.choice(['color1_R1C1', 'color5_R2C1', 'color9_R3C1', 'color12_R3C4']),
 									size: random.choice(['s', 'm', 'l', 'xl']),
 									font: 'draw',
 								},
@@ -189,7 +189,7 @@ export class HeavyBoardGenerator {
 								props: {
 									start: { x: 0, y: 0 },
 									end: { x: endX - x, y: endY - y },
-									color: random.choice(['black', 'blue', 'green', 'red']),
+									color: random.choice(['color1_R1C1', 'color5_R2C1', 'color9_R3C1', 'color12_R3C4']),
 									size: random.choice(['s', 'm', 'l']),
 									arrowheadStart: random.choice(['none', 'arrow', 'triangle']),
 									arrowheadEnd: random.choice(['arrow', 'triangle', 'dot']),
@@ -207,7 +207,7 @@ export class HeavyBoardGenerator {
 								y,
 								props: {
 									richText: tldrawApi.toRichText(`Note ${i}\nPerformance testing note`),
-									color: random.choice(['black', 'blue', 'green', 'red', 'yellow']),
+									color: random.choice(['color1_R1C1', 'color5_R2C1', 'color9_R3C1', 'color12_R3C4', 'color7_R2C3']),
 									size: random.choice(['s', 'm', 'l']),
 								},
 							}

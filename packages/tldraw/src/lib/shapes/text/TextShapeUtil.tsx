@@ -57,7 +57,7 @@ export class TextShapeUtil extends ShapeUtil<TLTextShape> {
 
 	getDefaultProps(): TLTextShape['props'] {
 		return {
-			color: 'black',
+			color: 'color1_R1C1',
 			size: 'm',
 			w: 8,
 			font: 'draw',

@@ -38,7 +38,7 @@ function MyComponent() {
 					width: 200,
 					padding: 12,
 					borderRadius: 8,
-					backgroundColor: 'pink',
+					backgroundColor: 'color21_R6C1',
 					zIndex: 99999999,
 					userSelect: 'unset',
 					boxShadow: '0 0 0 1px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.1)',

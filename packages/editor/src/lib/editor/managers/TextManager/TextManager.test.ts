@@ -186,7 +186,7 @@ describe('TextManager', () => {
 				...defaultOpts,
 				otherStyles: {
 					'text-decoration': 'underline',
-					color: 'red',
+					color: 'color12_R3C4',
 				},
 			}
 

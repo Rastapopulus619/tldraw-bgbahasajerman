@@ -105,7 +105,7 @@ export class FrameShapeUtil extends BaseBoxShapeUtil<TLFrameShape> {
 	}
 
 	override getDefaultProps(): TLFrameShape['props'] {
-		return { w: 160 * 2, h: 90 * 2, name: '', color: 'black' }
+		return { w: 160 * 2, h: 90 * 2, name: '', color: 'color1_R1C1' }
 	}
 
 	override getAriaDescriptor(shape: TLFrameShape) {
@@ -226,7 +226,7 @@ export class FrameShapeUtil extends BaseBoxShapeUtil<TLFrameShape> {
 		)
 
 		const showFrameColors = this.options.showColors
-		const colorToUse = showFrameColors ? shape.props.color : 'black'
+		const colorToUse = showFrameColors ? shape.props.color : 'color1_R1C1'
 		const frameFill = getColorValue(theme, colorToUse, 'frameFill')
 		const frameStroke = getColorValue(theme, colorToUse, 'frameStroke')
 		const frameHeadingStroke = showFrameColors
@@ -286,7 +286,7 @@ export class FrameShapeUtil extends BaseBoxShapeUtil<TLFrameShape> {
 		const text = createTextJsxFromSpans(this.editor, spans, opts)
 
 		const showFrameColors = this.options.showColors
-		const colorToUse = showFrameColors ? shape.props.color : 'black'
+		const colorToUse = showFrameColors ? shape.props.color : 'color1_R1C1'
 		const frameFill = getColorValue(theme, colorToUse, 'frameFill')
 		const frameStroke = getColorValue(theme, colorToUse, 'frameStroke')
 		const frameHeadingStroke = showFrameColors

@@ -73,7 +73,7 @@ export type RecordPropsType<Config extends Record<string, T.Validatable<any>>> =
  *   id: 'com.myapp.shape.custom/1.0.0',
  *   up: (props) => {
  *     // Add a default color property
- *     return { ...props, color: 'black' }
+ *     return { ...props, color: 'color1_R1C1' }
  *   },
  *   down: (props) => {
  *     // Remove the color property
@@ -239,7 +239,7 @@ export function processPropsMigrations<R extends UnknownRecord & { type: string;
  * ```ts
  * const propsMigration: TLPropsMigration = {
  *   id: 'com.myapp.shape.custom/1.0.0',
- *   up: (props) => ({ ...props, color: 'blue' })
+ *   up: (props) => ({ ...props, color: 'color5_R2C1' })
  * }
  *
  * const storeMigration = createPropsMigration('shape', 'custom', propsMigration)

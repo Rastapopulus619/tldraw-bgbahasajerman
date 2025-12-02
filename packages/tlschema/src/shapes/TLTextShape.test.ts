@@ -14,7 +14,7 @@ describe('TLTextShape', () => {
 			const fullValidator = T.object(textShapeProps)
 
 			const validPropsObject = {
-				color: 'red' as const,
+				color: 'color12_R3C4' as const,
 				size: 's' as const,
 				font: 'mono' as const,
 				textAlign: 'end' as const,
@@ -115,7 +115,7 @@ describe('TLTextShape', () => {
 				const oldRecord = {
 					id: 'shape:text1',
 					props: {
-						color: 'black',
+						color: 'color1_R1C1',
 						font: 'draw',
 						size: 'm',
 						align: 'justify',
@@ -128,7 +128,7 @@ describe('TLTextShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.align).toBe('start')
-				expect(result.props.color).toBe('black') // Preserve other props
+				expect(result.props.color).toBe('color1_R1C1') // Preserve other props
 				expect(result.props.text).toBe('Test text')
 			})
 
@@ -139,7 +139,7 @@ describe('TLTextShape', () => {
 					const oldRecord = {
 						id: 'shape:text1',
 						props: {
-							color: 'red',
+							color: 'color12_R3C4',
 							font: 'sans',
 							size: 'l',
 							align,
@@ -159,7 +159,7 @@ describe('TLTextShape', () => {
 				const oldRecord = {
 					id: 'shape:text1',
 					props: {
-						color: 'blue',
+						color: 'color5_R2C1',
 						font: 'serif',
 						size: 'xl',
 						align: 'justify',
@@ -172,7 +172,7 @@ describe('TLTextShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.align).toBe('start')
-				expect(result.props.color).toBe('blue')
+				expect(result.props.color).toBe('color5_R2C1')
 				expect(result.props.font).toBe('serif')
 				expect(result.props.size).toBe('xl')
 				expect(result.props.w).toBe(400)
@@ -199,7 +199,7 @@ describe('TLTextShape', () => {
 				const oldRecord = {
 					id: 'shape:text1',
 					props: {
-						color: 'black',
+						color: 'color1_R1C1',
 						font: 'draw',
 						size: 'm',
 						align: 'start',
@@ -213,7 +213,7 @@ describe('TLTextShape', () => {
 				const result = up(oldRecord)
 				expect(result.props.textAlign).toBe('start')
 				expect(result.props.align).toBeUndefined()
-				expect(result.props.color).toBe('black') // Preserve other props
+				expect(result.props.color).toBe('color1_R1C1') // Preserve other props
 			})
 
 			it('should handle all alignment values', () => {
@@ -223,7 +223,7 @@ describe('TLTextShape', () => {
 					const oldRecord = {
 						id: 'shape:text1',
 						props: {
-							color: 'red',
+							color: 'color12_R3C4',
 							align,
 							w: 200,
 							text: 'Test',
@@ -240,7 +240,7 @@ describe('TLTextShape', () => {
 				const oldRecord = {
 					id: 'shape:text1',
 					props: {
-						color: 'green',
+						color: 'color9_R3C1',
 						font: 'mono',
 						size: 's',
 						align: 'middle',
@@ -254,7 +254,7 @@ describe('TLTextShape', () => {
 				const result = up(oldRecord)
 				expect(result.props.textAlign).toBe('middle')
 				expect(result.props.align).toBeUndefined()
-				expect(result.props.color).toBe('green')
+				expect(result.props.color).toBe('color9_R3C1')
 				expect(result.props.font).toBe('mono')
 				expect(result.props.size).toBe('s')
 				expect(result.props.w).toBe(150)
@@ -269,7 +269,7 @@ describe('TLTextShape', () => {
 				const newRecord = {
 					id: 'shape:text1',
 					props: {
-						color: 'black',
+						color: 'color1_R1C1',
 						font: 'draw',
 						size: 'm',
 						textAlign: 'start',
@@ -283,7 +283,7 @@ describe('TLTextShape', () => {
 				const result = down(newRecord)
 				expect(result.props.align).toBe('start')
 				expect(result.props.textAlign).toBeUndefined()
-				expect(result.props.color).toBe('black') // Preserve other props
+				expect(result.props.color).toBe('color1_R1C1') // Preserve other props
 			})
 
 			it('should handle all textAlign values during down migration', () => {
@@ -293,7 +293,7 @@ describe('TLTextShape', () => {
 					const newRecord = {
 						id: 'shape:text1',
 						props: {
-							color: 'blue',
+							color: 'color5_R2C1',
 							textAlign,
 							w: 200,
 							text: 'Test',
@@ -316,7 +316,7 @@ describe('TLTextShape', () => {
 				const oldRecord = {
 					id: 'shape:text1',
 					props: {
-						color: 'black',
+						color: 'color1_R1C1',
 						font: 'draw',
 						size: 'm',
 						textAlign: 'start',
@@ -330,14 +330,14 @@ describe('TLTextShape', () => {
 				const result = up(oldRecord)
 				expect(result.props.richText).toBeDefined()
 				expect(result.props.text).toBeUndefined()
-				expect(result.props.color).toBe('black') // Preserve other props
+				expect(result.props.color).toBe('color1_R1C1') // Preserve other props
 			})
 
 			it('should handle empty text', () => {
 				const oldRecord = {
 					id: 'shape:text1',
 					props: {
-						color: 'red',
+						color: 'color12_R3C4',
 						font: 'sans',
 						size: 'l',
 						textAlign: 'middle',
@@ -357,7 +357,7 @@ describe('TLTextShape', () => {
 				const oldRecord = {
 					id: 'shape:text1',
 					props: {
-						color: 'blue',
+						color: 'color5_R2C1',
 						font: 'serif',
 						size: 'xl',
 						textAlign: 'end',
@@ -377,7 +377,7 @@ describe('TLTextShape', () => {
 				const oldRecord = {
 					id: 'shape:text1',
 					props: {
-						color: 'green',
+						color: 'color9_R3C1',
 						font: 'mono',
 						size: 's',
 						textAlign: 'start',
@@ -391,7 +391,7 @@ describe('TLTextShape', () => {
 				const result = up(oldRecord)
 				expect(result.props.richText).toBeDefined()
 				expect(result.props.text).toBeUndefined()
-				expect(result.props.color).toBe('green')
+				expect(result.props.color).toBe('color9_R3C1')
 				expect(result.props.font).toBe('mono')
 				expect(result.props.size).toBe('s')
 				expect(result.props.textAlign).toBe('start')

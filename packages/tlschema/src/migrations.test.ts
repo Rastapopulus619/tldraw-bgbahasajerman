@@ -339,9 +339,9 @@ describe('Adding instance.isToolLocked', () => {
 describe('Cleaning up junk data in instance.propsForNextShape', () => {
 	const { up } = getTestMigration(instanceVersions.RemoveExtraPropsForNextShape)
 	test('up works as expected', () => {
-		expect(up({ propsForNextShape: { color: 'red', unknown: 'gone' } })).toEqual({
+		expect(up({ propsForNextShape: { color: 'color12_R3C4', unknown: 'gone' } })).toEqual({
 			propsForNextShape: {
-				color: 'red',
+				color: 'color12_R3C4',
 			},
 		})
 	})
@@ -452,8 +452,8 @@ describe('Adding labelColor prop to geo / arrow shapes', () => {
 		['geo shape', getTestMigration(geoShapeVersions.AddLabelColor)],
 	] as const) {
 		test(`${name}: up works as expected`, () => {
-			expect(up({ props: { color: 'red' } })).toEqual({
-				props: { color: 'red', labelColor: 'black' },
+			expect(up({ props: { color: 'color12_R3C4' } })).toEqual({
+				props: { color: 'color12_R3C4', labelColor: 'color1_R1C1' },
 			})
 		})
 	}
@@ -462,8 +462,8 @@ describe('Adding labelColor prop to geo / arrow shapes', () => {
 describe('Adding labelColor prop to propsForNextShape', () => {
 	const { up } = getTestMigration(instanceVersions.AddLabelColor)
 	test('up works as expected', () => {
-		expect(up({ propsForNextShape: { color: 'red' } })).toEqual({
-			propsForNextShape: { color: 'red', labelColor: 'black' },
+		expect(up({ propsForNextShape: { color: 'color12_R3C4' } })).toEqual({
+			propsForNextShape: { color: 'color12_R3C4', labelColor: 'color1_R1C1' },
 		})
 	})
 })
@@ -605,11 +605,11 @@ describe('Adding followingUserId prop to instance', () => {
 describe('Removing align=justify from propsForNextShape', () => {
 	const { up } = getTestMigration(instanceVersions.RemoveAlignJustify)
 	test('up works as expected', () => {
-		expect(up({ propsForNextShape: { color: 'black', align: 'justify' } })).toEqual({
-			propsForNextShape: { color: 'black', align: 'start' },
+		expect(up({ propsForNextShape: { color: 'color1_R1C1', align: 'justify' } })).toEqual({
+			propsForNextShape: { color: 'color1_R1C1', align: 'start' },
 		})
-		expect(up({ propsForNextShape: { color: 'black', align: 'end' } })).toEqual({
-			propsForNextShape: { color: 'black', align: 'end' },
+		expect(up({ propsForNextShape: { color: 'color1_R1C1', align: 'end' } })).toEqual({
+			propsForNextShape: { color: 'color1_R1C1', align: 'end' },
 		})
 	})
 })
@@ -686,9 +686,9 @@ describe('Add verticalAlign to geo shape', () => {
 describe('Add verticalAlign to props for next shape', () => {
 	const { up } = getTestMigration(instanceVersions.AddVerticalAlign)
 	test('up works as expected', () => {
-		expect(up({ propsForNextShape: { color: 'red' } })).toEqual({
+		expect(up({ propsForNextShape: { color: 'color12_R3C4' } })).toEqual({
 			propsForNextShape: {
-				color: 'red',
+				color: 'color12_R3C4',
 				verticalAlign: 'middle',
 			},
 		})
@@ -729,14 +729,14 @@ describe('Migrate NoteShape legacy horizontal alignment', () => {
 	const { up } = getTestMigration(noteShapeVersions.MigrateLegacyAlign)
 
 	test('up works as expected', () => {
-		expect(up({ props: { align: 'start', color: 'red' } })).toEqual({
-			props: { align: 'start-legacy', color: 'red' },
+		expect(up({ props: { align: 'start', color: 'color12_R3C4' } })).toEqual({
+			props: { align: 'start-legacy', color: 'color12_R3C4' },
 		})
-		expect(up({ props: { align: 'middle', color: 'red' } })).toEqual({
-			props: { align: 'middle-legacy', color: 'red' },
+		expect(up({ props: { align: 'middle', color: 'color12_R3C4' } })).toEqual({
+			props: { align: 'middle-legacy', color: 'color12_R3C4' },
 		})
-		expect(up({ props: { align: 'end', color: 'red' } })).toEqual({
-			props: { align: 'end-legacy', color: 'red' },
+		expect(up({ props: { align: 'end', color: 'color12_R3C4' } })).toEqual({
+			props: { align: 'end-legacy', color: 'color12_R3C4' },
 		})
 	})
 })
@@ -758,7 +758,7 @@ describe('Adds delay to scribble', () => {
 				scribble: {
 					points: [{ x: 0, y: 0 }],
 					size: 4,
-					color: 'black',
+					color: 'color1_R1C1',
 					opacity: 1,
 					state: 'starting',
 				},
@@ -767,7 +767,7 @@ describe('Adds delay to scribble', () => {
 			scribble: {
 				points: [{ x: 0, y: 0 }],
 				size: 4,
-				color: 'black',
+				color: 'color1_R1C1',
 				opacity: 1,
 				state: 'starting',
 				delay: 0,
@@ -793,7 +793,7 @@ describe('Adds delay to scribble', () => {
 				scribble: {
 					points: [{ x: 0, y: 0 }],
 					size: 4,
-					color: 'black',
+					color: 'color1_R1C1',
 					opacity: 1,
 					state: 'starting',
 				},
@@ -802,7 +802,7 @@ describe('Adds delay to scribble', () => {
 			scribble: {
 				points: [{ x: 0, y: 0 }],
 				size: 4,
-				color: 'black',
+				color: 'color1_R1C1',
 				opacity: 1,
 				state: 'starting',
 				delay: 0,
@@ -945,8 +945,8 @@ describe('Adds NoteShape vertical alignment', () => {
 	const { up } = getTestMigration(noteShapeVersions.AddVerticalAlign)
 
 	test('up works as expected', () => {
-		expect(up({ props: { color: 'red' } })).toEqual({
-			props: { color: 'red', verticalAlign: 'middle' },
+		expect(up({ props: { color: 'color12_R3C4' } })).toEqual({
+			props: { color: 'color12_R3C4', verticalAlign: 'middle' },
 		})
 	})
 })
@@ -959,7 +959,7 @@ describe('hoist opacity', () => {
 			x: 0,
 			y: 0,
 			props: {
-				color: 'red',
+				color: 'color12_R3C4',
 				opacity: '0.5',
 			},
 		}
@@ -969,7 +969,7 @@ describe('hoist opacity', () => {
 			y: 0,
 			opacity: 0.5,
 			props: {
-				color: 'red',
+				color: 'color12_R3C4',
 			},
 		}
 
@@ -982,7 +982,7 @@ describe('hoist opacity', () => {
 			y: 0,
 			opacity: 0.6,
 			props: {
-				color: 'red',
+				color: 'color12_R3C4',
 			},
 		}
 
@@ -994,7 +994,7 @@ describe('hoist opacity', () => {
 		const before = {
 			isToolLocked: true,
 			propsForNextShape: {
-				color: 'black',
+				color: 'color1_R1C1',
 				opacity: '0.5',
 			},
 		}
@@ -1002,7 +1002,7 @@ describe('hoist opacity', () => {
 			isToolLocked: true,
 			opacityForNextShape: 0.5,
 			propsForNextShape: {
-				color: 'black',
+				color: 'color1_R1C1',
 			},
 		}
 
@@ -1076,7 +1076,7 @@ describe('propsForNextShape -> stylesForNextShape', () => {
 		const beforeUp = {
 			isToolLocked: true,
 			propsForNextShape: {
-				color: 'red',
+				color: 'color12_R3C4',
 				size: 'm',
 			},
 		}
@@ -1118,7 +1118,7 @@ describe('removes cursor color', () => {
 				cursor: {
 					type: 'default',
 					rotation: 0.1,
-					color: 'black',
+					color: 'color1_R1C1',
 				},
 			})
 		).toEqual({
@@ -1698,12 +1698,12 @@ describe('add white', () => {
 		expect(
 			down({
 				props: {
-					color: 'white',
+					color: 'color13_R4C1',
 				},
 			})
 		).toEqual({
 			props: {
-				color: 'black',
+				color: 'color1_R1C1',
 			},
 		})
 	})
@@ -2119,11 +2119,11 @@ describe('Adding label color to note shapes', () => {
 	const { up, down } = getTestMigration(noteShapeVersions.AddLabelColor)
 
 	test('up works as expected', () => {
-		expect(up({ props: {} })).toEqual({ props: { labelColor: 'black' } })
+		expect(up({ props: {} })).toEqual({ props: { labelColor: 'color1_R1C1' } })
 	})
 
 	test('down works as expected', () => {
-		expect(down({ props: { labelColor: 'black' } })).toEqual({ props: {} })
+		expect(down({ props: { labelColor: 'color1_R1C1' } })).toEqual({ props: {} })
 	})
 })
 
@@ -2195,11 +2195,11 @@ describe('Adding color to frame shapes', () => {
 	const { up, down } = getTestMigration(frameShapeVersions.AddColorProp)
 
 	test('up works as expected', () => {
-		expect(up({ props: {} })).toEqual({ props: { color: 'black' } })
+		expect(up({ props: {} })).toEqual({ props: { color: 'color1_R1C1' } })
 	})
 
 	test('down works as expected', () => {
-		expect(down({ props: { color: 'black' } })).toEqual({ props: {} })
+		expect(down({ props: { color: 'color1_R1C1' } })).toEqual({ props: {} })
 	})
 })
 

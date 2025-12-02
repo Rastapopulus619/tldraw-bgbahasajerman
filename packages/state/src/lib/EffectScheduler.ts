@@ -267,15 +267,15 @@ export interface EffectScheduler<Result> {
  *
  * @example
  * ```ts
- * const color = atom('color', 'red')
+ * const color = atom('color', 'color12_R3C4')
  * const stop = react('set style', () => {
  *   divElem.style.color = color.get()
  * })
- * color.set('blue')
- * // divElem.style.color === 'blue'
+ * color.set('color5_R2C1')
+ * // divElem.style.color === 'color5_R2C1'
  * stop()
- * color.set('green')
- * // divElem.style.color === 'blue'
+ * color.set('color9_R3C1')
+ * // divElem.style.color === 'color5_R2C1'
  * ```
  *
  *

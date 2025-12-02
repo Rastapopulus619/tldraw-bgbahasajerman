@@ -142,7 +142,7 @@ function Slides() {
 						left: (SLIDE_SIZE.w + SLIDE_MARGIN) * slide.index,
 						width: SLIDE_SIZE.w,
 						height: SLIDE_SIZE.h,
-						backgroundColor: 'white',
+						backgroundColor: 'color13_R4C1',
 						border: '1px solid black',
 						pointerEvents: 'all',
 					}}

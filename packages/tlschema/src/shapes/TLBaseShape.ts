@@ -146,7 +146,7 @@ export const shapeIdValidator = idValidator<TLShapeId>('shape')
  *   props: {
  *     width: 150,
  *     height: 100,
- *     color: 'red'
+ *     color: 'color12_R3C4'
  *   }
  * }
  *

@@ -86,7 +86,7 @@ export function CustomRenderer() {
 				} else {
 					// Draw any other kind of shape
 					const bounds = editor.getShapeGeometry(shape).bounds
-					ctx.strokeStyle = 'black'
+					ctx.strokeStyle = 'color1_R1C1'
 					ctx.lineWidth = 2
 					ctx.strokeRect(bounds.minX, bounds.minY, bounds.width, bounds.height)
 				}

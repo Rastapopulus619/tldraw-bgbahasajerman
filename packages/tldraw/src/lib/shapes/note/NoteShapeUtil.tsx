@@ -104,13 +104,13 @@ export class NoteShapeUtil extends ShapeUtil<TLNoteShape> {
 
 	getDefaultProps(): TLNoteShape['props'] {
 		return {
-			color: 'black',
+			color: 'color1_R1C1',
 			richText: toRichText(''),
 			size: 'm',
 			font: 'draw',
 			align: 'middle',
 			verticalAlign: 'middle',
-			labelColor: 'black',
+			labelColor: 'color1_R1C1',
 			growY: 0,
 			fontSizeAdjustment: 0,
 			url: '',
@@ -311,7 +311,7 @@ export class NoteShapeUtil extends ShapeUtil<TLNoteShape> {
 							richText={richText}
 							isSelected={isSelected}
 							labelColor={
-								labelColor === 'black'
+								labelColor === 'color1_R1C1'
 									? getColorValue(theme, color, 'noteText')
 									: getColorValue(theme, labelColor, 'fill')
 							}

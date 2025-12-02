@@ -37,8 +37,8 @@ describe('Editor.styles', () => {
 		editor.select(defaultShapesIds.box1)
 		expect(asPlainObject(editor.getSharedStyles())).toStrictEqual({
 			'tldraw:horizontalAlign': { type: 'shared', value: 'middle' },
-			'tldraw:labelColor': { type: 'shared', value: 'black' },
-			'tldraw:color': { type: 'shared', value: 'black' },
+			'tldraw:labelColor': { type: 'shared', value: 'color1_R1C1' },
+			'tldraw:color': { type: 'shared', value: 'color1_R1C1' },
 			'tldraw:dash': { type: 'shared', value: 'draw' },
 			'tldraw:fill': { type: 'shared', value: 'none' },
 			'tldraw:size': { type: 'shared', value: 'm' },
@@ -52,8 +52,8 @@ describe('Editor.styles', () => {
 		editor.select(defaultShapesIds.box1, defaultShapesIds.box2)
 		expect(asPlainObject(editor.getSharedStyles())).toStrictEqual({
 			'tldraw:horizontalAlign': { type: 'shared', value: 'middle' },
-			'tldraw:labelColor': { type: 'shared', value: 'black' },
-			'tldraw:color': { type: 'shared', value: 'black' },
+			'tldraw:labelColor': { type: 'shared', value: 'color1_R1C1' },
+			'tldraw:color': { type: 'shared', value: 'color1_R1C1' },
 			'tldraw:dash': { type: 'shared', value: 'draw' },
 			'tldraw:fill': { type: 'shared', value: 'none' },
 			'tldraw:size': { type: 'shared', value: 'm' },
@@ -68,7 +68,7 @@ describe('Editor.styles', () => {
 			{
 				id: defaultShapesIds.box1,
 				type: 'geo',
-				props: { h: 200, w: 200, color: 'red', dash: 'solid' },
+				props: { h: 200, w: 200, color: 'color12_R3C4', dash: 'solid' },
 			},
 		])
 
@@ -76,7 +76,7 @@ describe('Editor.styles', () => {
 
 		expect(asPlainObject(editor.getSharedStyles())).toStrictEqual({
 			'tldraw:horizontalAlign': { type: 'shared', value: 'middle' },
-			'tldraw:labelColor': { type: 'shared', value: 'black' },
+			'tldraw:labelColor': { type: 'shared', value: 'color1_R1C1' },
 			'tldraw:color': { type: 'mixed' },
 			'tldraw:dash': { type: 'mixed' },
 			'tldraw:fill': { type: 'shared', value: 'none' },
@@ -92,7 +92,7 @@ describe('Editor.styles', () => {
 			{
 				id: defaultShapesIds.box1,
 				type: 'geo',
-				props: { h: 200, w: 200, color: 'red', dash: 'solid' },
+				props: { h: 200, w: 200, color: 'color12_R3C4', dash: 'solid' },
 			},
 			{
 				id: defaultShapesIds.box2,
@@ -121,7 +121,7 @@ describe('Editor.styles', () => {
 			'tldraw:font': { type: 'mixed' },
 			'tldraw:geo': { type: 'mixed' },
 			'tldraw:horizontalAlign': { type: 'mixed' },
-			'tldraw:labelColor': { type: 'shared', value: 'black' },
+			'tldraw:labelColor': { type: 'shared', value: 'color1_R1C1' },
 			'tldraw:size': { type: 'mixed' },
 			'tldraw:verticalAlign': { type: 'mixed' },
 		})
@@ -148,16 +148,16 @@ describe('Editor.styles', () => {
 describe('Editor.setStyle', () => {
 	it('should set style for selected shapes', () => {
 		const ids = editor.createShapesFromJsx([
-			<TL.geo ref="A" x={0} y={0} color="blue" />,
-			<TL.geo ref="B" x={0} y={0} color="green" />,
+			<TL.geo ref="A" x={0} y={0} color="color5_R2C1" />,
+			<TL.geo ref="B" x={0} y={0} color="color9_R3C1" />,
 		])
 
 		editor.setSelectedShapes([ids.A, ids.B])
-		editor.setStyleForSelectedShapes(DefaultColorStyle, 'red')
-		editor.setStyleForNextShapes(DefaultColorStyle, 'red')
+		editor.setStyleForSelectedShapes(DefaultColorStyle, 'color12_R3C4')
+		editor.setStyleForNextShapes(DefaultColorStyle, 'color12_R3C4')
 
-		expect(editor.getShape<TLGeoShape>(ids.A)!.props.color).toBe('red')
-		expect(editor.getShape<TLGeoShape>(ids.B)!.props.color).toBe('red')
+		expect(editor.getShape<TLGeoShape>(ids.A)!.props.color).toBe('color12_R3C4')
+		expect(editor.getShape<TLGeoShape>(ids.B)!.props.color).toBe('color12_R3C4')
 	})
 
 	it('should traverse into groups and set styles in their children', () => {
@@ -173,16 +173,16 @@ describe('Editor.setStyle', () => {
 		])
 
 		editor.setSelectedShapes([ids.groupA])
-		editor.setStyleForSelectedShapes(DefaultColorStyle, 'red')
-		editor.setStyleForNextShapes(DefaultColorStyle, 'red')
+		editor.setStyleForSelectedShapes(DefaultColorStyle, 'color12_R3C4')
+		editor.setStyleForNextShapes(DefaultColorStyle, 'color12_R3C4')
 
 		// a wasn't selected...
-		expect(editor.getShape<TLGeoShape>(ids.boxA)!.props.color).toBe('black')
+		expect(editor.getShape<TLGeoShape>(ids.boxA)!.props.color).toBe('color1_R1C1')
 
 		// b, c, & d were within a selected group...
-		expect(editor.getShape<TLGeoShape>(ids.boxB)!.props.color).toBe('red')
-		expect(editor.getShape<TLGeoShape>(ids.boxC)!.props.color).toBe('red')
-		expect(editor.getShape<TLGeoShape>(ids.boxD)!.props.color).toBe('red')
+		expect(editor.getShape<TLGeoShape>(ids.boxB)!.props.color).toBe('color12_R3C4')
+		expect(editor.getShape<TLGeoShape>(ids.boxC)!.props.color).toBe('color12_R3C4')
+		expect(editor.getShape<TLGeoShape>(ids.boxD)!.props.color).toBe('color12_R3C4')
 
 		// groups get skipped
 		expect(editor.getShape<TLGroupShape>(ids.groupA)!.props).not.toHaveProperty('color')
@@ -190,11 +190,11 @@ describe('Editor.setStyle', () => {
 	})
 
 	it('stores styles on stylesForNextShape', () => {
-		editor.setStyleForSelectedShapes(DefaultColorStyle, 'red')
-		editor.setStyleForNextShapes(DefaultColorStyle, 'red')
-		expect(editor.getInstanceState().stylesForNextShape[DefaultColorStyle.id]).toBe('red')
-		editor.setStyleForSelectedShapes(DefaultColorStyle, 'green')
-		editor.setStyleForNextShapes(DefaultColorStyle, 'green')
-		expect(editor.getInstanceState().stylesForNextShape[DefaultColorStyle.id]).toBe('green')
+		editor.setStyleForSelectedShapes(DefaultColorStyle, 'color12_R3C4')
+		editor.setStyleForNextShapes(DefaultColorStyle, 'color12_R3C4')
+		expect(editor.getInstanceState().stylesForNextShape[DefaultColorStyle.id]).toBe('color12_R3C4')
+		editor.setStyleForSelectedShapes(DefaultColorStyle, 'color9_R3C1')
+		editor.setStyleForNextShapes(DefaultColorStyle, 'color9_R3C1')
+		expect(editor.getInstanceState().stylesForNextShape[DefaultColorStyle.id]).toBe('color9_R3C1')
 	})
 })

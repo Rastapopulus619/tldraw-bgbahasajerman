@@ -65,7 +65,7 @@ test.describe('smoke tests', () => {
 			await page.evaluate(() => (editor.getSelectedShapes()[0] as TLGeoShape).props.color)
 
 		// change style
-		expect(await getSelectedShapeColor()).toBe('black')
+		expect(await getSelectedShapeColor()).toBe('color1_R1C1')
 
 		// when on a mobile device...
 		const hasMobileMenu = await toolbar.mobileStylesButton.isVisible()
@@ -77,7 +77,7 @@ test.describe('smoke tests', () => {
 
 		// Click the light-blue color
 		await page.getByTestId('style.color.light-blue').click()
-		expect(await getSelectedShapeColor()).toBe('light-blue')
+		expect(await getSelectedShapeColor()).toBe('color6_R2C2')
 
 		// now drag from blue to orange; the color should change as we drag
 		// but when we undo, we should ignore the colors which were changed
@@ -89,17 +89,17 @@ test.describe('smoke tests', () => {
 		// start a pointer down over the blue color button
 		await page.getByTestId('style.color.blue').hover()
 		await page.mouse.down()
-		expect(await getSelectedShapeColor()).toBe('blue')
+		expect(await getSelectedShapeColor()).toBe('color5_R2C1')
 
 		// now move across to the other colors before releasing
 		await page.getByTestId('style.color.light-blue').hover()
-		expect(await getSelectedShapeColor()).toBe('light-blue')
+		expect(await getSelectedShapeColor()).toBe('color6_R2C2')
 
 		await page.getByTestId('style.color.yellow').hover()
-		expect(await getSelectedShapeColor()).toBe('yellow')
+		expect(await getSelectedShapeColor()).toBe('color7_R2C3')
 
 		await page.getByTestId('style.color.orange').hover()
-		expect(await getSelectedShapeColor()).toBe('orange')
+		expect(await getSelectedShapeColor()).toBe('color8_R2C4')
 
 		await page.mouse.up()
 
@@ -108,14 +108,14 @@ test.describe('smoke tests', () => {
 		const redo = page.getByTestId('quick-actions.redo')
 
 		await undo.click() // orange -> light blue
-		expect(await getSelectedShapeColor()).toBe('light-blue') // skipping squashed colors!
+		expect(await getSelectedShapeColor()).toBe('color6_R2C2') // skipping squashed colors!
 
 		await redo.click() // light blue -> orange
-		expect(await getSelectedShapeColor()).toBe('orange') // skipping squashed colors!
+		expect(await getSelectedShapeColor()).toBe('color8_R2C4') // skipping squashed colors!
 
 		await undo.click() // orange -> light blue
 		await undo.click() // light blue -> black
-		expect(await getSelectedShapeColor()).toBe('black')
+		expect(await getSelectedShapeColor()).toBe('color1_R1C1')
 
 		await redo.click() // black -> light blue
 		await redo.click() // light-blue -> orange

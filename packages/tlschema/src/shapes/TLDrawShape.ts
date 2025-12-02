@@ -83,7 +83,7 @@ export interface TLDrawShapeProps {
  *   isLocked: false,
  *   opacity: 1,
  *   props: {
- *     color: 'black',
+ *     color: 'color1_R1C1',
  *     fill: 'none',
  *     dash: 'solid',
  *     size: 'm',
@@ -110,7 +110,7 @@ export type TLDrawShape = TLBaseShape<'draw', TLDrawShapeProps>
  * ```ts
  * // Validate draw shape properties
  * const props = {
- *   color: 'red',
+ *   color: 'color12_R3C4',
  *   fill: 'solid',
  *   segments: [{ type: 'free', points: [] }],
  *   isComplete: true

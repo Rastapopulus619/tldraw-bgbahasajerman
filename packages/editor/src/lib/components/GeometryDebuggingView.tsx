@@ -73,7 +73,7 @@ export const GeometryDebuggingView = track(function GeometryDebuggingView({
 					>
 						{showStroke && (
 							<g
-								stroke={geometry.debugColor ?? 'red'}
+								stroke={geometry.debugColor ?? 'color12_R3C4'}
 								opacity="1"
 								strokeWidth={2 / zoomLevel}
 								fill="none"
@@ -89,7 +89,7 @@ export const GeometryDebuggingView = track(function GeometryDebuggingView({
 									cy={v.y}
 									r={2 / zoomLevel}
 									fill={`hsl(${modulate(i, [0, vertices.length - 1], [120, 200])}, 100%, 50%)`}
-									stroke="black"
+									stroke="color1_R1C1"
 									strokeWidth={1 / zoomLevel}
 								/>
 							))}

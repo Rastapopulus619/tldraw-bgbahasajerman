@@ -1,6 +1,6 @@
 export function RaisedCWingSprite({
-	topWingColor = 'white',
-	bottomWingColor = 'white',
+	topWingColor = 'color13_R4C1',
+	bottomWingColor = 'color13_R4C1',
 }: {
 	topWingColor?: string
 	bottomWingColor?: string

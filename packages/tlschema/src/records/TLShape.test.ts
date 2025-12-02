@@ -41,12 +41,12 @@ describe('rootShapeMigrations', () => {
 			id: 'shape:test',
 			typeName: 'shape',
 			type: 'geo',
-			props: { opacity: '0.5', color: 'red' },
+			props: { opacity: '0.5', color: 'color12_R3C4' },
 		}
 		migration.up(record)
 		expect(record.opacity).toBe(0.5)
 		expect(record.props.opacity).toBeUndefined()
-		expect(record.props.color).toBe('red')
+		expect(record.props.color).toBe('color12_R3C4')
 
 		// Test down migration
 		migration.down!(record)
@@ -67,14 +67,14 @@ describe('rootShapeMigrations', () => {
 		expect(migration.down).toBeDefined()
 
 		// Up migration is noop
-		const record: any = { props: { color: 'white' } }
+		const record: any = { props: { color: 'color13_R4C1' } }
 		const original = { ...record }
 		migration.up(record)
 		expect(record).toEqual(original)
 
 		// Down migration converts white to black
 		migration.down!(record)
-		expect(record.props.color).toBe('black')
+		expect(record.props.color).toBe('color1_R1C1')
 	})
 })
 
@@ -144,7 +144,7 @@ describe('createShapeId', () => {
 
 describe('getShapePropKeysByStyle', () => {
 	it('should map style props to their keys', () => {
-		const colorStyle = StyleProp.define('color', { defaultValue: 'black' })
+		const colorStyle = StyleProp.define('color', { defaultValue: 'color1_R1C1' })
 		const sizeStyle = StyleProp.define('size', { defaultValue: 'm' })
 
 		const props = {
@@ -161,7 +161,7 @@ describe('getShapePropKeysByStyle', () => {
 	})
 
 	it('should throw error for duplicate style props', () => {
-		const colorStyle = StyleProp.define('color', { defaultValue: 'black' })
+		const colorStyle = StyleProp.define('color', { defaultValue: 'color1_R1C1' })
 		const props = {
 			color1: colorStyle,
 			color2: colorStyle, // Same style prop used twice
@@ -193,7 +193,7 @@ describe('createShapeRecordType', () => {
 				props: {
 					w: T.number,
 					h: T.number,
-					color: StyleProp.define('color', { defaultValue: 'black' }),
+					color: StyleProp.define('color', { defaultValue: 'color1_R1C1' }),
 				},
 				meta: {},
 			},

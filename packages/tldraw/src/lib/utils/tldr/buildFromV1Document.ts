@@ -829,18 +829,18 @@ export enum TLV1ShapeType {
 
 /** @internal */
 export enum TLV1ColorStyle {
-	White = 'white',
+	White = 'color13_R4C1',
 	LightGray = 'lightGray',
 	Gray = 'gray',
-	Black = 'black',
-	Green = 'green',
-	Cyan = 'cyan',
-	Blue = 'blue',
-	Indigo = 'indigo',
-	Violet = 'violet',
-	Red = 'red',
-	Orange = 'orange',
-	Yellow = 'yellow',
+	Black = 'color1_R1C1',
+	Green = 'color9_R3C1',
+	Cyan = 'color16_R4C4',
+	Blue = 'color5_R2C1',
+	Indigo = 'color24_R6C4',
+	Violet = 'color4_R1C4',
+	Red = 'color12_R3C4',
+	Orange = 'color8_R2C4',
+	Yellow = 'color7_R2C3',
 }
 
 /** @internal */
@@ -1102,18 +1102,18 @@ export interface TLV1Document {
 /* ------------------ Translations ------------------ */
 
 const v1ColorsToV2Colors: Record<TLV1ColorStyle, TLDefaultColorStyle> = {
-	[TLV1ColorStyle.White]: 'black',
-	[TLV1ColorStyle.Black]: 'black',
-	[TLV1ColorStyle.LightGray]: 'grey',
-	[TLV1ColorStyle.Gray]: 'grey',
-	[TLV1ColorStyle.Green]: 'light-green',
-	[TLV1ColorStyle.Cyan]: 'green',
-	[TLV1ColorStyle.Blue]: 'light-blue',
-	[TLV1ColorStyle.Indigo]: 'blue',
-	[TLV1ColorStyle.Orange]: 'orange',
-	[TLV1ColorStyle.Yellow]: 'yellow',
-	[TLV1ColorStyle.Red]: 'red',
-	[TLV1ColorStyle.Violet]: 'light-violet',
+	[TLV1ColorStyle.White]: 'color1_R1C1',
+	[TLV1ColorStyle.Black]: 'color1_R1C1',
+	[TLV1ColorStyle.LightGray]: 'color2_R1C2',
+	[TLV1ColorStyle.Gray]: 'color2_R1C2',
+	[TLV1ColorStyle.Green]: 'color10_R3C2',
+	[TLV1ColorStyle.Cyan]: 'color9_R3C1',
+	[TLV1ColorStyle.Blue]: 'color6_R2C2',
+	[TLV1ColorStyle.Indigo]: 'color5_R2C1',
+	[TLV1ColorStyle.Orange]: 'color8_R2C4',
+	[TLV1ColorStyle.Yellow]: 'color7_R2C3',
+	[TLV1ColorStyle.Red]: 'color12_R3C4',
+	[TLV1ColorStyle.Violet]: 'color3_R1C3',
 }
 
 const v1FontsToV2Fonts: Record<TLV1FontStyle, TLDefaultFontStyle> = {
@@ -1157,7 +1157,7 @@ const v1DashesToV2Dashes: Record<TLV1DashStyle, TLDefaultDashStyle> = {
 }
 
 function getV2Color(color: TLV1ColorStyle | undefined): TLDefaultColorStyle {
-	return color ? (v1ColorsToV2Colors[color] ?? 'black') : 'black'
+	return color ? (v1ColorsToV2Colors[color] ?? 'color1_R1C1') : 'color1_R1C1'
 }
 
 function getV2Font(font: TLV1FontStyle | undefined): TLDefaultFontStyle {

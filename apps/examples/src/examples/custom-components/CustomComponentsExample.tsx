@@ -15,7 +15,7 @@ const components: TLEditorComponents = {
 
 		return (
 			<svg ref={rSvg} className="tl-overlays__item">
-				<rect className="tl-brush" stroke="red" fill="none" width={w} height={h} />
+				<rect className="tl-brush" stroke="color12_R3C4" fill="none" width={w} height={h} />
 			</svg>
 		)
 	},
@@ -24,7 +24,7 @@ const components: TLEditorComponents = {
 			<svg className="tl-overlays__item">
 				<polyline
 					points={scribble.points.map((p) => `${p.x},${p.y}`).join(' ')}
-					stroke={color ?? 'black'}
+					stroke={color ?? 'color1_R1C1'}
 					opacity={opacity ?? '1'}
 					fill="none"
 				/>

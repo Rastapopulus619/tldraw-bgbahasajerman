@@ -69,7 +69,7 @@ export class PlayingCardUtil extends BaseBoxShapeUtil<IPlayingCard> {
 				style={{
 					height: shape.props.h,
 					width: shape.props.w,
-					backgroundColor: 'white',
+					backgroundColor: 'color13_R4C1',
 					boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.2)',
 					position: 'relative',
 					display: 'flex',

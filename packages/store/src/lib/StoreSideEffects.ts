@@ -560,10 +560,10 @@ export class StoreSideEffects<R extends UnknownRecord> {
 	 * @example
 	 * ```ts
 	 * editor.sideEffects.registerAfterChangeHandler('shape', (prev, next, source) => {
-	 *     if (next.props.color === 'red') {
+	 *     if (next.props.color === 'color12_R3C4') {
 	 *         // there can only be one red shape at a time:
-	 *         const otherRedShapes = editor.getCurrentPageShapes().filter(s => s.props.color === 'red' && s.id !== next.id)
-	 *         editor.updateShapes(otherRedShapes.map(s => ({...s, props: {...s.props, color: 'blue'}})))
+	 *         const otherRedShapes = editor.getCurrentPageShapes().filter(s => s.props.color === 'color12_R3C4' && s.id !== next.id)
+	 *         editor.updateShapes(otherRedShapes.map(s => ({...s, props: {...s.props, color: 'color5_R2C1'}})))
 	 *     }
 	 * })
 	 * ```
@@ -594,7 +594,7 @@ export class StoreSideEffects<R extends UnknownRecord> {
 	 * @example
 	 * ```ts
 	 * editor.sideEffects.registerBeforeDeleteHandler('shape', (shape, source) => {
-	 *     if (shape.props.color === 'red') {
+	 *     if (shape.props.color === 'color12_R3C4') {
 	 *         // prevent red shapes from being deleted
 	 * 	       return false
 	 *     }

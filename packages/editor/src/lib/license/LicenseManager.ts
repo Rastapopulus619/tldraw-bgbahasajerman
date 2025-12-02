@@ -433,8 +433,8 @@ export class LicenseManager {
 		if (this.verbose) {
 			this.outputDelimiter()
 			for (const message of messages) {
-				const color = type === 'warning' ? 'orange' : 'crimson'
-				const bgColor = type === 'warning' ? 'orange' : 'crimson'
+				const color = type === 'warning' ? 'color8_R2C4' : 'crimson'
+				const bgColor = type === 'warning' ? 'color8_R2C4' : 'crimson'
 				// eslint-disable-next-line no-console
 				console.log(
 					`%c${message}`,

@@ -86,7 +86,7 @@ export class SpeechBubbleUtil extends ShapeUtil<SpeechBubbleShape> {
 		return {
 			w: 200,
 			h: 130,
-			color: 'black',
+			color: 'color1_R1C1',
 			size: 'm',
 			font: 'draw',
 			align: 'middle',

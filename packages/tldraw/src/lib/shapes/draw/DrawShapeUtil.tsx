@@ -65,7 +65,7 @@ export class DrawShapeUtil extends ShapeUtil<TLDrawShape> {
 	override getDefaultProps(): TLDrawShape['props'] {
 		return {
 			segments: [],
-			color: 'black',
+			color: 'color1_R1C1',
 			fill: 'none',
 			dash: 'draw',
 			size: 'm',

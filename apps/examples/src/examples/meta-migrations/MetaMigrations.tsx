@@ -15,15 +15,15 @@ import { components } from './ui-overrides'
  * Let's say you added some page metadata, e.g. to allow setting the background color of a page independently.
  */
 interface _PageMetaV1 {
-	backgroundTheme?: 'red' | 'blue' | 'green' | 'purple'
+	backgroundTheme?: 'color12_R3C4' | 'color5_R2C1' | 'color9_R3C1' | 'color23_R6C3'
 }
 
 /**
- * And then perhaps later on you decided to remove support for 'purple' because it's an ugly color.
+ * And then perhaps later on you decided to remove support for 'color23_R6C3' because it's an ugly color.
  * So all purple pages will become blue.
  */
 export interface PageMetaV2 {
-	backgroundTheme?: 'red' | 'blue' | 'green'
+	backgroundTheme?: 'color12_R3C4' | 'color5_R2C1' | 'color9_R3C1'
 }
 
 /**
@@ -49,8 +49,8 @@ const migrations = createMigrationSequence({
 			filter: (record) => record.typeName === 'page',
 			// This up function will be called on all records that match the filter
 			up(page: any) {
-				if (page.meta.backgroundTheme === 'purple') {
-					page.meta.backgroundTheme = 'blue'
+				if (page.meta.backgroundTheme === 'color23_R6C3') {
+					page.meta.backgroundTheme = 'color5_R2C1'
 					page.name += ' (was purple)'
 				}
 			},

@@ -1498,10 +1498,10 @@ export function model<T extends { readonly id: string }>(
  * @throws ValidationError When the value is not in the allowed set
  * @example
  * ```ts
- * const allowedColors = new Set(['red', 'green', 'blue'] as const)
+ * const allowedColors = new Set(['color12_R3C4', 'color9_R3C1', 'color5_R2C1'] as const)
  * const colorValidator = T.setEnum(allowedColors)
- * colorValidator.validate('red') // Returns 'red'
- * colorValidator.validate('yellow') // Throws ValidationError
+ * colorValidator.validate('color12_R3C4') // Returns 'color12_R3C4'
+ * colorValidator.validate('color7_R2C3') // Throws ValidationError
  * ```
  * @public
  */
@@ -1587,7 +1587,7 @@ export function nullable<T>(validator: Validatable<T>): Validator<T | null> {
  * ```ts
  * const themeValidator = T.literalEnum('light', 'dark', 'auto')
  * themeValidator.validate('light') // Returns 'light'
- * themeValidator.validate('blue') // Throws ValidationError: Expected "light" or "dark" or "auto", got blue
+ * themeValidator.validate('color5_R2C1') // Throws ValidationError: Expected "light" or "dark" or "auto", got blue
  * ```
  * @public
  */

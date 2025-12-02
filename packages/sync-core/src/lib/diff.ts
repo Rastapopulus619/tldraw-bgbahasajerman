@@ -170,13 +170,13 @@ export interface ObjectDiff {
  *
  * @example
  * ```ts
- * const oldShape = { id: 'shape:1', x: 100, y: 200, props: { color: 'red' } }
- * const newShape = { id: 'shape:1', x: 150, y: 200, props: { color: 'blue' } }
+ * const oldShape = { id: 'shape:1', x: 100, y: 200, props: { color: 'color12_R3C4' } }
+ * const newShape = { id: 'shape:1', x: 150, y: 200, props: { color: 'color5_R2C1' } }
  *
  * const diff = diffRecord(oldShape, newShape)
  * // Returns: {
  * //   x: ['put', 150],
- * //   props: ['patch', { color: ['put', 'blue'] }]
+ * //   props: ['patch', { color: ['put', 'color5_R2C1'] }]
  * // }
  * ```
  *
@@ -316,14 +316,14 @@ function diffArray(
  *
  * @example
  * ```ts
- * const original = { x: 100, y: 200, props: { color: 'red' } }
+ * const original = { x: 100, y: 200, props: { color: 'color12_R3C4' } }
  * const diff = {
  *   x: ['put', 150],
- *   props: ['patch', { color: ['put', 'blue'] }]
+ *   props: ['patch', { color: ['put', 'color5_R2C1'] }]
  * }
  *
  * const updated = applyObjectDiff(original, diff)
- * // Returns: { x: 150, y: 200, props: { color: 'blue' } }
+ * // Returns: { x: 150, y: 200, props: { color: 'color5_R2C1' } }
  * ```
  *
  * @internal

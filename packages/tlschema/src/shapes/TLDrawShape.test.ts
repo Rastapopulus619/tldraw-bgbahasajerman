@@ -41,7 +41,7 @@ describe('TLDrawShape', () => {
 			const fullValidator = T.object(drawShapeProps)
 
 			const validProps = {
-				color: 'red' as const,
+				color: 'color12_R3C4' as const,
 				fill: 'solid' as const,
 				dash: 'dashed' as const,
 				size: 'l' as const,
@@ -149,7 +149,7 @@ describe('TLDrawShape', () => {
 		it('should add scale property with default value 1', () => {
 			const oldRecord = {
 				props: {
-					color: 'blue',
+					color: 'color5_R2C1',
 					segments: [{ type: 'free', points: [{ x: 0, y: 0 }] }],
 					isPen: false,
 				},
@@ -162,7 +162,7 @@ describe('TLDrawShape', () => {
 		it('should remove scale property on down migration', () => {
 			const newRecord = {
 				props: {
-					color: 'blue',
+					color: 'color5_R2C1',
 					segments: [{ type: 'free', points: [{ x: 0, y: 0 }] }],
 					isPen: false,
 					scale: 1.5,
@@ -171,7 +171,7 @@ describe('TLDrawShape', () => {
 
 			const result = down(newRecord)
 			expect(result.props.scale).toBeUndefined()
-			expect(result.props.color).toBe('blue') // Other props preserved
+			expect(result.props.color).toBe('color5_R2C1') // Other props preserved
 		})
 	})
 })

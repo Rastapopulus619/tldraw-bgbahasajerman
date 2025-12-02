@@ -15,6 +15,7 @@ import { ActionsProvider } from './actions'
 import { AssetUrlsProvider } from './asset-urls'
 import { BreakPointProvider } from './breakpoints'
 import { TLUiComponents, TldrawUiComponentsProvider } from './components'
+import { CustomColorProvider } from './custom-colors'
 import { TldrawUiDialogsProvider } from './dialogs'
 import { TLUiEventHandler, TldrawUiEventsProvider } from './events'
 import { TldrawUiToastsProvider } from './toasts'
@@ -84,9 +85,11 @@ export const TldrawUiContextProvider = track(function TldrawUiContextProvider({
 								<TldrawUiDialogsProvider context={'tla'}>
 									<TldrawUiA11yProvider>
 										<BreakPointProvider forceMobile={forceMobile}>
-											<TldrawUiComponentsProvider overrides={components}>
-												<InternalProviders overrides={overrides}>{children}</InternalProviders>
-											</TldrawUiComponentsProvider>
+											<CustomColorProvider>
+												<TldrawUiComponentsProvider overrides={components}>
+													<InternalProviders overrides={overrides}>{children}</InternalProviders>
+												</TldrawUiComponentsProvider>
+											</CustomColorProvider>
 										</BreakPointProvider>
 									</TldrawUiA11yProvider>
 								</TldrawUiDialogsProvider>

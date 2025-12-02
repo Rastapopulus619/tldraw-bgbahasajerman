@@ -8,7 +8,7 @@ function TestInFrontOfTheCanvas() {
 	return (
 		<div data-testid="in-front-element">
 			<button data-testid="front-button">Click me</button>
-			<div data-testid="front-div" style={{ width: 100, height: 100, background: 'red' }} />
+			<div data-testid="front-div" style={{ width: 100, height: 100, background: 'color12_R3C4' }} />
 		</div>
 	)
 }

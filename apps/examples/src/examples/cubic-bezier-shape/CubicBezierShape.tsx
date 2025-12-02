@@ -97,7 +97,7 @@ export class BezierCurveShapeUtil extends ShapeUtil<MyBezierCurveShape> {
 
 	override toSvg(shape: MyBezierCurveShape) {
 		const path = this.getGeometry(shape).getSvgPathData(true)
-		return <path d={path} stroke="black" fill="transparent" strokeWidth={2} />
+		return <path d={path} stroke="color1_R1C1" fill="transparent" strokeWidth={2} />
 	}
 
 	// [5]
@@ -298,7 +298,7 @@ export class BezierCurveShapeUtil extends ShapeUtil<MyBezierCurveShape> {
 		return (
 			<HTMLContainer>
 				<svg className="tl-svg-container">
-					<path d={path} stroke="black" fill="transparent" />
+					<path d={path} stroke="color1_R1C1" fill="transparent" />
 					<>
 						{this.shouldShowControlLines(shape) && (
 							<>
@@ -307,7 +307,7 @@ export class BezierCurveShapeUtil extends ShapeUtil<MyBezierCurveShape> {
 									y1={start.y}
 									x2={cp1.x}
 									y2={cp1.y}
-									stroke="black"
+									stroke="color1_R1C1"
 									strokeWidth={1 / zoomLevel}
 									strokeDasharray={`${6 / zoomLevel} ${6 / zoomLevel}`}
 									opacity={0.5}
@@ -317,7 +317,7 @@ export class BezierCurveShapeUtil extends ShapeUtil<MyBezierCurveShape> {
 									y1={end.y}
 									x2={cp2.x}
 									y2={cp2.y}
-									stroke="black"
+									stroke="color1_R1C1"
 									strokeWidth={1 / zoomLevel}
 									strokeDasharray={`${6 / zoomLevel} ${6 / zoomLevel}`}
 									opacity={0.5}

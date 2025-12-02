@@ -117,7 +117,7 @@ it('updates shapes', () => {
 		props: {
 			h: 100,
 			w: 100,
-			color: 'black',
+			color: 'color1_R1C1',
 			dash: 'draw',
 			fill: 'none',
 			size: 'm',
@@ -136,7 +136,7 @@ it('updates shapes', () => {
 		props: {
 			h: 100,
 			w: 100,
-			color: 'black',
+			color: 'color1_R1C1',
 			dash: 'draw',
 			fill: 'none',
 			size: 'm',
@@ -155,7 +155,7 @@ it('updates shapes', () => {
 		props: {
 			h: 100,
 			w: 100,
-			color: 'black',
+			color: 'color1_R1C1',
 			dash: 'draw',
 			fill: 'none',
 			size: 'm',

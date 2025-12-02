@@ -660,10 +660,10 @@ export class GlobShapeUtil extends ShapeUtil<GlobShape> {
 				<path
 					pointerEvents="none"
 					d={pathBuilder.toD()}
-					stroke="black"
+					stroke="color1_R1C1"
 					strokeWidth={2 / zoomLevel}
 					opacity={0.25}
-					fill="blue"
+					fill="color5_R2C1"
 				/>
 			</SVGContainer>
 		)
@@ -680,7 +680,7 @@ export class GlobShapeUtil extends ShapeUtil<GlobShape> {
 			style: 'solid',
 			strokeWidth: 2,
 			forceSolid: false,
-			props: { stroke: 'black', fill: 'black' },
+			props: { stroke: 'color1_R1C1', fill: 'color1_R1C1' },
 		})
 	}
 
@@ -970,8 +970,8 @@ export const GlobShape = track(function GlobShape({
 			)}
 			<path
 				d={pathBuilder.toD()}
-				stroke="black"
-				fill={fillGlob ? 'black' : 'white'}
+				stroke="color1_R1C1"
+				fill={fillGlob ? 'color1_R1C1' : 'color13_R4C1'}
 				opacity={fillGlob ? 1 : 0.75}
 				strokeWidth={2 / zoomLevel}
 			/>

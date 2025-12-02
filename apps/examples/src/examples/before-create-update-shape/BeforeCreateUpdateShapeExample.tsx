@@ -52,7 +52,7 @@ export default function BeforeCreateUpdateShapeExample() {
 					// circle on the canvas showing where shapes are being constrained to.
 					OnTheCanvas: () => (
 						<SVGContainer>
-							<circle cx={0} cy={0} r={500} fill="none" stroke="black" />
+							<circle cx={0} cy={0} r={500} fill="none" stroke="color1_R1C1" />
 						</SVGContainer>
 					),
 				}}

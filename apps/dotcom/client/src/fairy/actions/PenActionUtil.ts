@@ -88,7 +88,7 @@ export class PenActionUtil extends AgentActionUtil<PenAction> {
 			x: minX,
 			y: minY,
 			props: {
-				color: asColor(action.color ?? 'black'),
+				color: asColor(action.color ?? 'color1_R1C1'),
 				fill: convertFocusFillToTldrawFill(action.fill ?? 'none'),
 				dash: 'draw',
 				size: 's',

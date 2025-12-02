@@ -30,7 +30,7 @@ export function MobileStylePanel() {
 	const currentColor =
 		color?.type === 'shared'
 			? getColorValue(theme, color.value as TLDefaultColorStyle, 'solid')
-			: getColorValue(theme, 'black', 'solid')
+			: getColorValue(theme, 'color1_R1C1', 'solid')
 
 	const disableStylePanel = useValue(
 		'disable style panel',

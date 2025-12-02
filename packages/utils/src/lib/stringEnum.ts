@@ -5,16 +5,16 @@
  * @returns An object where each provided string is both the key and value.
  * @example
  * ```ts
- * const Colors = stringEnum('red', 'green', 'blue')
- * // Results in: { red: 'red', green: 'green', blue: 'blue' }
+ * const Colors = stringEnum('color12_R3C4', 'color9_R3C1', 'color5_R2C1')
+ * // Results in: { red: 'color12_R3C4', green: 'color9_R3C1', blue: 'color5_R2C1' }
  *
  * // Type-safe usage
  * function setColor(color: keyof typeof Colors) {
  *   console.log(`Setting color to ${Colors[color]}`)
  * }
  *
- * setColor('red') // ✓ Valid
- * setColor('yellow') // ✗ TypeScript error
+ * setColor('color12_R3C4') // ✓ Valid
+ * setColor('color7_R2C3') // ✗ TypeScript error
  * ```
  * @internal
  */

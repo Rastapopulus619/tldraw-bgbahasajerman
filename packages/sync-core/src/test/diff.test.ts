@@ -293,17 +293,17 @@ describe('diffRecord comprehensive tests', () => {
 	})
 
 	it('should handle nested props changes', () => {
-		const prev = { id: 'test:1', props: { color: 'red', size: 'medium' } }
-		const next = { id: 'test:1', props: { color: 'blue', size: 'medium' } }
+		const prev = { id: 'test:1', props: { color: 'color12_R3C4', size: 'medium' } }
+		const next = { id: 'test:1', props: { color: 'color5_R2C1', size: 'medium' } }
 
 		expect(diffRecord(prev, next)).toEqual({
-			props: [ValueOpType.Patch, { color: [ValueOpType.Put, 'blue'] }],
+			props: [ValueOpType.Patch, { color: [ValueOpType.Put, 'color5_R2C1'] }],
 		})
 	})
 
 	it('should handle adding nested props', () => {
-		const prev = { id: 'test:1', props: { color: 'red' } }
-		const next = { id: 'test:1', props: { color: 'red', size: 'large' } }
+		const prev = { id: 'test:1', props: { color: 'color12_R3C4' } }
+		const next = { id: 'test:1', props: { color: 'color12_R3C4', size: 'large' } }
 
 		expect(diffRecord(prev, next)).toEqual({
 			props: [ValueOpType.Patch, { size: [ValueOpType.Put, 'large'] }],
@@ -311,8 +311,8 @@ describe('diffRecord comprehensive tests', () => {
 	})
 
 	it('should handle removing nested props', () => {
-		const prev = { id: 'test:1', props: { color: 'red', size: 'large' } }
-		const next = { id: 'test:1', props: { color: 'red' } }
+		const prev = { id: 'test:1', props: { color: 'color12_R3C4', size: 'large' } }
+		const next = { id: 'test:1', props: { color: 'color12_R3C4' } }
 
 		expect(diffRecord(prev, next)).toEqual({
 			props: [ValueOpType.Patch, { size: [ValueOpType.Delete] }],
@@ -680,7 +680,7 @@ describe('complex scenarios', () => {
 			x: 100,
 			y: 200,
 			props: {
-				color: 'red',
+				color: 'color12_R3C4',
 				size: 'medium',
 				geo: 'rectangle',
 			},
@@ -693,7 +693,7 @@ describe('complex scenarios', () => {
 			x: 150,
 			y: 200,
 			props: {
-				color: 'blue',
+				color: 'color5_R2C1',
 				size: 'medium',
 				geo: 'rectangle',
 			},
@@ -703,7 +703,7 @@ describe('complex scenarios', () => {
 		const diff = diffRecord(prev, next)
 		expect(diff).toBeTruthy()
 		expect(diff!.x).toEqual([ValueOpType.Put, 150])
-		expect(diff!.props).toEqual([ValueOpType.Patch, { color: [ValueOpType.Put, 'blue'] }])
+		expect(diff!.props).toEqual([ValueOpType.Patch, { color: [ValueOpType.Put, 'color5_R2C1'] }])
 		expect(diff!.meta).toBeTruthy()
 
 		// Apply the diff and verify result
@@ -771,14 +771,14 @@ describe('nested key primitive value bug', () => {
 	})
 
 	it('should still handle object changes in nested keys normally', () => {
-		const prev = { id: 'shape:1', props: { color: 'red' } }
-		const next = { id: 'shape:1', props: { color: 'blue' } }
+		const prev = { id: 'shape:1', props: { color: 'color12_R3C4' } }
+		const next = { id: 'shape:1', props: { color: 'color5_R2C1' } }
 
 		const diff = diffRecord(prev, next)
 
 		// Objects in nested keys should still use patch
 		expect(diff).toEqual({
-			props: [ValueOpType.Patch, { color: [ValueOpType.Put, 'blue'] }],
+			props: [ValueOpType.Patch, { color: [ValueOpType.Put, 'color5_R2C1'] }],
 		})
 	})
 })

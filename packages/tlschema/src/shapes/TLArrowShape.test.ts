@@ -7,7 +7,7 @@ describe('TLArrowShape', () => {
 		const { up, down } = getTestMigration(arrowShapeVersions.AddLabelColor)
 
 		describe('AddLabelColor up migration', () => {
-			it('should add labelColor property with default value "black"', () => {
+			it('should add labelColor property with default value "color1_R1C1"', () => {
 				const oldRecord = {
 					id: 'shape:arrow1',
 					typeName: 'shape',
@@ -20,7 +20,7 @@ describe('TLArrowShape', () => {
 					isLocked: false,
 					opacity: 1,
 					props: {
-						color: 'blue',
+						color: 'color5_R2C1',
 						fill: 'none',
 						dash: 'solid',
 						size: 'm',
@@ -34,8 +34,8 @@ describe('TLArrowShape', () => {
 				}
 
 				const result = up(oldRecord)
-				expect(result.props.labelColor).toBe('black')
-				expect(result.props.color).toBe('blue') // Preserve other props
+				expect(result.props.labelColor).toBe('color1_R1C1')
+				expect(result.props.color).toBe('color5_R2C1') // Preserve other props
 			})
 
 			it('should preserve all existing properties during migration', () => {
@@ -51,7 +51,7 @@ describe('TLArrowShape', () => {
 					isLocked: true,
 					opacity: 0.8,
 					props: {
-						color: 'red',
+						color: 'color12_R3C4',
 						fill: 'solid',
 						dash: 'dashed',
 						size: 'l',
@@ -65,8 +65,8 @@ describe('TLArrowShape', () => {
 				}
 
 				const result = up(oldRecord)
-				expect(result.props.labelColor).toBe('black')
-				expect(result.props.color).toBe('red')
+				expect(result.props.labelColor).toBe('color1_R1C1')
+				expect(result.props.color).toBe('color12_R3C4')
 				expect(result.props.fill).toBe('solid')
 				expect(result.props.dash).toBe('dashed')
 				expect(result.props.size).toBe('l')
@@ -84,13 +84,13 @@ describe('TLArrowShape', () => {
 					typeName: 'shape',
 					type: 'arrow',
 					props: {
-						labelColor: 'red', // Already has labelColor
-						color: 'blue',
+						labelColor: 'color12_R3C4', // Already has labelColor
+						color: 'color5_R2C1',
 					},
 				}
 
 				const result = up(recordWithLabelColor)
-				expect(result.props.labelColor).toBe('black') // Migration sets default regardless
+				expect(result.props.labelColor).toBe('color1_R1C1') // Migration sets default regardless
 			})
 		})
 
@@ -238,7 +238,7 @@ describe('TLArrowShape', () => {
 				const oldRecord = {
 					id: 'shape:arrow1',
 					props: {
-						color: 'blue',
+						color: 'color5_R2C1',
 						start: { x: 0, y: 0 },
 						end: { x: 100, y: 100 },
 					},
@@ -252,7 +252,7 @@ describe('TLArrowShape', () => {
 				const oldRecord = {
 					id: 'shape:arrow1',
 					props: {
-						color: 'red',
+						color: 'color12_R3C4',
 						fill: 'solid',
 						start: { x: 25, y: 50 },
 						end: { x: 200, y: 150 },
@@ -262,7 +262,7 @@ describe('TLArrowShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.labelPosition).toBe(0.5)
-				expect(result.props.color).toBe('red')
+				expect(result.props.color).toBe('color12_R3C4')
 				expect(result.props.fill).toBe('solid')
 				expect(result.props.start).toEqual({ x: 25, y: 50 })
 				expect(result.props.end).toEqual({ x: 200, y: 150 })
@@ -275,7 +275,7 @@ describe('TLArrowShape', () => {
 				const newRecord = {
 					id: 'shape:arrow1',
 					props: {
-						color: 'blue',
+						color: 'color5_R2C1',
 						start: { x: 0, y: 0 },
 						end: { x: 100, y: 100 },
 						labelPosition: 0.7,
@@ -284,7 +284,7 @@ describe('TLArrowShape', () => {
 
 				const result = down(newRecord)
 				expect(result.props.labelPosition).toBeUndefined()
-				expect(result.props.color).toBe('blue') // Preserve other props
+				expect(result.props.color).toBe('color5_R2C1') // Preserve other props
 			})
 		})
 	})
@@ -322,7 +322,7 @@ describe('TLArrowShape', () => {
 				const oldRecord = {
 					id: 'shape:arrow1',
 					props: {
-						color: 'blue',
+						color: 'color5_R2C1',
 						start: { x: 0, y: 0 },
 						end: { x: 100, y: 100 },
 					},
@@ -336,7 +336,7 @@ describe('TLArrowShape', () => {
 				const oldRecord = {
 					id: 'shape:arrow1',
 					props: {
-						color: 'red',
+						color: 'color12_R3C4',
 						labelPosition: 0.3,
 						start: { x: 10, y: 20 },
 						end: { x: 200, y: 150 },
@@ -345,7 +345,7 @@ describe('TLArrowShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.scale).toBe(1)
-				expect(result.props.color).toBe('red')
+				expect(result.props.color).toBe('color12_R3C4')
 				expect(result.props.labelPosition).toBe(0.3)
 			})
 		})
@@ -355,7 +355,7 @@ describe('TLArrowShape', () => {
 				const newRecord = {
 					id: 'shape:arrow1',
 					props: {
-						color: 'blue',
+						color: 'color5_R2C1',
 						start: { x: 0, y: 0 },
 						end: { x: 100, y: 100 },
 						scale: 1.5,
@@ -364,7 +364,7 @@ describe('TLArrowShape', () => {
 
 				const result = down(newRecord)
 				expect(result.props.scale).toBeUndefined()
-				expect(result.props.color).toBe('blue') // Preserve other props
+				expect(result.props.color).toBe('color5_R2C1') // Preserve other props
 			})
 		})
 	})
@@ -377,7 +377,7 @@ describe('TLArrowShape', () => {
 				const oldRecord = {
 					id: 'shape:arrow1',
 					props: {
-						color: 'blue',
+						color: 'color5_R2C1',
 						start: { x: 0, y: 0 },
 						end: { x: 100, y: 100 },
 					},
@@ -392,7 +392,7 @@ describe('TLArrowShape', () => {
 				const oldRecord = {
 					id: 'shape:arrow1',
 					props: {
-						color: 'red',
+						color: 'color12_R3C4',
 						scale: 1.2,
 						labelPosition: 0.7,
 						start: { x: 25, y: 50 },
@@ -403,7 +403,7 @@ describe('TLArrowShape', () => {
 				const result = up(oldRecord)
 				expect(result.props.kind).toBe('arc')
 				expect(result.props.elbowMidPoint).toBe(0.5)
-				expect(result.props.color).toBe('red')
+				expect(result.props.color).toBe('color12_R3C4')
 				expect(result.props.scale).toBe(1.2)
 				expect(result.props.labelPosition).toBe(0.7)
 			})
@@ -416,7 +416,7 @@ describe('TLArrowShape', () => {
 					props: {
 						kind: 'elbow',
 						elbowMidPoint: 0.3,
-						color: 'blue',
+						color: 'color5_R2C1',
 						start: { x: 0, y: 0 },
 						end: { x: 100, y: 100 },
 					},
@@ -425,7 +425,7 @@ describe('TLArrowShape', () => {
 				const result = down(newRecord)
 				expect(result.props.kind).toBeUndefined()
 				expect(result.props.elbowMidPoint).toBeUndefined()
-				expect(result.props.color).toBe('blue') // Preserve other props
+				expect(result.props.color).toBe('color5_R2C1') // Preserve other props
 			})
 		})
 	})
@@ -439,7 +439,7 @@ describe('TLArrowShape', () => {
 					id: 'shape:arrow1',
 					props: {
 						text: 'Simple text label',
-						color: 'blue',
+						color: 'color5_R2C1',
 						start: { x: 0, y: 0 },
 						end: { x: 100, y: 100 },
 					},
@@ -455,7 +455,7 @@ describe('TLArrowShape', () => {
 					id: 'shape:arrow1',
 					props: {
 						text: '',
-						color: 'red',
+						color: 'color12_R3C4',
 						start: { x: 10, y: 20 },
 						end: { x: 200, y: 150 },
 					},
@@ -473,7 +473,7 @@ describe('TLArrowShape', () => {
 						text: 'Label text',
 						kind: 'elbow',
 						elbowMidPoint: 0.3,
-						color: 'green',
+						color: 'color9_R3C1',
 						scale: 1.5,
 					},
 				}
@@ -483,7 +483,7 @@ describe('TLArrowShape', () => {
 				expect(result.props.text).toBeUndefined()
 				expect(result.props.kind).toBe('elbow')
 				expect(result.props.elbowMidPoint).toBe(0.3)
-				expect(result.props.color).toBe('green')
+				expect(result.props.color).toBe('color9_R3C1')
 				expect(result.props.scale).toBe(1.5)
 			})
 		})

@@ -821,7 +821,7 @@ export const createDefaultShapes = (): TLShapePartial[] => [
 		props: {
 			w: 100,
 			h: 100,
-			color: 'black',
+			color: 'color1_R1C1',
 			fill: 'none',
 			dash: 'draw',
 			size: 'm',
@@ -837,7 +837,7 @@ export const createDefaultShapes = (): TLShapePartial[] => [
 		props: {
 			w: 50,
 			h: 50,
-			color: 'black',
+			color: 'color1_R1C1',
 			fill: 'none',
 			dash: 'draw',
 			size: 'm',

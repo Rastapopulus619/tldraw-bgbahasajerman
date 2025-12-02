@@ -139,7 +139,7 @@ export async function putExcalidrawContent(
 						w: element.width,
 						h: element.height,
 						size: strokeWidthsToSizes[element.strokeWidth] ?? 'draw',
-						color: colorsToColors[colorToUse] ?? 'black',
+						color: colorsToColors[colorToUse] ?? 'color1_R1C1',
 						richText: toRichText(text),
 						align,
 						dash: getDash(element),
@@ -156,7 +156,7 @@ export async function putExcalidrawContent(
 						...editor.getShapeUtil('draw').getDefaultProps(),
 						dash: getDash(element),
 						size: strokeWidthsToSizes[element.strokeWidth],
-						color: colorsToColors[element.strokeColor] ?? 'black',
+						color: colorsToColors[element.strokeColor] ?? 'color1_R1C1',
 						segments: [
 							{
 								type: 'free',
@@ -185,7 +185,7 @@ export async function putExcalidrawContent(
 						...editor.getShapeUtil('line').getDefaultProps(),
 						dash: getDash(element),
 						size: strokeWidthsToSizes[element.strokeWidth],
-						color: colorsToColors[element.strokeColor] ?? 'black',
+						color: colorsToColors[element.strokeColor] ?? 'color1_R1C1',
 						spline: element.roundness ? 'cubic' : 'line',
 						points: {
 							...Object.fromEntries(
@@ -230,7 +230,7 @@ export async function putExcalidrawContent(
 						bend: getBend(element, start, end),
 						dash: getDash(element),
 						size: strokeWidthsToSizes[element.strokeWidth] ?? 'm',
-						color: colorsToColors[element.strokeColor] ?? 'black',
+						color: colorsToColors[element.strokeColor] ?? 'color1_R1C1',
 						start: { x: start[0], y: start[1] },
 						end: { x: end[0], y: end[1] },
 						arrowheadEnd: arrowheadsToArrowheadTypes[element.endArrowhead] ?? 'none',
@@ -285,7 +285,7 @@ export async function putExcalidrawContent(
 						size,
 						scale,
 						font: fontFamilyToFontType[element.fontFamily] ?? 'draw',
-						color: colorsToColors[element.strokeColor] ?? 'black',
+						color: colorsToColors[element.strokeColor] ?? 'color1_R1C1',
 						richText: toRichText(element.text),
 						textAlign: textAlignToTextAlignTypes[element.textAlign],
 					},
@@ -449,18 +449,18 @@ function mapExcalidrawColorToTldrawColors(
 }
 
 const colorsToColors: Record<string, TLDefaultColorStyle> = {
-	...mapExcalidrawColorToTldrawColors('gray', 'grey', 'black'),
-	...mapExcalidrawColorToTldrawColors('red', 'light-red', 'red'),
-	...mapExcalidrawColorToTldrawColors('pink', 'light-red', 'red'),
-	...mapExcalidrawColorToTldrawColors('grape', 'light-violet', 'violet'),
-	...mapExcalidrawColorToTldrawColors('blue', 'light-blue', 'blue'),
-	...mapExcalidrawColorToTldrawColors('cyan', 'light-blue', 'blue'),
-	...mapExcalidrawColorToTldrawColors('teal', 'light-green', 'green'),
-	...mapExcalidrawColorToTldrawColors('green', 'light-green', 'green'),
-	...mapExcalidrawColorToTldrawColors('yellow', 'yellow', 'orange'),
-	...mapExcalidrawColorToTldrawColors('orange', 'yellow', 'orange'),
-	'#ffffff': 'white',
-	'#000000': 'black',
+	...mapExcalidrawColorToTldrawColors('gray', 'color2_R1C2', 'color1_R1C1'),
+	...mapExcalidrawColorToTldrawColors('red', 'color11_R3C3', 'color12_R3C4'),
+	...mapExcalidrawColorToTldrawColors('pink', 'color11_R3C3', 'color12_R3C4'),
+	...mapExcalidrawColorToTldrawColors('grape', 'color3_R1C3', 'color4_R1C4'),
+	...mapExcalidrawColorToTldrawColors('blue', 'color6_R2C2', 'color5_R2C1'),
+	...mapExcalidrawColorToTldrawColors('cyan', 'color6_R2C2', 'color5_R2C1'),
+	...mapExcalidrawColorToTldrawColors('teal', 'color10_R3C2', 'color9_R3C1'),
+	...mapExcalidrawColorToTldrawColors('green', 'color10_R3C2', 'color9_R3C1'),
+	...mapExcalidrawColorToTldrawColors('yellow', 'color7_R2C3', 'color8_R2C4'),
+	...mapExcalidrawColorToTldrawColors('orange', 'color7_R2C3', 'color8_R2C4'),
+	'#ffffff': 'color13_R4C1',
+	'#000000': 'color1_R1C1',
 }
 
 const strokeStylesToStrokeTypes: Record<string, TLDefaultDashStyle> = {

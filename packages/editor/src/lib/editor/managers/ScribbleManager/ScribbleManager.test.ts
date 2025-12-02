@@ -68,7 +68,7 @@ describe('ScribbleManager', () => {
 		it('should add a scribble with custom properties', () => {
 			const customScribble: Partial<TLScribble> = {
 				size: 30,
-				color: 'black',
+				color: 'color1_R1C1',
 				opacity: 0.5,
 				delay: 1000,
 				shrink: 0.2,
@@ -105,13 +105,13 @@ describe('ScribbleManager', () => {
 		it('should handle multiple scribbles', () => {
 			mockUniqueId.mockReturnValueOnce('id1').mockReturnValueOnce('id2').mockReturnValueOnce('id3')
 
-			const scribble1 = scribbleManager.addScribble({ color: 'black' })
-			const scribble2 = scribbleManager.addScribble({ color: 'white' })
+			const scribble1 = scribbleManager.addScribble({ color: 'color1_R1C1' })
+			const scribble2 = scribbleManager.addScribble({ color: 'color13_R4C1' })
 			const scribble3 = scribbleManager.addScribble({ color: 'accent' })
 
 			expect(scribbleManager.scribbleItems.size).toBe(3)
-			expect(scribble1.scribble.color).toBe('black')
-			expect(scribble2.scribble.color).toBe('white')
+			expect(scribble1.scribble.color).toBe('color1_R1C1')
+			expect(scribble2.scribble.color).toBe('color13_R4C1')
 			expect(scribble3.scribble.color).toBe('accent')
 		})
 	})
@@ -465,19 +465,19 @@ describe('ScribbleManager', () => {
 		describe('instance state updates', () => {
 			it('should update instance state with scribbles', () => {
 				mockUniqueId.mockReturnValueOnce('id1').mockReturnValueOnce('id2')
-				scribbleManager.addScribble({ color: 'black' })
-				scribbleManager.addScribble({ color: 'white' })
+				scribbleManager.addScribble({ color: 'color1_R1C1' })
+				scribbleManager.addScribble({ color: 'color13_R4C1' })
 
 				scribbleManager.tick(16)
 
 				expect(editor.updateInstanceState).toHaveBeenCalledWith({
 					scribbles: expect.arrayContaining([
 						expect.objectContaining({
-							color: 'black',
+							color: 'color1_R1C1',
 							points: expect.any(Array),
 						}),
 						expect.objectContaining({
-							color: 'white',
+							color: 'color13_R4C1',
 							points: expect.any(Array),
 						}),
 					]),
@@ -502,7 +502,7 @@ describe('ScribbleManager', () => {
 
 			it('should limit scribbles to 5 items', () => {
 				// Add 7 scribbles
-				const colors = ['accent', 'black', 'white', 'laser', 'muted-1', 'accent', 'black'] as const
+				const colors = ['accent', 'color1_R1C1', 'color13_R4C1', 'laser', 'muted-1', 'accent', 'color1_R1C1'] as const
 				for (let i = 0; i < 7; i++) {
 					mockUniqueId.mockReturnValueOnce(`id${i}`)
 					scribbleManager.addScribble({ color: colors[i] })

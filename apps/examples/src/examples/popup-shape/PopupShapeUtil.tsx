@@ -116,7 +116,7 @@ export class PopupShapeUtil extends BaseBoxShapeUtil<IMyPopupShape> {
 						// transformOrigin: 'bottom center',
 						// transform: `rotateX(20deg) translateY(5px) translateZ(40px)`,
 						// note
-						background: `gold`,
+						background: `color27_R7C3`,
 						border: '1px solid goldenrod',
 					}}
 				>

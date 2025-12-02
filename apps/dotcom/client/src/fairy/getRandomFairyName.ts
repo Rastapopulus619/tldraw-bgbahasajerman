@@ -178,5 +178,5 @@ const LAST_NAME_PARTS_2 = [
 	'glow',
 	'toe',
 	'tooth',
-	'gold',
+	'color27_R7C3',
 ]

@@ -3,7 +3,7 @@ import { FairyLegsSpritePart } from './parts/FairyLegsSpritePart'
 
 export function WorkingSprite1({
 	bodyColor = 'var(--tl-color-fairy-light)',
-	hatColor = 'white',
+	hatColor = 'color13_R4C1',
 }: {
 	bodyColor?: string
 	hatColor?: string
@@ -27,7 +27,7 @@ export function WorkingSprite1({
 
 export function WorkingSprite2({
 	bodyColor = 'var(--tl-color-fairy-light)',
-	hatColor = 'white',
+	hatColor = 'color13_R4C1',
 }: {
 	bodyColor?: string
 	hatColor?: string
@@ -51,7 +51,7 @@ export function WorkingSprite2({
 
 export function WorkingSprite3({
 	bodyColor = 'var(--tl-color-fairy-light)',
-	hatColor = 'white',
+	hatColor = 'color13_R4C1',
 }: {
 	bodyColor?: string
 	hatColor?: string
@@ -75,7 +75,7 @@ export function WorkingSprite3({
 
 export function WorkingSpriteBase({
 	bodyColor = 'var(--tl-color-fairy-light)',
-	hatColor = 'white',
+	hatColor = 'color13_R4C1',
 }: {
 	bodyColor?: string
 	hatColor?: string

@@ -11,7 +11,7 @@ export const snapshot = {
 		},
 		'page:red': {
 			meta: {
-				backgroundTheme: 'red',
+				backgroundTheme: 'color12_R3C4',
 			},
 			id: 'page:red',
 			name: 'Red',
@@ -20,7 +20,7 @@ export const snapshot = {
 		},
 		'page:green': {
 			meta: {
-				backgroundTheme: 'green',
+				backgroundTheme: 'color9_R3C1',
 			},
 			id: 'page:green',
 			name: 'Green',
@@ -29,7 +29,7 @@ export const snapshot = {
 		},
 		'page:blue': {
 			meta: {
-				backgroundTheme: 'blue',
+				backgroundTheme: 'color5_R2C1',
 			},
 			id: 'page:blue',
 			name: 'Blue',
@@ -38,7 +38,7 @@ export const snapshot = {
 		},
 		'page:purple': {
 			meta: {
-				backgroundTheme: 'purple',
+				backgroundTheme: 'color23_R6C3',
 			},
 			id: 'page:purple',
 			name: 'Purple',

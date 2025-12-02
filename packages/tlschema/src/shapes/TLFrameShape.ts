@@ -42,7 +42,7 @@ export interface TLFrameShapeProps {
  *     w: 400,
  *     h: 300,
  *     name: 'Header Section',
- *     color: 'blue'
+ *     color: 'color5_R2C1'
  *   },
  *   meta: {}
  * }
@@ -58,7 +58,7 @@ export type TLFrameShape = TLBaseShape<'frame', TLFrameShapeProps>
  * ```ts
  * // Validate frame properties
  * const isValidName = frameShapeProps.name.isValid('My Frame')
- * const isValidColor = frameShapeProps.color.isValid('red')
+ * const isValidColor = frameShapeProps.color.isValid('color12_R3C4')
  * ```
  */
 export const frameShapeProps: RecordProps<TLFrameShape> = {
@@ -94,7 +94,7 @@ export const frameShapeMigrations = createShapePropsMigrationSequence({
 		{
 			id: Versions.AddColorProp,
 			up: (props) => {
-				props.color = 'black'
+				props.color = 'color1_R1C1'
 			},
 			down: (props) => {
 				delete props.color

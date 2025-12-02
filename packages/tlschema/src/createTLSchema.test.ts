@@ -160,8 +160,8 @@ describe('createTLSchema', () => {
 		it('should throw error for duplicate style property IDs', () => {
 			// Create a duplicate style property with same ID as DefaultColorStyle
 			const duplicateColorStyle = StyleProp.defineEnum('tldraw:color', {
-				defaultValue: 'black',
-				values: ['black', 'white'],
+				defaultValue: 'color1_R1C1',
+				values: ['color1_R1C1', 'color13_R4C1'],
 			})
 
 			const conflictingShapes = {

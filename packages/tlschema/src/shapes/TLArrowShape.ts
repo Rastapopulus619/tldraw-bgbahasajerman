@@ -141,8 +141,8 @@ export type TLArrowShapeArrowheadStyle = T.TypeOf<typeof ArrowShapeArrowheadStar
  * ```ts
  * const arrowProps: TLArrowShapeProps = {
  *   kind: 'arc',
- *   labelColor: 'black',
- *   color: 'blue',
+ *   labelColor: 'color1_R1C1',
+ *   color: 'color5_R2C1',
  *   fill: 'none',
  *   dash: 'solid',
  *   size: 'm',
@@ -298,7 +298,7 @@ export const arrowShapeMigrations = createMigrationSequence({
 		propsMigration({
 			id: arrowShapeVersions.AddLabelColor,
 			up: (props) => {
-				props.labelColor = 'black'
+				props.labelColor = 'color1_R1C1'
 			},
 			down: 'retired',
 		}),

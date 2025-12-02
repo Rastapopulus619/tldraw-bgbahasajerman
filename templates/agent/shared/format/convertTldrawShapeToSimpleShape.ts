@@ -14,6 +14,7 @@ import {
 	TLShapeId,
 	TLTextShape,
 } from 'tldraw'
+import { toSimpleColor } from './SimpleColor'
 import { convertTldrawFillToSimpleFill } from './SimpleFill'
 import { convertTldrawFontSizeAndScaleToSimpleFontSize } from './SimpleFontSize'
 import { SimpleGeoShapeType } from './SimpleGeoShapeType'
@@ -97,7 +98,7 @@ export function convertTldrawIdToSimpleId(id: TLShapeId): string {
 function convertDrawShapeToSimple(editor: Editor, shape: TLDrawShape): SimpleDrawShape {
 	return {
 		_type: 'draw',
-		color: shape.props.color,
+		color: toSimpleColor(shape.props.color),
 		fill: convertTldrawFillToSimpleFill(shape.props.fill),
 		note: (shape.meta.note as string) ?? '',
 		shapeId: convertTldrawIdToSimpleId(shape.id),
@@ -128,7 +129,7 @@ function convertTextShapeToSimple(editor: Editor, shape: TLTextShape): SimpleTex
 
 	return {
 		_type: 'text',
-		color: shape.props.color,
+		color: toSimpleColor(shape.props.color),
 		fontSize: convertTldrawFontSizeAndScaleToSimpleFontSize(textSize, shape.props.scale),
 		note: (shape.meta.note as string) ?? '',
 		shapeId: convertTldrawIdToSimpleId(shape.id),
@@ -163,7 +164,7 @@ function convertGeoShapeToSimple(editor: Editor, shape: TLGeoShape): SimpleGeoSh
 
 	return {
 		_type: GEO_TO_SIMPLE_TYPES[shape.props.geo],
-		color: shape.props.color,
+		color: toSimpleColor(shape.props.color),
 		fill: convertTldrawFillToSimpleFill(shape.props.fill),
 		h: shape.props.h,
 		note: (shape.meta.note as string) ?? '',
@@ -181,7 +182,7 @@ function convertLineShapeToSimple(editor: Editor, shape: TLLineShape): SimpleLin
 	const points = Object.values(shape.props.points).sort((a, b) => a.index.localeCompare(b.index))
 	return {
 		_type: 'line',
-		color: shape.props.color,
+		color: toSimpleColor(shape.props.color),
 		note: (shape.meta.note as string) ?? '',
 		shapeId: convertTldrawIdToSimpleId(shape.id),
 		x1: points[0].x + bounds.x,
@@ -203,7 +204,7 @@ function convertArrowShapeToSimple(editor: Editor, shape: TLArrowShape): SimpleA
 	return {
 		_type: 'arrow',
 		bend: shape.props.bend * -1,
-		color: shape.props.color,
+		color: toSimpleColor(shape.props.color),
 		fromId: startBinding?.toId ?? null,
 		note: (shape.meta.note as string) ?? '',
 		shapeId: convertTldrawIdToSimpleId(shape.id),
@@ -222,7 +223,7 @@ function convertNoteShapeToSimple(editor: Editor, shape: TLNoteShape): SimpleNot
 	const bounds = getSimpleBounds(editor, shape)
 	return {
 		_type: 'note',
-		color: shape.props.color,
+		color: toSimpleColor(shape.props.color),
 		note: (shape.meta.note as string) ?? '',
 		shapeId: convertTldrawIdToSimpleId(shape.id),
 		text: text ?? '',

@@ -11,7 +11,7 @@ describe('TLHighlightShape', () => {
 	describe('highlightShapeProps validation schema', () => {
 		it('should validate valid highlight shape properties', () => {
 			const validProps = {
-				color: 'yellow' as const,
+				color: 'color7_R2C3' as const,
 				size: 'l' as const,
 				segments: [
 					{
@@ -29,7 +29,7 @@ describe('TLHighlightShape', () => {
 		})
 
 		it('should reject invalid color values', () => {
-			const invalidColors = ['purple', 'YELLOW', 'neon', '', null, undefined, 123, {}, []]
+			const invalidColors = ['color23_R6C3', 'YELLOW', 'neon', '', null, undefined, 123, {}, []]
 
 			invalidColors.forEach((color) => {
 				expect(() => highlightShapeProps.color.validate(color)).toThrow()
@@ -103,14 +103,14 @@ describe('TLHighlightShape', () => {
 			const fullValidator = T.object(highlightShapeProps)
 
 			expect(() => fullValidator.validate({})).toThrow()
-			expect(() => fullValidator.validate({ color: 'yellow' })).toThrow()
+			expect(() => fullValidator.validate({ color: 'color7_R2C3' })).toThrow()
 		})
 
 		it('should reject objects with extra properties', () => {
 			const fullValidator = T.object(highlightShapeProps)
 
 			const objectWithExtraProps = {
-				color: 'yellow',
+				color: 'color7_R2C3',
 				size: 'm',
 				segments: [],
 				isComplete: true,
@@ -175,7 +175,7 @@ describe('TLHighlightShape', () => {
 				const oldRecord = {
 					id: 'shape:highlight1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						size: 'm',
 						segments: [
 							{
@@ -196,7 +196,7 @@ describe('TLHighlightShape', () => {
 				const oldRecord = {
 					id: 'shape:highlight1',
 					props: {
-						color: 'green',
+						color: 'color9_R3C1',
 						size: 'l',
 						segments: [
 							{
@@ -214,7 +214,7 @@ describe('TLHighlightShape', () => {
 
 				const result = up(oldRecord)
 				expect(result.props.scale).toBe(1)
-				expect(result.props.color).toBe('green')
+				expect(result.props.color).toBe('color9_R3C1')
 				expect(result.props.size).toBe('l')
 				expect(result.props.segments).toEqual(oldRecord.props.segments)
 				expect(result.props.isComplete).toBe(true)
@@ -227,7 +227,7 @@ describe('TLHighlightShape', () => {
 				const newRecord = {
 					id: 'shape:highlight1',
 					props: {
-						color: 'yellow',
+						color: 'color7_R2C3',
 						size: 'm',
 						segments: [
 							{
@@ -243,7 +243,7 @@ describe('TLHighlightShape', () => {
 
 				const result = down(newRecord)
 				expect(result.props.scale).toBeUndefined()
-				expect(result.props.color).toBe('yellow') // Preserve other props
+				expect(result.props.color).toBe('color7_R2C3') // Preserve other props
 				expect(result.props.isPen).toBe(false) // Preserve other props
 			})
 
@@ -251,7 +251,7 @@ describe('TLHighlightShape', () => {
 				const newRecord = {
 					id: 'shape:highlight1',
 					props: {
-						color: 'red',
+						color: 'color12_R3C4',
 						size: 'xl',
 						segments: [
 							{
@@ -270,7 +270,7 @@ describe('TLHighlightShape', () => {
 
 				const result = down(newRecord)
 				expect(result.props.scale).toBeUndefined()
-				expect(result.props.color).toBe('red')
+				expect(result.props.color).toBe('color12_R3C4')
 				expect(result.props.size).toBe('xl')
 				expect(result.props.segments).toEqual(newRecord.props.segments)
 				expect(result.props.isComplete).toBe(true)
@@ -282,7 +282,7 @@ describe('TLHighlightShape', () => {
 			const originalRecord = {
 				id: 'shape:highlight1',
 				props: {
-					color: 'green',
+					color: 'color9_R3C1',
 					size: 'l',
 					segments: [
 						{
@@ -302,7 +302,7 @@ describe('TLHighlightShape', () => {
 			// Apply down migration
 			const downResult = down(upResult)
 			expect(downResult.props.scale).toBeUndefined()
-			expect(downResult.props.color).toBe('green')
+			expect(downResult.props.color).toBe('color9_R3C1')
 			expect(downResult.props.size).toBe('l')
 			expect(downResult.props.isComplete).toBe(true)
 			expect(downResult.props.isPen).toBe(true)

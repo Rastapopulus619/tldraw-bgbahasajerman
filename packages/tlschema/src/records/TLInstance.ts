@@ -423,7 +423,7 @@ export const instanceMigrations = createRecordMigrationSequence({
 					...instance,
 					propsForNextShape: {
 						...propsForNextShape,
-						labelColor: 'black',
+						labelColor: 'color1_R1C1',
 					},
 				}
 			},

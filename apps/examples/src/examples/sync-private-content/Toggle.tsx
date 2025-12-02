@@ -18,7 +18,7 @@ export function Toggle({ isChecked }: { isChecked: boolean }) {
 		>
 			{isChecked && (
 				<div
-					style={{ fontSize: 9, fontWeight: 600, color: 'white', position: 'relative', left: -3 }}
+					style={{ fontSize: 9, fontWeight: 600, color: 'color13_R4C1', position: 'relative', left: -3 }}
 				>
 					ON
 				</div>
@@ -28,12 +28,12 @@ export function Toggle({ isChecked }: { isChecked: boolean }) {
 					width: pillSize,
 					height: pillSize,
 					borderRadius: pillSize / 2,
-					backgroundColor: 'white',
+					backgroundColor: 'color13_R4C1',
 				}}
 			/>
 			{!isChecked && (
 				<div
-					style={{ fontSize: 9, fontWeight: 600, color: 'white', position: 'relative', right: -1 }}
+					style={{ fontSize: 9, fontWeight: 600, color: 'color13_R4C1', position: 'relative', right: -1 }}
 				>
 					OFF
 				</div>

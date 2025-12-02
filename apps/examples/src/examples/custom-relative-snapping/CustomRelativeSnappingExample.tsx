@@ -155,7 +155,7 @@ class YShapeUtil extends ShapeUtil<YShape> {
 						y1={center.y}
 						x2={armTop.x}
 						y2={armTop.y}
-						stroke="black"
+						stroke="color1_R1C1"
 						strokeWidth={2}
 					/>
 					<line
@@ -163,7 +163,7 @@ class YShapeUtil extends ShapeUtil<YShape> {
 						y1={center.y}
 						x2={armLeft.x}
 						y2={armLeft.y}
-						stroke="black"
+						stroke="color1_R1C1"
 						strokeWidth={2}
 					/>
 					<line
@@ -171,7 +171,7 @@ class YShapeUtil extends ShapeUtil<YShape> {
 						y1={center.y}
 						x2={armRight.x}
 						y2={armRight.y}
-						stroke="black"
+						stroke="color1_R1C1"
 						strokeWidth={2}
 					/>
 				</svg>

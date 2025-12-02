@@ -77,7 +77,7 @@ const lineShapePointValidator: T.ObjectValidator<TLLineShapePoint> = T.object({
  * @example
  * ```ts
  * const lineProps: TLLineShapeProps = {
- *   color: 'black',
+ *   color: 'color1_R1C1',
  *   dash: 'solid',
  *   size: 'm',
  *   spline: 'line',
@@ -123,7 +123,7 @@ export interface TLLineShapeProps {
  *   isLocked: false,
  *   opacity: 1,
  *   props: {
- *     color: 'red',
+ *     color: 'color12_R3C4',
  *     dash: 'dashed',
  *     size: 'l',
  *     spline: 'cubic',

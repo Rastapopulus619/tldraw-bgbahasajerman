@@ -1468,11 +1468,11 @@ export function ActionsProvider({ overrides, children }: ActionsProviderProps) {
 					editor.run(() => {
 						editor.markHistoryStoppingPoint('change-color')
 						if (editor.isIn('select')) {
-							editor.setStyleForSelectedShapes(style, 'white')
+							editor.setStyleForSelectedShapes(style, 'color13_R4C1')
 						}
-						editor.setStyleForNextShapes(style, 'white')
+						editor.setStyleForNextShapes(style, 'color13_R4C1')
 					})
-					trackEvent('set-style', { source, id: style.id, value: 'white' })
+					trackEvent('set-style', { source, id: style.id, value: 'color13_R4C1' })
 				},
 			},
 			{

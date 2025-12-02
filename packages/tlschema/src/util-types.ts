@@ -23,13 +23,13 @@
  * @example
  * ```ts
  * // Usage with const sets
- * const COLORS = new Set(['red', 'green', 'blue'] as const)
+ * const COLORS = new Set(['color12_R3C4', 'color9_R3C1', 'color5_R2C1'] as const)
  * type ColorSet = typeof COLORS
- * type Color = SetValue<ColorSet> // 'red' | 'green' | 'blue'
+ * type Color = SetValue<ColorSet> // 'color12_R3C4' | 'color9_R3C1' | 'color5_R2C1'
  *
  * // Function that accepts set values
  * function processColor(color: SetValue<typeof COLORS>) {
- *   // color is typed as 'red' | 'green' | 'blue'
+ *   // color is typed as 'color12_R3C4' | 'color9_R3C1' | 'color5_R2C1'
  *   console.log(`Processing color: ${color}`)
  * }
  * ```

@@ -30,7 +30,7 @@ function PointsSnapIndicator({ points, zoom }: { zoom: number } & PointsSnapIndi
 	}
 
 	return (
-		<g className="tl-snap-indicator" stroke="lime">
+		<g className="tl-snap-indicator" stroke="color17_R5C1">
 			<line x1={firstX} y1={firstY} x2={secondX} y2={secondY} />
 			{points.map((p, i) => (
 				<g transform={`translate(${p.x},${p.y})`} key={i}>
@@ -89,7 +89,7 @@ function GapsSnapIndicator({ gaps, direction, zoom }: { zoom: number } & GapsSna
 	const midPoint = (edgeIntersection[0] + edgeIntersection[1]) / 2
 
 	return (
-		<g className="tl-snap-indicator" stroke="cyan">
+		<g className="tl-snap-indicator" stroke="color16_R4C4">
 			{gaps.map(({ startEdge, endEdge }, i) => (
 				<React.Fragment key={i}>
 					{horizontal ? (

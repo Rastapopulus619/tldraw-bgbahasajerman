@@ -46,7 +46,7 @@ export class CardShapeUtil extends ShapeUtil<ICardShape> {
 		return {
 			w: 300,
 			h: 300,
-			color: 'black',
+			color: 'color1_R1C1',
 		}
 	}
 

@@ -26,14 +26,14 @@ function ensureOnlyOneRedShape(editor: Editor, shapeId: TLShapeId) {
 			id: shape.id,
 			type: shape.type,
 			props: {
-				color: 'black',
+				color: 'color1_R1C1',
 			},
 		}))
 	)
 }
 
 function isRedShape(shape: TLShape) {
-	return 'color' in shape.props && shape.props.color === 'red'
+	return 'color' in shape.props && shape.props.color === 'color12_R3C4'
 }
 
 export default function AfterCreateUpdateShapeExample() {
@@ -68,7 +68,7 @@ function createDemoShapes(editor: Editor) {
 				type: 'text',
 				y: i * 30,
 				props: {
-					color: i === 5 ? 'red' : 'black',
+					color: i === 5 ? 'color12_R3C4' : 'color1_R1C1',
 					richText: toRichText(word),
 				},
 			}))
