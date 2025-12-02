@@ -1,0 +1,205 @@
+import { FairyOutfit, FairyPose } from '@tldraw/fairy-shared'
+import { ComponentType, useEffect, useState } from 'react'
+import { IdleSprite } from './sprites/IdleSprite'
+import { PoofSprite } from './sprites/PoofSprite'
+import { RaisedAWingSprite } from './sprites/RaisedAWingSprite'
+import { RaisedBWingSprite } from './sprites/RaisedBWingSprite'
+import { RaisedCWingSprite } from './sprites/RaisedCWingSprite'
+import { ReadingSprite } from './sprites/ReadingSprite'
+import { SleepingSprite } from './sprites/SleepingSprite'
+import { SleepingWingSprite } from './sprites/SleepingWingSprite'
+import { ThinkingSprite } from './sprites/ThinkingSprite'
+import { WaitingSprite } from './sprites/WaitingSprite'
+import { WorkingSprite1, WorkingSprite2, WorkingSprite3 } from './sprites/WorkingSprite'
+import { WritingSprite } from './sprites/WritingSprite'
+
+interface WingSpriteProps {
+	topWingColor?: string
+	bottomWingColor?: string
+}
+
+interface FairySpriteProps {
+	bodyColor: string
+	hatColor: string
+}
+
+const WING_SPRITES: Record<FairyPose, ComponentType<WingSpriteProps>[]> = {
+	idle: [RaisedAWingSprite, RaisedCWingSprite, RaisedBWingSprite, RaisedCWingSprite],
+	waiting: [RaisedAWingSprite, RaisedCWingSprite, RaisedBWingSprite, RaisedCWingSprite],
+	active: [RaisedAWingSprite, RaisedCWingSprite, RaisedBWingSprite, RaisedCWingSprite],
+	reading: [RaisedAWingSprite, RaisedCWingSprite, RaisedBWingSprite, RaisedCWingSprite],
+	writing: [RaisedAWingSprite, RaisedCWingSprite, RaisedBWingSprite, RaisedCWingSprite],
+	thinking: [RaisedAWingSprite, RaisedCWingSprite, RaisedBWingSprite, RaisedCWingSprite],
+	working: [RaisedAWingSprite, RaisedCWingSprite, RaisedBWingSprite, RaisedCWingSprite],
+	sleeping: [SleepingWingSprite],
+	poof: [],
+}
+
+const FAIRY_SPRITES_WITH_PROPS: Record<FairyPose, ComponentType<FairySpriteProps>[]> = {
+	idle: [IdleSprite],
+	active: [IdleSprite],
+	reading: [ReadingSprite],
+	writing: [WritingSprite],
+	thinking: [ThinkingSprite],
+	working: [WorkingSprite1, WorkingSprite2, WorkingSprite3, WorkingSprite2],
+	sleeping: [SleepingSprite],
+	waiting: [WaitingSprite],
+	poof: [PoofSprite],
+}
+
+/**
+ * Color mapping for different hat types
+ * Using medium chroma, high value colors for good visibility
+ */
+const HAT_COLORS: Record<string, string> = {
+	top: 'var(--tl-color-fairy-pink)', // Medium pink for top hat
+	pointy: 'var(--tl-color-fairy-purple)', // Medium purple for wizard hat
+	bald: 'var(--tl-color-fairy-peach)', // Medium peach/tan
+	antenna: 'var(--tl-color-fairy-coral)', // Medium coral for antenna
+	spiky: 'var(--tl-color-fairy-teal)', // Medium teal for spiky
+	hair: 'var(--tl-color-fairy-gold)', // Medium gold for hair
+	ears: 'var(--tl-color-fairy-rose)', // Medium rose for ears
+	propellor: 'var(--tl-color-fairy-green)', // Medium green for propellor
+}
+
+export function getHatColor(hat: FairyOutfit['hat']) {
+	return HAT_COLORS[hat]
+}
+
+export function FairySprite({
+	pose,
+	gesture,
+	flipX,
+	hatColor,
+	projectColor = 'var(--tl-color-fairy-light)',
+	isAnimated,
+	showShadow,
+	isGenerating,
+	isOrchestrator,
+}: {
+	pose: FairyPose
+	gesture?: FairyPose | null
+	flipX?: boolean
+	tint?: string | null
+	projectColor?: string
+	isAnimated?: boolean
+	showShadow?: boolean
+	isGenerating?: boolean
+	isOrchestrator?: boolean
+	hatColor?: string
+	padding?: number
+}) {
+	const bottomWingColor = isOrchestrator ? projectColor : 'var(--tl-color-fairy-light)'
+
+	return (
+		<div className="fairy-sprite-container">
+			{isAnimated ? (
+				<AnimatedFairySpriteComponent
+					pose={gesture || pose}
+					speed={pose === 'working' ? 100 : isGenerating ? 120 : 160}
+					topWingColor={projectColor}
+					bottomWingColor={bottomWingColor}
+					bodyColor={'var(--tl-color-fairy-light)'}
+					hatColor={hatColor}
+					flipX={flipX}
+					showShadow={showShadow}
+				/>
+			) : (
+				<FairySpriteSvg
+					pose={gesture || pose}
+					topWingColor={projectColor}
+					bottomWingColor={bottomWingColor}
+					bodyColor={'var(--tl-color-fairy-light)'}
+					hatColor={hatColor}
+					flipX={flipX}
+					showShadow={showShadow}
+				/>
+			)}
+		</div>
+	)
+}
+
+function useKeyframe({ pose, duration }: { pose: FairyPose; duration: number }) {
+	const [keyframe, setKeyframe] = useState<number>(0)
+
+	useEffect(() => {
+		const startTime = Date.now()
+		function updateFrame() {
+			setKeyframe(Math.floor((Date.now() - startTime) / duration))
+		}
+		updateFrame()
+		const timer = setInterval(updateFrame, duration)
+		return () => clearInterval(timer)
+	}, [duration, pose])
+
+	return keyframe
+}
+
+function AnimatedFairySpriteComponent({
+	speed,
+	pose,
+	...rest
+}: FairySpriteSvgProps & { speed: number }) {
+	const keyframe = useKeyframe({
+		pose,
+		duration: speed,
+	})
+
+	return <FairySpriteSvg pose={pose} keyframe={keyframe} {...rest} />
+}
+
+export function CleanFairySpriteComponent() {
+	return (
+		<div className="fairy-sprite-container">
+			<FairySpriteSvg pose="idle" />
+		</div>
+	)
+}
+
+export interface FairySpriteSvgProps {
+	pose: FairyPose
+	topWingColor?: string
+	bottomWingColor?: string
+	bodyColor?: string
+	hatColor?: string
+	keyframe?: number
+	flipX?: boolean
+	showShadow?: boolean
+}
+
+function getItemForKeyFrame<T>(items: T | T[], keyframe: number) {
+	if (Array.isArray(items)) {
+		return items[keyframe % items.length]
+	}
+	return items
+}
+
+function FairySpriteSvg({
+	pose,
+	topWingColor = 'var(--tl-color-fairy-light)',
+	bottomWingColor = 'var(--tl-color-fairy-light)',
+	bodyColor = 'var(--tl-color-fairy-light)',
+	hatColor = 'var(--tl-color-fairy-light)',
+	keyframe = 0,
+	flipX = false,
+	showShadow = false,
+}: FairySpriteSvgProps) {
+	const FSprite = getItemForKeyFrame(FAIRY_SPRITES_WITH_PROPS[pose], keyframe)
+	const WSprite = getItemForKeyFrame(WING_SPRITES[pose], keyframe)
+
+	return (
+		<div className={`fairy-sprite-stack ${flipX ? 'flip-x' : ''} ${showShadow ? 'shadow' : ''}`}>
+			<svg
+				className="fairy-sprite"
+				width="108"
+				height="108"
+				viewBox="0 0 108 108"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				{WSprite && <WSprite topWingColor={topWingColor} bottomWingColor={bottomWingColor} />}
+				{FSprite && <FSprite bodyColor={bodyColor} hatColor={hatColor} />}
+			</svg>
+		</div>
+	)
+}

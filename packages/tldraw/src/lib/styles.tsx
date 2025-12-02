@@ -1,0 +1,132 @@
+import { TLUiIconJsx } from './ui/components/primitives/TldrawUiIcon'
+
+/** @public */
+export type StyleValuesForUi<T> = readonly {
+	readonly value: T
+	readonly icon: string | TLUiIconJsx
+}[]
+
+// todo: default styles prop?
+export const STYLES = {
+	color: [
+		{ value: 'color1_R1C1', icon: 'color' },
+		{ value: 'color2_R1C2', icon: 'color' },
+		{ value: 'color3_R1C3', icon: 'color' },
+		{ value: 'color4_R1C4', icon: 'color' },
+		{ value: 'color5_R2C1', icon: 'color' },
+		{ value: 'color6_R2C2', icon: 'color' },
+		{ value: 'color7_R2C3', icon: 'color' },
+		{ value: 'color8_R2C4', icon: 'color' },
+		{ value: 'color9_R3C1', icon: 'color' },
+		{ value: 'color10_R3C2', icon: 'color' },
+		{ value: 'color11_R3C3', icon: 'color' },
+		{ value: 'color12_R3C4', icon: 'color' },
+		{ value: 'color13_R4C1', icon: 'color' },
+		// Extended colors
+		{ value: 'color14_R4C2', icon: 'color' },
+		{ value: 'color15_R4C3', icon: 'color' },
+		{ value: 'color16_R4C4', icon: 'color' },
+		{ value: 'color17_R5C1', icon: 'color' },
+		{ value: 'color18_R5C2', icon: 'color' },
+		{ value: 'color19_R5C3', icon: 'color' },
+		{ value: 'color20_R5C4', icon: 'color' },
+		{ value: 'color21_R6C1', icon: 'color' },
+		{ value: 'color22_R6C2', icon: 'color' },
+		{ value: 'color23_R6C3', icon: 'color' },
+		{ value: 'color24_R6C4', icon: 'color' },
+		{ value: 'color25_R7C1', icon: 'color' },
+		{ value: 'color26_R7C2', icon: 'color' },
+		{ value: 'color27_R7C3', icon: 'color' },
+		{ value: 'color28_R7C4', icon: 'color' },
+	],
+	fill: [
+		{ value: 'none', icon: 'fill-none' },
+		{ value: 'semi', icon: 'fill-semi' },
+		{ value: 'solid', icon: 'fill-solid' },
+		{ value: 'pattern', icon: 'fill-pattern' },
+		// { value: 'fill', icon: 'fill-fill' },
+	],
+	dash: [
+		{ value: 'draw', icon: 'dash-draw' },
+		{ value: 'dashed', icon: 'dash-dashed' },
+		{ value: 'dotted', icon: 'dash-dotted' },
+		{ value: 'solid', icon: 'dash-solid' },
+	],
+	size: [
+		{ value: 's', icon: 'size-small' },
+		{ value: 'm', icon: 'size-medium' },
+		{ value: 'l', icon: 'size-large' },
+		{ value: 'xl', icon: 'size-extra-large' },
+	],
+	font: [
+		{ value: 'draw', icon: 'font-draw' },
+		{ value: 'sans', icon: 'font-sans' },
+		{ value: 'serif', icon: 'font-serif' },
+		{ value: 'mono', icon: 'font-mono' },
+	],
+	textAlign: [
+		{ value: 'start', icon: 'text-align-left' },
+		{ value: 'middle', icon: 'text-align-center' },
+		{ value: 'end', icon: 'text-align-right' },
+	],
+	horizontalAlign: [
+		{ value: 'start', icon: 'horizontal-align-start' },
+		{ value: 'middle', icon: 'horizontal-align-middle' },
+		{ value: 'end', icon: 'horizontal-align-end' },
+	],
+	verticalAlign: [
+		{ value: 'start', icon: 'vertical-align-start' },
+		{ value: 'middle', icon: 'vertical-align-middle' },
+		{ value: 'end', icon: 'vertical-align-end' },
+	],
+	geo: [
+		{ value: 'rectangle', icon: 'geo-rectangle' },
+		{ value: 'ellipse', icon: 'geo-ellipse' },
+		{ value: 'triangle', icon: 'geo-triangle' },
+		{ value: 'diamond', icon: 'geo-diamond' },
+		{ value: 'star', icon: 'geo-star' },
+		{ value: 'pentagon', icon: 'geo-pentagon' },
+		{ value: 'hexagon', icon: 'geo-hexagon' },
+		{ value: 'octagon', icon: 'geo-octagon' },
+		{ value: 'rhombus', icon: 'geo-rhombus' },
+		{ value: 'rhombus-2', icon: 'geo-rhombus-2' },
+		{ value: 'oval', icon: 'geo-oval' },
+		{ value: 'trapezoid', icon: 'geo-trapezoid' },
+		{ value: 'arrow-left', icon: 'geo-arrow-left' },
+		{ value: 'arrow-up', icon: 'geo-arrow-up' },
+		{ value: 'arrow-down', icon: 'geo-arrow-down' },
+		{ value: 'arrow-right', icon: 'geo-arrow-right' },
+		{ value: 'cloud', icon: 'geo-cloud' },
+		{ value: 'x-box', icon: 'geo-x-box' },
+		{ value: 'check-box', icon: 'geo-check-box' },
+		{ value: 'heart', icon: 'geo-heart' },
+	],
+	arrowKind: [
+		{ value: 'arc', icon: 'arrow-arc' },
+		{ value: 'elbow', icon: 'arrow-elbow' },
+	],
+	arrowheadStart: [
+		{ value: 'none', icon: 'arrowhead-none' },
+		{ value: 'arrow', icon: 'arrowhead-arrow' },
+		{ value: 'triangle', icon: 'arrowhead-triangle' },
+		{ value: 'square', icon: 'arrowhead-square' },
+		{ value: 'dot', icon: 'arrowhead-dot' },
+		{ value: 'diamond', icon: 'arrowhead-diamond' },
+		{ value: 'inverted', icon: 'arrowhead-triangle-inverted' },
+		{ value: 'bar', icon: 'arrowhead-bar' },
+	],
+	arrowheadEnd: [
+		{ value: 'none', icon: 'arrowhead-none' },
+		{ value: 'arrow', icon: 'arrowhead-arrow' },
+		{ value: 'triangle', icon: 'arrowhead-triangle' },
+		{ value: 'square', icon: 'arrowhead-square' },
+		{ value: 'dot', icon: 'arrowhead-dot' },
+		{ value: 'diamond', icon: 'arrowhead-diamond' },
+		{ value: 'inverted', icon: 'arrowhead-triangle-inverted' },
+		{ value: 'bar', icon: 'arrowhead-bar' },
+	],
+	spline: [
+		{ value: 'line', icon: 'spline-line' },
+		{ value: 'cubic', icon: 'spline-cubic' },
+	],
+} as const satisfies Record<string, StyleValuesForUi<string>>
