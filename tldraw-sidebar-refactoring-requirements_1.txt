@@ -1,0 +1,460 @@
+# tldraw Sidebar Refactoring - Requirements Document
+
+## Overview
+This document consolidates all requirements for adding a collapsible sidebar with file navigation to the self-hosted tldraw application. The sidebar and tldraw canvas will exist as sibling components within a container/wrapper component to ensure the sidebar persists its state during whiteboard switching.
+
+## Architecture Decision: Wrapper Approach
+
+**Structure:**
+```
+Container Component (App Shell)
+├── Sidebar Component (collapsible, persistent)
+└── tldraw Component (main canvas, switches whiteboards)
+```
+
+**Key Principle:** The sidebar and tldraw are independent siblings. When switching whiteboards, only the tldraw component re-renders - the sidebar remains mounted and preserves all its state (scroll position, expanded folders, selection, etc.).
+
+## Storage & Data Persistence
+
+### Location
+- All whiteboard files stored on the Ubuntu server VM's file system (not browser localStorage)
+- Files organized in directories on disk
+- JSON format for whiteboard data
+
+### Auto-save Requirements
+- Changes to whiteboards must auto-save to disk without manual user intervention
+- Auto-save should trigger on specific events (to be determined based on tldraw's existing architecture)
+- No manual sync or save buttons required
+
+### File Structure
+```
+user-data-pool/
+├── project-a/
+│   ├── whiteboard-1.json
+│   └── whiteboard-2.json
+├── project-b/
+│   └── whiteboard-3.json
+└── teaching/
+    ├── lesson-1.json
+    └── lesson-2.json
+```
+
+**Terminology:**
+- **user-data-pool**: All directories and files the app can access and manage on the server
+- **View**: A filtered subset of the user-data-pool, defined by which folders/files are checked/visible
+- Views are saved in configuration files (format TBD)
+
+## Sidebar Features
+
+### Single Tab Design
+After evaluation, the three-tab approach was deemed too clunky. Instead:
+- **Single explorer tab** with integrated functionality
+- Top bar buttons for actions (add folder to view, create new whiteboard, etc.)
+- Inline search functionality (see below)
+
+### File Explorer
+- Display directory tree structure
+- Show only folders/files included in the current "View"
+- Expandable/collapsable folders
+- Single-click: Select/highlight file
+- Double-click: Open/activate that whiteboard in tldraw
+- Visual indication of currently active whiteboard
+
+### File and Folder Operations (VS Code-style)
+
+The explorer panel must support comprehensive file management operations:
+
+#### Basic Operations
+- **Rename**: Right-click context menu or F2 shortcut on selected file/folder
+- **Delete**: Right-click context menu or Delete key on selected file/folder
+- **Create New File**: Context menu on folder or button in top bar
+- **Create New Folder**: Context menu on folder or button in top bar
+
+#### Advanced Operations
+- **Cut**: Ctrl+X on selected file/folder (prepare for move)
+- **Copy**: Ctrl+C on selected file/folder (prepare for copy)
+- **Paste**: Ctrl+V in target folder (complete move or copy operation)
+- **Drag and Drop**: 
+  - Drag file/folder to move it to another folder
+  - Hold Ctrl while dragging to copy instead of move
+  - Visual feedback during drag operation (ghost image, drop targets highlighted)
+
+#### Operation Behavior
+- **Move operation**: File/folder physically moves to new location on server disk
+- **Copy operation**: Creates duplicate file/folder at new location
+- **Rename validation**: Prevent duplicate names in same directory, show error if conflict
+- **Delete confirmation**: Optional confirmation dialog for delete operations (can be disabled in settings)
+- **Undo support**: Consider implementing undo for destructive operations (optional, lower priority)
+
+#### Visual Feedback
+- Show loading/processing indicator during file operations
+- Display error messages if operations fail (permissions, disk space, etc.)
+- Update file tree immediately after successful operation
+- Maintain selection on renamed/moved items when possible
+
+### Scrollbar Behavior
+
+The sidebar must handle content overflow gracefully:
+
+#### Vertical Scrolling
+- When folder tree exceeds sidebar height, display vertical scrollbar
+- Preserve scroll position when switching whiteboards
+- Preserve scroll position when expanding/collapsing folders
+- Smooth scrolling behavior
+
+#### Horizontal Scrolling
+- When folder names or nesting depth causes horizontal overflow, display horizontal scrollbar
+- Consider these overflow scenarios:
+  - Long file/folder names
+  - Deep nesting levels (indentation)
+  - Combination of both
+- Alternative to horizontal scroll: Implement text truncation with ellipsis (...) and show full name on hover tooltip (recommended for better UX)
+
+#### Scrollbar Styling
+- Match tldraw's theme (light/dark mode)
+- Use native or custom-styled scrollbars consistent with overall design
+- Thin scrollbars that don't take excessive space (consider overlay scrollbars)
+
+### View Management
+- User can define multiple "Views" (e.g., "Teaching View", "Personal Projects View")
+- Each View is a configuration of which folders from the user-data-pool are visible
+- Views stored in config files with directory paths
+- Dropdown menu or similar UI to switch between Views
+- Checking/unchecking folders adds/removes them from the current View
+- Views provide focus: only show relevant folders for specific tasks
+
+### Search Functionality (VS Code-style)
+- **Keyboard shortcut**: Ctrl+F opens search (when sidebar is active)
+- **Search behavior**: 
+  - Search pane appears (dropdown/inline within sidebar)
+  - Highlights matching files/folders in the tree
+  - Jumps to closest match automatically
+  - Navigate through matches with standard shortcuts (F3/Shift+F3 or similar)
+  - Close search with Escape
+- **Matching**: Should match file/folder names
+- **Visual feedback**: Highlight matches in the tree structure
+
+### Focus/Selection State Management
+The sidebar needs to handle focus state similar to VS Code's panels:
+
+**Two states:**
+1. **Sidebar active/selected**: 
+   - Keyboard shortcuts (Ctrl+F, arrow keys, Enter, F2, Delete, Ctrl+C/X/V) directed to sidebar
+   - Visual indication (border highlight, background color change)
+   
+2. **Sidebar inactive (tldraw active)**:
+   - All keyboard shortcuts go to tldraw canvas
+   - Sidebar still visible if not collapsed, but not intercepting input
+
+**Behavior:**
+- Clicking on sidebar makes it active
+- Clicking on tldraw canvas makes tldraw active
+- If sidebar is collapsed, tldraw is always active
+- Explicit keyboard shortcut to toggle focus between sidebar and tldraw (TBD, e.g., Ctrl+B)
+
+### Collapsible Behavior
+- Toggle button to collapse/expand sidebar
+- When collapsed: only a thin bar or icon visible
+- Sidebar state (collapsed/expanded) persists across whiteboard switches
+- Keyboard shortcut to toggle collapse (TBD)
+
+## Theme Integration
+
+The sidebar must follow tldraw's light/dark theme:
+
+**Recommended approach:**
+1. Check if tldraw uses CSS variables for theming
+2. If yes: Sidebar uses the same CSS variables
+3. If no: Explore shared theme context or prop passing from container component
+
+**Goal:** When user switches theme in tldraw, sidebar updates automatically without additional code.
+
+## Component Responsibilities
+
+### Container Component
+- Manages which whiteboard is currently active (state: `currentWhiteboardId`)
+- Manages sidebar collapsed state (state: `sidebarCollapsed`)
+- Manages current View selection (state: `currentView`)
+- Manages sidebar focus state (state: `sidebarActive`)
+- Passes appropriate props to both sidebar and tldraw
+- Handles keyboard shortcuts for focus switching
+
+### Sidebar Component
+- Reads directory structure from server (via API or file system access)
+- Displays filtered tree based on current View
+- Handles folder expand/collapse
+- Handles file selection and double-click to switch whiteboards
+- Implements search functionality
+- Manages its own UI state (scroll position, expanded folders, search query)
+- Emits events to container when whiteboard should change
+- Responds to focus state changes
+- Handles all file/folder operations (rename, delete, copy, paste, move, drag-drop)
+- Validates operations and shows appropriate error messages
+- Updates UI optimistically while operations are in progress
+
+### tldraw Component
+- Receives `whiteboardId` prop from container
+- Loads corresponding whiteboard data from server
+- Auto-saves changes back to server
+- Maintains existing tldraw functionality
+- Does not know about sidebar existence
+
+## Technical Considerations
+
+### Backend Requirements
+- Need to verify if current setup has backend server (Node.js/Express or similar)
+- If not, must add backend to handle:
+  - File system operations (read/write whiteboard JSON files)
+  - Directory traversal for sidebar file tree
+  - Auto-save endpoints
+  - View configuration storage/retrieval
+  - File/folder operations (rename, delete, copy, move)
+
+### API Endpoints (if backend needed)
+Suggested endpoints:
+- `GET /api/whiteboards/:id` - Load whiteboard data
+- `POST /api/whiteboards/:id` - Save/update whiteboard
+- `GET /api/file-tree` - Get directory structure for current View
+- `GET /api/views` - Get list of available Views
+- `POST /api/views/:name` - Save/update View configuration
+- `GET /api/views/:name` - Load specific View configuration
+- `POST /api/files/rename` - Rename file or folder
+- `DELETE /api/files/:path` - Delete file or folder
+- `POST /api/files/copy` - Copy file or folder
+- `POST /api/files/move` - Move file or folder
+- `POST /api/folders/create` - Create new folder
+- `POST /api/whiteboards/create` - Create new whiteboard file
+
+### Auto-save Strategy
+To be determined based on tldraw's architecture. Possible triggers:
+- On any shape change (debounced by X seconds)
+- On specific actions (create, delete, modify shapes)
+- On visibility change (tab blur, window minimization)
+- Periodic interval (every N seconds if changes detected)
+
+## Implementation Approach
+
+### Phase 1: Foundation
+1. Analyze existing tldraw codebase to understand current structure
+2. Verify if backend server exists; if not, create minimal Express server
+3. Create basic container component with sidebar and tldraw as siblings
+4. Implement basic state management (currentWhiteboardId, sidebarCollapsed)
+
+### Phase 2: File System Integration
+1. Implement backend endpoints for file system operations
+2. Create basic directory tree reading functionality
+3. Display simple file list in sidebar (no Views yet, no search yet)
+4. Implement double-click to switch whiteboards
+5. Add scrollbar support (vertical and horizontal)
+
+### Phase 3: Core Sidebar Features
+1. Add expand/collapse folders functionality
+2. Implement single-click selection, double-click activation
+3. Add collapsible sidebar toggle
+4. Ensure sidebar state persists during whiteboard switches
+5. Add visual indication of active whiteboard
+
+### Phase 4: File Operations
+1. Implement context menu system (right-click on files/folders)
+2. Add basic operations: rename (F2), delete (Delete key), create new
+3. Implement keyboard operations: Ctrl+C (copy), Ctrl+X (cut), Ctrl+V (paste)
+4. Add drag-and-drop functionality for moving/copying files
+5. Implement operation validation and error handling
+6. Add visual feedback and loading states during operations
+7. Create corresponding backend API endpoints for all operations
+
+### Phase 5: View System
+1. Implement View configuration storage (JSON config files on server)
+2. Add UI for checking/unchecking folders to include in View
+3. Add View selector dropdown
+4. Implement View switching (reload file tree based on View config)
+
+### Phase 6: Search & Focus Management
+1. Implement Ctrl+F search pane
+2. Add file/folder name matching and highlighting
+3. Implement navigation through search results
+4. Add focus state management (sidebar active vs tldraw active)
+5. Route keyboard shortcuts based on focus state
+
+### Phase 7: Theme & Polish
+1. Integrate theme synchronization with tldraw
+2. Add keyboard shortcuts documentation
+3. Performance optimization (lazy loading for large directory trees, virtualized scrolling)
+4. Error handling and user feedback improvements
+5. Scrollbar styling to match theme
+
+## Open Questions for Implementation
+
+These should be answered by examining the codebase:
+
+1. Does the current tldraw setup already have a backend server?
+2. How is tldraw currently initialized and rendered?
+3. What component is currently the root/entry point?
+4. Does tldraw use CSS variables for theming? If so, what are they named?
+5. What is tldraw's current data structure for whiteboard content?
+6. Are there existing save/load mechanisms that can be extended?
+7. What build system is in use (Vite confirmed, but what's the exact setup)?
+
+## User Experience Priorities
+
+1. **Seamless whiteboard switching**: No visible UI resets when changing whiteboards
+2. **Always-accurate file tree**: Sidebar reflects current disk state
+3. **No manual saving**: Changes persist automatically
+4. **Focused workflow**: Views allow hiding irrelevant folders
+5. **Fast navigation**: Search quickly finds whiteboards without scrolling
+6. **Flexible file management**: Rename, move, copy operations feel natural and responsive
+7. **Predictable shortcuts**: VS Code-like keyboard navigation
+
+## Performance Considerations
+
+### Potential Bottlenecks
+- Large directory trees (hundreds or thousands of files)
+- Real-time file system watching for updates
+- Auto-save frequency and debouncing
+- Drag-and-drop with large files
+- Deep folder nesting rendering
+
+### Most Performance-Intensive Feature: File System Watching + Real-time Updates
+
+The biggest potential performance issue is keeping the sidebar's file tree **always accurate** while the file system changes. This involves:
+
+1. **Watching the file system** for changes (new files, renames, deletes, moves)
+2. **Polling or event-based updates** from the server to the browser
+3. **Re-rendering the entire tree** when changes occur
+
+**Why this is expensive:**
+- File system watching can be CPU-intensive on the server
+- Sending updates to the browser constantly creates network overhead
+- Re-rendering large directory trees (especially with hundreds of files) can cause UI lag
+- If you have deep nesting, the React reconciliation process has to check many components
+
+### Recommended Streamlining Strategy
+
+**Approach: Smart Invalidation with Debounced Updates**
+
+Instead of watching everything in real-time, use this hybrid approach:
+
+#### 1. Client-Initiated Updates
+When the sidebar performs an operation (rename, delete, move), it immediately updates its local state optimistically, then confirms with the server.
+- **Benefit**: No file system watching needed for user's own actions
+- **Benefit**: Instant UI feedback
+- **Implementation**: Update React state immediately, send API request, revert if error occurs
+
+#### 2. Periodic Shallow Checks
+Every 5-10 seconds, ask the server "did anything change in these directories?" with a lightweight endpoint that just returns modification timestamps or a hash.
+- **If nothing changed**: No re-render needed, zero overhead
+- **If something changed**: Fetch only the updated portions of the tree
+- **Implementation**: Simple GET endpoint that returns checksums or timestamps for watched directories
+
+#### 3. Lazy Loading
+Only load folder contents when the user expands that folder.
+- **Don't load** the entire file tree at once on initial render
+- **Do load** folder contents on-demand when user clicks to expand
+- **Dramatically reduces** initial load time and memory usage
+- **Implementation**: Store folder state (expanded/collapsed) and fetch children only when expanded
+
+#### 4. Virtual Scrolling
+For folders with many files (50+), only render the visible items in the viewport.
+- **Libraries**: Use `react-window` or `react-virtualized`
+- **Can display** thousands of items with smooth 60fps scrolling
+- **Only renders** ~20-30 DOM nodes regardless of total items
+- **Implementation**: Wrap file list in virtual scroll container
+
+#### 5. Debounced Auto-Save
+Group rapid changes together instead of saving every single modification.
+- **Don't save** on every single shape movement or edit
+- **Wait for** 1-2 seconds of inactivity, then save once
+- **Or save** on specific events (stop dragging, finish typing, blur canvas)
+- **Implementation**: Use debounce utility (lodash.debounce or custom) on save function
+
+**Example Integration Strategy:**
+```
+Timeline of operations:
+- User clicks folder → Load that folder's contents (lazy loading)
+- User edits whiteboard → Debounced auto-save after 2 seconds of inactivity
+- Every 10 seconds → Check server: "any changes to my current View folders?"
+- User performs file operation → Optimistic UI update + server confirmation
+- Large folder rendered → Use virtual scrolling for smooth performance
+```
+
+This gives you the "always accurate" feeling without the overhead of true real-time watching.
+
+### Secondary Concern: Large File Tree Rendering
+
+If you have hundreds of nested folders, rendering them all as React components can be slow.
+
+**Problem**: Each folder node is a React component. With deep nesting and many files, you might have 500+ components mounting simultaneously, causing:
+- Slow initial render (2-3 seconds for very large trees)
+- Laggy expand/collapse animations
+- High memory usage
+- Sluggish interaction
+
+**Solutions:**
+
+#### Solution 1: Virtual Scrolling (Primary Recommendation)
+- **Use library**: `react-window` or `react-virtualized`
+- **How it works**: Only renders tree nodes that are currently visible in the viewport
+- **Result**: Can handle 10,000+ files with only ~30 DOM nodes rendered at any time
+- **Trade-off**: Slight complexity in implementation, but worth it for large trees
+
+#### Solution 2: Memoization
+- **Use**: `React.memo()` on tree node components
+- **How it works**: Prevents re-rendering of nodes whose props haven't changed
+- **Implementation**: Wrap folder/file components in React.memo with custom comparison function
+- **Result**: When one folder expands, only that folder re-renders, not the entire tree
+
+#### Solution 3: Tree Data Structure Optimization
+- **Instead of**: Flat array of all files that gets filtered/mapped
+- **Use**: Proper tree structure with parent-child relationships
+- **Benefit**: More efficient updates (only update the specific branch that changed)
+- **Implementation**: Store tree as nested objects/maps in state
+
+#### Solution 4: Windowing/Pagination
+- **For extremely large folders**: Show first 100 items, "Load more" button for rest
+- **Simpler alternative** to virtual scrolling
+- **Good for**: Folders with 500+ files (rare but possible)
+
+**Recommended Combined Approach:**
+```
+1. Use memoization on all tree node components (easy, always beneficial)
+2. Implement lazy loading for folder contents (medium effort, huge benefit)
+3. Add virtual scrolling if testing shows >200ms render times (higher effort, needed for large trees)
+4. Use efficient tree data structure from the start (prevents future refactoring)
+```
+
+### Performance Testing Targets
+
+Set these targets during development to ensure good performance:
+
+- **Initial sidebar load**: < 500ms for typical tree (50-100 files)
+- **Expand folder**: < 100ms animation
+- **Switch whiteboard**: < 200ms to see new canvas
+- **Auto-save operation**: < 300ms to complete
+- **Search results**: < 200ms to highlight matches
+- **File operation (rename/move)**: Optimistic UI update < 50ms, server confirmation < 500ms
+
+### Optimization Strategies Summary
+- Implement virtual scrolling for large file lists (render only visible items)
+- Use debouncing/throttling for auto-save operations (1-2 second debounce)
+- Lazy-load folder contents (only load when expanded)
+- Cache file tree structure with smart invalidation (periodic shallow checks)
+- Use memoization (React.memo) on tree node components
+- Implement efficient tree data structure (nested objects, not flat arrays)
+- Use optimistic UI updates for file operations (instant feedback)
+- Avoid true real-time file watching (use periodic checks instead)
+
+## Future Considerations (Explicitly Out of Scope for Now)
+
+- Multi-user support
+- Permissions/access control
+- Collaborative editing
+- Cloud sync
+- File sharing between users
+- Version control integration
+- Undo/redo for file operations (lower priority, consider for later)
+
+These may be added later but should not influence the current architecture decisions.
+
+---
+
+**Note to AI Agent:** This document assumes you have access to the full codebase. When implementing, please verify assumptions about existing architecture and adjust implementation accordingly. Prioritize the wrapper approach architecture as this is fundamental to achieving the persistent sidebar requirement.
