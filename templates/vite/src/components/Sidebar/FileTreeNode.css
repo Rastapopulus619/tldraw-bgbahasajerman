@@ -1,0 +1,50 @@
+.file-tree-node {
+	width: 100%;
+}
+
+.file-tree-node__item {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 8px;
+	cursor: pointer;
+	border-radius: var(--tl-radius-2);
+	font-size: 13px;
+	color: var(--tl-color-text);
+	transition: background-color 0.15s ease;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.file-tree-node__item:hover {
+	background-color: var(--tl-color-muted-2);
+}
+
+.file-tree-node__item--active {
+	background-color: var(--tl-color-selected);
+	font-weight: 600;
+}
+
+.file-tree-node__item--folder {
+	font-weight: 500;
+}
+
+.file-tree-node__icon {
+	flex-shrink: 0;
+	font-size: 10px;
+	width: 16px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.file-tree-node__name {
+	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.file-tree-node__children {
+	width: 100%;
+}
