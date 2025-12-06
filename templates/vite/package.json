@@ -25,7 +25,7 @@
 		"build": "tsc && vite build",
 		"lint": "yarn run -T tsx ../../internal/scripts/lint.ts",
 		"preview": "vite preview --host",
-		"server": "node server.js",
+		"server": "node server/index.js",
 		"dev:full": "concurrently \"yarn server\" \"yarn dev\""
 	},
 	"dependencies": {

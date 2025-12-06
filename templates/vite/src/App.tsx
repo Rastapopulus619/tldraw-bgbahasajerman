@@ -1,11 +1,7 @@
-import { Tldraw } from 'tldraw'
+import { AppContainer } from './components/AppContainer'
 
 function App() {
-	return (
-		<div style={{ position: 'fixed', inset: 0 }}>
-			<Tldraw />
-		</div>
-	)
+	return <AppContainer />
 }
 
 export default App

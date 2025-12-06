@@ -1,0 +1,60 @@
+{
+  "tldrawSnapshot": {
+    "store": {
+      "document:document": {
+        "gridSize": 10,
+        "name": "",
+        "meta": {},
+        "id": "document:document",
+        "typeName": "document"
+      },
+      "page:page": {
+        "meta": {},
+        "id": "page:page",
+        "name": "Page 1",
+        "index": "a1",
+        "typeName": "page"
+      }
+    },
+    "schema": {
+      "schemaVersion": 2,
+      "sequences": {}
+    }
+  },
+  "metadata": {
+    "colorPalette": {
+      "color1_R1C1": { "light": "#ff0000", "dark": "#cc0000" },
+      "color2_R1C2": { "light": "#00ff00", "dark": "#00cc00" },
+      "color3_R1C3": { "light": "#0000ff", "dark": "#0000cc" },
+      "color4_R1C4": { "light": "#ffff00", "dark": "#cccc00" },
+      "color5_R2C1": { "light": "#ff00ff", "dark": "#cc00cc" },
+      "color6_R2C2": { "light": "#00ffff", "dark": "#00cccc" },
+      "color7_R2C3": { "light": "#ff8800", "dark": "#cc6600" },
+      "color8_R2C4": { "light": "#88ff00", "dark": "#66cc00" },
+      "color9_R3C1": { "light": "#8800ff", "dark": "#6600cc" },
+      "color10_R3C2": { "light": "#ff0088", "dark": "#cc0066" },
+      "color11_R3C3": { "light": "#00ff88", "dark": "#00cc66" },
+      "color12_R3C4": { "light": "#0088ff", "dark": "#0066cc" },
+      "color13_R4C1": { "light": "#ff8888", "dark": "#cc6666" },
+      "color14_R4C2": { "light": "#88ff88", "dark": "#66cc66" },
+      "color15_R4C3": { "light": "#8888ff", "dark": "#6666cc" },
+      "color16_R4C4": { "light": "#ffff88", "dark": "#cccc66" },
+      "color17_R5C1": { "light": "#ff88ff", "dark": "#cc66cc" },
+      "color18_R5C2": { "light": "#88ffff", "dark": "#66cccc" },
+      "color19_R5C3": { "light": "#888888", "dark": "#666666" },
+      "color20_R5C4": { "light": "#444444", "dark": "#222222" },
+      "color21_R6C1": { "light": "#aa0000", "dark": "#880000" },
+      "color22_R6C2": { "light": "#00aa00", "dark": "#008800" },
+      "color23_R6C3": { "light": "#0000aa", "dark": "#000088" },
+      "color24_R6C4": { "light": "#aaaa00", "dark": "#888800" },
+      "color25_R7C1": { "light": "#aa00aa", "dark": "#880088" },
+      "color26_R7C2": { "light": "#00aaaa", "dark": "#008888" },
+      "color27_R7C3": { "light": "#666666", "dark": "#444444" },
+      "color28_R7C4": { "light": "#333333", "dark": "#111111" }
+    },
+    "createdAt": "2025-01-06T00:00:00.000Z",
+    "lastModified": "2025-01-06T00:00:00.000Z",
+    "boardName": "Welcome Board",
+    "readOnly": true
+  }
+}
