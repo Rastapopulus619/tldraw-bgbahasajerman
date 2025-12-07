@@ -44,11 +44,18 @@ export async function buildFileTree(dirPath, relativePath = '') {
 			}
 		}
 
-		// Sort: folders first, then files, alphabetically
+		// Sort: welcome.tldr always first (even before folders), then folders, then files
 		return nodes.sort((a, b) => {
+			// Pin welcome.tldr to absolute top (before everything)
+			if (a.name === 'welcome.tldr' && a.type === 'file') return -1
+			if (b.name === 'welcome.tldr' && b.type === 'file') return 1
+
+			// Then folders before other files
 			if (a.type !== b.type) {
 				return a.type === 'folder' ? -1 : 1
 			}
+
+			// Alphabetical within same type
 			return a.name.localeCompare(b.name)
 		})
 	} catch (error) {

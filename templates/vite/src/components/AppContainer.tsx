@@ -1,7 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Tldraw } from 'tldraw'
+import { useAutoSave } from '../hooks/useAutoSave'
+import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts'
+import { useWhiteboardLoader } from '../hooks/useWhiteboardLoader'
 import './AppContainer.css'
 import { Sidebar } from './Sidebar/Sidebar'
+import { TldrawWrapper } from './TldrawWrapper'
 
 /**
  * AppContainer - Main wrapper component
@@ -11,27 +15,55 @@ import { Sidebar } from './Sidebar/Sidebar'
  * - Sidebar collapsed state
  * - Sidebar active/focus state
  * - Current view
+ * - Store lifecycle (loading/disposal)
  *
  * Sidebar and Tldraw are sibling components that persist independently.
  */
 export function AppContainer() {
-	const [currentWhiteboardId, setCurrentWhiteboardId] = useState<string>('welcome.tldr')
 	const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false)
 	const [sidebarActive, setSidebarActive] = useState<boolean>(true)
 	const [currentView] = useState<string>('default-view')
+	const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
+	const [editorInstance, setEditorInstance] = useState<any>(null)
+
+	// Use whiteboard loader hook
+	const { store, isLoading, error, currentBoardId, loadWhiteboard } = useWhiteboardLoader()
+
+	// Load welcome board on mount
+	useEffect(() => {
+		loadWhiteboard('welcome.tldr')
+	}, [loadWhiteboard])
+
+	// Auto-save hook
+	useAutoSave(editorInstance, currentBoardId || 'welcome.tldr')
 
 	// Log current view for Phase 5
 	console.log('Current view:', currentView)
 
+	const handleThemeChange = (isDark: boolean) => {
+		setIsDarkMode(isDark)
+	}
+
 	const handleWhiteboardSelect = (id: string) => {
-		console.log('Switching to whiteboard:', id)
-		setCurrentWhiteboardId(id)
-		// TODO Phase 3: Load whiteboard data and create new store
+		console.log('Opening whiteboard:', id)
+		loadWhiteboard(id)
 	}
 
 	const handleToggleSidebar = () => {
 		setSidebarCollapsed(!sidebarCollapsed)
 	}
+
+	const handleToggleFocus = () => {
+		setSidebarActive(!sidebarActive)
+		console.log('Focus toggled:', !sidebarActive ? 'Sidebar' : 'Canvas')
+	}
+
+	// Keyboard shortcuts
+	useKeyboardShortcuts({
+		onToggleSidebar: handleToggleSidebar,
+		onToggleFocus: handleToggleFocus,
+		sidebarActive,
+	})
 
 	const handleSidebarClick = () => {
 		if (!sidebarActive) {
@@ -45,19 +77,40 @@ export function AppContainer() {
 		}
 	}
 
+	const handleMount = (editor: any) => {
+		setEditorInstance(editor)
+		console.log('Editor mounted')
+	}
+
 	return (
-		<div className="app-container">
+		<div className={`app-container ${isDarkMode ? 'theme-dark' : 'theme-light'}`}>
 			<div className="app-container__sidebar" onClick={handleSidebarClick}>
 				<Sidebar
 					isCollapsed={sidebarCollapsed}
 					isActive={sidebarActive}
 					onToggleCollapse={handleToggleSidebar}
-					currentWhiteboardId={currentWhiteboardId}
+					currentWhiteboardId={currentBoardId || 'welcome.tldr'}
 					onWhiteboardSelect={handleWhiteboardSelect}
 				/>
 			</div>
 			<div className="app-container__canvas" onClick={handleCanvasClick}>
-				<Tldraw />
+				{isLoading && (
+					<div className="app-container__loading">
+						<div className="spinner"></div>
+						<div>Loading whiteboard...</div>
+					</div>
+				)}
+				{error && (
+					<div className="app-container__error">
+						<div>Error: {error}</div>
+						<button onClick={() => loadWhiteboard('welcome.tldr')}>Return to Welcome Board</button>
+					</div>
+				)}
+				{!isLoading && !error && store && (
+					<Tldraw store={store} onMount={handleMount}>
+						<TldrawWrapper onThemeChange={handleThemeChange} />
+					</Tldraw>
+				)}
 			</div>
 		</div>
 	)

@@ -51,14 +51,17 @@ export function useAutoSave(editor: Editor | null, whiteboardId: string) {
 						},
 					}
 
-					// Send to server
-					const response = await fetch(`http://localhost:3001/api/whiteboards/${whiteboardId}`, {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify(boardData),
-					})
+					// Send to server (using query parameter for nested paths)
+					const response = await fetch(
+						`/api/whiteboards/save?id=${encodeURIComponent(whiteboardId)}`,
+						{
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(boardData),
+						}
+					)
 
 					if (!response.ok) {
 						console.error('Auto-save failed:', await response.text())

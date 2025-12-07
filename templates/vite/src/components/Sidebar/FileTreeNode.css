@@ -8,21 +8,29 @@
 	gap: 6px;
 	padding: 6px 8px;
 	cursor: pointer;
-	border-radius: var(--tl-radius-2);
+	border-radius: var(--tl-radius-2, 4px);
 	font-size: 13px;
-	color: var(--tl-color-text);
+	color: var(--tl-color-text, #1d1d1d);
 	transition: background-color 0.15s ease;
 	white-space: nowrap;
 	overflow: hidden;
 }
 
 .file-tree-node__item:hover {
-	background-color: var(--tl-color-muted-2);
+	background-color: var(--tl-color-muted-2, #f0f0f0);
 }
 
+/* Selected state (single-clicked but not open) */
+.file-tree-node__item--selected {
+	background-color: var(--tl-color-muted-1, #e8e8e8);
+}
+
+/* Active state (currently open whiteboard) */
 .file-tree-node__item--active {
-	background-color: var(--tl-color-selected);
+	background-color: var(--tl-color-selected, #e3f2fd);
 	font-weight: 600;
+	border-left: 3px solid var(--tl-color-focus, #2d7ff9);
+	padding-left: 5px;
 }
 
 .file-tree-node__item--folder {
@@ -36,6 +44,12 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	transition: transform 0.2s ease;
+}
+
+/* Chevron rotation for expanded folders */
+.file-tree-node__icon.expanded {
+	transform: rotate(90deg);
 }
 
 .file-tree-node__name {
@@ -47,4 +61,23 @@
 
 .file-tree-node__children {
 	width: 100%;
+}
+
+/* Dark mode - applied via .theme-dark class on parent */
+.theme-dark .file-tree-node__item {
+	color: var(--tl-color-text, #e8e8e8);
+}
+
+.theme-dark .file-tree-node__item:hover {
+	background-color: var(--tl-color-muted-2, #2a2a2a);
+}
+
+.theme-dark .file-tree-node__item--selected {
+	background-color: var(--tl-color-muted-1, #2a2a2a);
+}
+
+.theme-dark .file-tree-node__item--active {
+	background-color: var(--tl-color-selected, #1e3a5f);
+	color: var(--tl-color-text, #ffffff);
+	border-left-color: var(--tl-color-focus, #4d9fff);
 }

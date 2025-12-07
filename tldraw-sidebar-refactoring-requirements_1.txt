@@ -458,3 +458,77 @@ These may be added later but should not influence the current architecture decis
 ---
 
 **Note to AI Agent:** This document assumes you have access to the full codebase. When implementing, please verify assumptions about existing architecture and adjust implementation accordingly. Prioritize the wrapper approach architecture as this is fundamental to achieving the persistent sidebar requirement.
+
+---
+
+## IMPLEMENTATION NOTES (Added During Development)
+
+### Keyboard Event Blocking Strategy (Phase 3)
+
+**Current Implementation (Phase 3):**
+The keyboard shortcut system blocks ONLY specific keys when sidebar is focused:
+- Arrow keys (Up, Down, Left, Right)
+- F2 (rename)
+- Delete
+- Ctrl+C, Ctrl+X, Ctrl+V (clipboard)
+- Enter
+- Escape
+
+**Still Allowed When Sidebar Focused:**
+- Letter keys (a, b, c, v, t, r, etc.) - for tldraw tool selection
+- Number keys
+- Other tldraw shortcuts
+
+**IMPORTANT FOR FUTURE PHASES:**
+As new sidebar features are added (especially in Phase 6 - Search), the keyboard blocking list MUST BE EXTENDED:
+
+**Phase 4 (File Operations):**
+- Existing blocks (F2, Delete, Ctrl+C/X/V) are sufficient
+- No additional blocking needed
+
+**Phase 6 (Search):**
+- When search pane is OPEN and input is FOCUSED:
+  - Block ALL letter keys (a-z, A-Z)
+  - Block ALL number keys (0-9)
+  - Block ALL symbol keys
+  - Only allow: Escape (close search), Enter (navigate results), F3 (next result)
+- When search pane is CLOSED but sidebar is focused:
+  - Keep current blocking behavior (only specific keys)
+
+**Implementation Location:**
+File: `templates/vite/src/hooks/useKeyboardShortcuts.ts`
+Function: `handleKeyDown` in `useEffect`
+
+**Code Pattern:**
+```typescript
+if (sidebarActive) {
+  // Check if search is open and focused
+  if (isSearchActive && isSearchInputFocused) {
+    // Block almost everything except search-specific keys
+    if (!['Escape', 'Enter', 'F3'].includes(e.key)) {
+      e.stopPropagation()
+    }
+  } else {
+    // Current behavior: block only specific keys
+    const isNavigationKey = [...list...]
+    // etc.
+  }
+}
+```
+
+### Default Board Protection (Phase 3)
+
+**Requirement:** `welcome.tldr` must be protected from accidental deletion.
+
+**Implementation:**
+1. **File tree pinning:** Always show `welcome.tldr` at the top of the file tree (regardless of alphabetical order)
+2. **Delete protection:** Two-stage confirmation dialog when attempting to delete `welcome.tldr`:
+   - Stage 1: Warning dialog explaining this is the default/fallback board
+   - Stage 2: Secondary confirmation (checkbox "I understand this is the fallback board")
+   - Both stages must be confirmed before deletion proceeds
+3. **Backend validation:** Server should also reject deletion of `welcome.tldr` (safety fallback)
+
+**Implementation Location:**
+- Frontend: Phase 4 - Delete operation handler
+- Backend: `server/routes/fileOperations.js` or `server/index.js`
+- File sorting: `server/utils/fileSystem.js` - `buildFileTree()` function

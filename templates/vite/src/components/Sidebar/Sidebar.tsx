@@ -27,7 +27,7 @@ export function Sidebar({
 		async function fetchFileTree() {
 			try {
 				setIsLoading(true)
-				const response = await fetch('http://localhost:3001/api/file-tree')
+				const response = await fetch('/api/file-tree')
 				const data = await response.json()
 
 				if (data.success) {

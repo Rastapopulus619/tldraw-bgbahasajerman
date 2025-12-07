@@ -36,10 +36,10 @@ app.use(cors())
 app.use(express.json({ limit: '50mb' }))
 
 // ===== WHITEBOARD ROUTES =====
-// Using query parameter for path to avoid Express 5 wildcard issues
+// Using query parameter approach for nested paths (Express 5 compatible)
 
 // Create new whiteboard
-app.post('/api/whiteboards', async (req, res) => {
+app.post('/api/whiteboards/create', async (req, res) => {
 	try {
 		const { name, parentPath = '' } = req.body
 		let filename
@@ -105,10 +105,10 @@ app.post('/api/whiteboards', async (req, res) => {
 	}
 })
 
-// Get whiteboard - using query param for path
-app.get('/api/whiteboards/:id', async (req, res) => {
+// Get whiteboard by ID (query parameter)
+app.get('/api/whiteboards/load', async (req, res) => {
 	try {
-		const whiteboardId = req.params.id
+		const whiteboardId = req.query.id
 
 		if (!whiteboardId || !isValidWhiteboardId(whiteboardId)) {
 			return res.status(400).json({ success: false, error: 'Invalid whiteboard ID' })
@@ -132,10 +132,10 @@ app.get('/api/whiteboards/:id', async (req, res) => {
 	}
 })
 
-// Save whiteboard
-app.post('/api/whiteboards/:id', async (req, res) => {
+// Save whiteboard (query parameter)
+app.post('/api/whiteboards/save', async (req, res) => {
 	try {
-		const whiteboardId = req.params.id
+		const whiteboardId = req.query.id
 		const boardData = req.body
 
 		if (!whiteboardId || !isValidWhiteboardId(whiteboardId)) {
@@ -163,10 +163,10 @@ app.post('/api/whiteboards/:id', async (req, res) => {
 	}
 })
 
-// Delete whiteboard
-app.delete('/api/whiteboards/:id', async (req, res) => {
+// Delete whiteboard (query parameter)
+app.delete('/api/whiteboards/delete', async (req, res) => {
 	try {
-		const whiteboardId = req.params.id
+		const whiteboardId = req.query.id
 
 		if (!whiteboardId || !isValidWhiteboardId(whiteboardId)) {
 			return res.status(400).json({ success: false, error: 'Invalid whiteboard ID' })
@@ -174,6 +174,14 @@ app.delete('/api/whiteboards/:id', async (req, res) => {
 
 		if (!isPathSafe(whiteboardId)) {
 			return res.status(400).json({ success: false, error: 'Invalid path' })
+		}
+
+		// Protect welcome.tldr from deletion (safety fallback)
+		if (whiteboardId === 'welcome.tldr') {
+			return res.status(403).json({
+				success: false,
+				error: 'Cannot delete welcome.tldr - this is the default fallback board',
+			})
 		}
 
 		const filePath = path.join(WHITEBOARDS_DIR, whiteboardId)
