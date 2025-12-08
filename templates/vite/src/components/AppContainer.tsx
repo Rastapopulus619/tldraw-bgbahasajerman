@@ -25,6 +25,7 @@ export function AppContainer() {
 	const [currentView] = useState<string>('default-view')
 	const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
 	const [editorInstance, setEditorInstance] = useState<any>(null)
+	const [selectedFileId, setSelectedFileId] = useState<string | null>(null)
 
 	// Use whiteboard loader hook
 	const { store, isLoading, error, currentBoardId, loadWhiteboard } = useWhiteboardLoader()
@@ -91,6 +92,9 @@ export function AppContainer() {
 					onToggleCollapse={handleToggleSidebar}
 					currentWhiteboardId={currentBoardId || 'welcome.tldr'}
 					onWhiteboardSelect={handleWhiteboardSelect}
+					selectedFileId={selectedFileId}
+					onSelectedFileChange={setSelectedFileId}
+					sidebarActive={sidebarActive}
 				/>
 			</div>
 			<div className="app-container__canvas" onClick={handleCanvasClick}>

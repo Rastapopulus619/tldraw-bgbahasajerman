@@ -37,6 +37,21 @@
 	font-weight: 500;
 }
 
+.file-tree-node__item--drag-over {
+	background-color: var(--tl-color-focus, #2d7ff9) !important;
+	opacity: 0.3;
+}
+
+.file-tree-node__item--root {
+	font-weight: 700;
+	color: var(--tl-color-text-1, #0d0d0d);
+	cursor: default;
+}
+
+.file-tree-node__item--root:hover {
+	background-color: var(--tl-color-muted-1, #f8f8f8);
+}
+
 .file-tree-node__icon {
 	flex-shrink: 0;
 	font-size: 10px;
@@ -59,8 +74,26 @@
 	white-space: nowrap;
 }
 
+.file-tree-node__input {
+	flex: 1;
+	padding: 2px 4px;
+	border: 1px solid var(--tl-color-focus, #2d7ff9);
+	border-radius: var(--tl-radius-2, 4px);
+	background-color: var(--tl-color-panel, #ffffff);
+	color: var(--tl-color-text, #1d1d1d);
+	font-size: 13px;
+	outline: none;
+}
+
 .file-tree-node__children {
 	width: 100%;
+}
+
+/* Dark mode for input */
+.theme-dark .file-tree-node__input {
+	background-color: var(--tl-color-panel, #2a2a2a);
+	color: var(--tl-color-text, #e8e8e8);
+	border-color: var(--tl-color-focus, #4d9fff);
 }
 
 /* Dark mode - applied via .theme-dark class on parent */

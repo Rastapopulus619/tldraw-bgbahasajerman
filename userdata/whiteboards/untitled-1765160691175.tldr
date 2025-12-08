@@ -1,0 +1,153 @@
+{
+  "tldrawSnapshot": {
+    "document": {
+      "store": {
+        "document:document": {
+          "gridSize": 10,
+          "name": "",
+          "meta": {},
+          "id": "document:document",
+          "typeName": "document"
+        },
+        "page:page": {
+          "meta": {},
+          "id": "page:page",
+          "name": "Page 1",
+          "index": "a1",
+          "typeName": "page"
+        },
+        "shape:1XaPuU4Lg8z6c6ozTuY9w": {
+          "x": 221.25830078125,
+          "y": 295.0500030517578,
+          "rotation": 0,
+          "isLocked": false,
+          "opacity": 1,
+          "meta": {},
+          "id": "shape:1XaPuU4Lg8z6c6ozTuY9w",
+          "type": "text",
+          "props": {
+            "color": "color1_R1C1",
+            "size": "m",
+            "w": 859.1500244140625,
+            "font": "draw",
+            "textAlign": "middle",
+            "autoSize": true,
+            "scale": 1,
+            "richText": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "[X] - nothing happens when i press Delete key with any file selected"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "parentId": "page:page",
+          "index": "a14RVpRV",
+          "typeName": "shape"
+        },
+        "shape:zxGbrqc9BEIY86ptC-Z0P": {
+          "x": 221.25830078125,
+          "y": 295.0500030517578,
+          "rotation": 0,
+          "isLocked": false,
+          "opacity": 1,
+          "meta": {},
+          "id": "shape:zxGbrqc9BEIY86ptC-Z0P",
+          "type": "text",
+          "props": {
+            "color": "color1_R1C1",
+            "size": "m",
+            "w": 859.1500244140625,
+            "font": "draw",
+            "textAlign": "middle",
+            "autoSize": true,
+            "scale": 1,
+            "richText": {
+              "type": "doc",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "[X] - nothing happens when i press Delete key with any file selected"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "parentId": "page:page",
+          "index": "a2ebFt6V",
+          "typeName": "shape"
+        }
+      },
+      "schema": {
+        "schemaVersion": 2,
+        "sequences": {
+          "com.tldraw.store": 5,
+          "com.tldraw.asset": 1,
+          "com.tldraw.camera": 1,
+          "com.tldraw.document": 2,
+          "com.tldraw.instance": 25,
+          "com.tldraw.instance_page_state": 5,
+          "com.tldraw.page": 1,
+          "com.tldraw.instance_presence": 6,
+          "com.tldraw.pointer": 1,
+          "com.tldraw.shape": 4,
+          "com.tldraw.asset.bookmark": 2,
+          "com.tldraw.asset.image": 5,
+          "com.tldraw.asset.video": 5,
+          "com.tldraw.shape.arrow": 7,
+          "com.tldraw.shape.bookmark": 2,
+          "com.tldraw.shape.draw": 2,
+          "com.tldraw.shape.embed": 4,
+          "com.tldraw.shape.frame": 1,
+          "com.tldraw.shape.geo": 10,
+          "com.tldraw.shape.group": 0,
+          "com.tldraw.shape.highlight": 1,
+          "com.tldraw.shape.image": 5,
+          "com.tldraw.shape.line": 5,
+          "com.tldraw.shape.note": 9,
+          "com.tldraw.shape.text": 3,
+          "com.tldraw.shape.video": 4,
+          "com.tldraw.binding.arrow": 1
+        }
+      }
+    },
+    "session": {
+      "version": 0,
+      "currentPageId": "page:page",
+      "exportBackground": true,
+      "isFocusMode": false,
+      "isDebugMode": false,
+      "isToolLocked": false,
+      "isGridMode": false,
+      "pageStates": [
+        {
+          "pageId": "page:page",
+          "camera": {
+            "x": 0,
+            "y": 0,
+            "z": 1
+          },
+          "selectedShapeIds": [],
+          "focusedGroupId": null
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "colorPalette": {},
+    "createdAt": "2025-12-08T02:32:33.063Z",
+    "lastModified": "2025-12-08T02:32:33.067Z",
+    "boardName": "untitled-1765160691175.tldr"
+  }
+}

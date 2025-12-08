@@ -56,7 +56,8 @@ export function useKeyboardShortcuts({
 					'Escape',
 				].includes(e.key)
 				const isEditingKey = e.key === 'F2' || e.key === 'Delete'
-				const isClipboardKey = ctrlOrCmd && ['c', 'x', 'v'].includes(e.key.toLowerCase())
+				// Removed Ctrl+X (cut) per user request - only Ctrl+C and Ctrl+V
+				const isClipboardKey = ctrlOrCmd && ['c', 'v'].includes(e.key.toLowerCase())
 
 				if (isNavigationKey || isEditingKey || isClipboardKey) {
 					// Let sidebar handle these, stop tldraw from getting them
