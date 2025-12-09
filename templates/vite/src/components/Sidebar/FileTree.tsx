@@ -11,7 +11,6 @@ interface FileTreeProps {
 	onRefresh: () => void
 	selectedFileId: string | null
 	onSelectedFileChange: (id: string | null) => void
-	sidebarActive: boolean
 }
 
 export function FileTree({
@@ -21,56 +20,72 @@ export function FileTree({
 	onRefresh,
 	selectedFileId,
 	onSelectedFileChange,
-	sidebarActive,
 }: FileTreeProps) {
-	const { rename, deleteFile, copy, cut, clipboard } = useFileOperations(onRefresh)
+	const { rename, deleteFile, copy, clipboard } = useFileOperations(onRefresh)
 	const [renamingFileId, setRenamingFileId] = useState<string | null>(null)
 
-	// Keyboard shortcuts for file operations (F2, Delete, Ctrl+C/V)
-	useEffect(() => {
-		if (!sidebarActive || !selectedFileId) return
-
-		const handleKeyDown = async (e: KeyboardEvent) => {
-			const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0
-			const ctrlOrCmd = isMac ? e.metaKey : e.ctrlKey
-
-			// F2: Rename selected file
-			if (e.key === 'F2') {
-				e.preventDefault()
-				e.stopPropagation()
-				setRenamingFileId(selectedFileId)
-				return
-			}
-
-			// Delete: Delete selected file
-			if (e.key === 'Delete') {
-				e.preventDefault()
-				e.stopPropagation()
-				deleteFile(selectedFileId)
-				return
-			}
-
-			// Ctrl+C: Copy
-			if (ctrlOrCmd && e.key === 'c' && !e.shiftKey) {
-				e.preventDefault()
-				e.stopPropagation()
-				copy(selectedFileId)
-				return
-			}
-
-			// Ctrl+V: Paste with smart destination
-			if (ctrlOrCmd && e.key === 'v' && !e.shiftKey) {
-				e.preventDefault()
-				e.stopPropagation()
-
-				if (!clipboard) {
-					console.log('Nothing in clipboard to paste')
-					return
+	// Helper: Flatten tree to list for navigation
+	const flattenTree = (nodesList: FileTreeNodeType[]): string[] => {
+		const result: string[] = []
+		const traverse = (nodes: FileTreeNodeType[]) => {
+			for (const node of nodes) {
+				result.push(node.path)
+				if (node.children && node.children.length > 0) {
+					traverse(node.children)
 				}
+			}
+		}
+		// Add root first
+		result.push('')
+		traverse(nodesList)
+		return result
+	}
 
-				// Find the selected node to determine destination
-				const findNode = (nodes: FileTreeNodeType[], path: string): FileTreeNodeType | null => {
-					for (const node of nodes) {
+	// Expose operations via window for keyboard shortcuts
+	useEffect(() => {
+		;(window as any).__sidebarFileOps = {
+			startRename: () => {
+				if (selectedFileId) setRenamingFileId(selectedFileId)
+			},
+			deleteSelected: () => {
+				if (selectedFileId) deleteFile(selectedFileId)
+			},
+			copySelected: () => {
+				if (selectedFileId) copy(selectedFileId)
+			},
+			navigateUp: () => {
+				const flatList = flattenTree(nodes)
+				const currentIndex = flatList.indexOf(selectedFileId || '')
+				if (currentIndex > 0) {
+					onSelectedFileChange(flatList[currentIndex - 1])
+				}
+			},
+			navigateDown: () => {
+				const flatList = flattenTree(nodes)
+				const currentIndex = flatList.indexOf(selectedFileId || '')
+				if (currentIndex < flatList.length - 1) {
+					onSelectedFileChange(flatList[currentIndex + 1])
+				}
+			},
+			expandSelected: () => {
+				// Trigger expand via FileTreeNode - needs implementation
+				console.log('Expand:', selectedFileId)
+			},
+			collapseSelected: () => {
+				// Trigger collapse via FileTreeNode - needs implementation
+				console.log('Collapse:', selectedFileId)
+			},
+			openSelected: () => {
+				if (selectedFileId && selectedFileId.endsWith('.tldr')) {
+					onWhiteboardSelect(selectedFileId)
+				}
+			},
+			pasteToSelected: async () => {
+				if (!clipboard || !selectedFileId) return
+
+				// Smart destination logic
+				const findNode = (nodesList: FileTreeNodeType[], path: string): FileTreeNodeType | null => {
+					for (const node of nodesList) {
 						if (node.path === path) return node
 						if (node.children) {
 							const found = findNode(node.children, path)
@@ -81,26 +96,21 @@ export function FileTree({
 				}
 
 				const selectedNode = findNode(nodes, selectedFileId)
-				let destinationPath: string
+				let destinationPath = ''
 
-				if (!selectedNode) {
-					// Nothing selected, paste to root
-					destinationPath = ''
-				} else if (selectedNode.type === 'folder') {
-					// Selected a folder, paste into it
-					destinationPath = selectedNode.path
-				} else {
-					// Selected a file, paste into its parent directory
-					const parts = selectedNode.path.split('/')
-					parts.pop() // Remove filename
-					destinationPath = parts.join('/') || ''
+				if (selectedNode) {
+					if (selectedNode.type === 'folder' || selectedNode.id === '__root__') {
+						destinationPath = selectedNode.path
+					} else {
+						const parts = selectedNode.path.split('/')
+						parts.pop()
+						destinationPath = parts.join('/') || ''
+					}
 				}
 
-				// Build full destination path
 				const fileName = clipboard.path.split('/').pop()
 				const fullDestination = destinationPath ? `${destinationPath}/${fileName}` : fileName
 
-				// Execute paste
 				const endpoint = clipboard.operation === 'copy' ? '/api/files/copy' : '/api/files/move'
 				try {
 					const response = await fetch(endpoint, {
@@ -115,11 +125,6 @@ export function FileTree({
 					const result = await response.json()
 
 					if (result.success) {
-						if (clipboard.operation === 'cut') {
-							// Clear clipboard after cut
-							// Note: clipboard state is in useFileOperations, can't clear from here
-							// Will clear automatically on next operation
-						}
 						onRefresh()
 					} else {
 						alert(`Paste failed: ${result.error}`)
@@ -128,24 +133,17 @@ export function FileTree({
 					console.error('Paste error:', error)
 					alert('Failed to paste')
 				}
-				return
-			}
+			},
 		}
 
-		window.addEventListener('keydown', handleKeyDown)
-		return () => window.removeEventListener('keydown', handleKeyDown)
-	}, [sidebarActive, selectedFileId, deleteFile, copy])
-
-	if (nodes.length === 0) {
-		return null
-	}
+		return () => {
+			delete (window as any).__sidebarFileOps
+		}
+	}, [selectedFileId, deleteFile, copy, clipboard, nodes, onRefresh])
 
 	const handleFileSelect = (id: string) => {
 		onSelectedFileChange(id)
 	}
-
-	// Log clipboard for debugging
-	console.log('Clipboard:', clipboard)
 
 	// Create virtual root node
 	const rootNode: FileTreeNodeType = {
@@ -155,6 +153,9 @@ export function FileTree({
 		path: '',
 		children: nodes,
 	}
+
+	// Log clipboard for debugging
+	console.log('Clipboard:', clipboard)
 
 	return (
 		<div className="file-tree">
@@ -168,10 +169,11 @@ export function FileTree({
 				onRename={rename}
 				onDelete={deleteFile}
 				onCopy={copy}
-				onCut={cut}
+				onCut={() => {}}
 				onRefresh={onRefresh}
 				renamingFileId={renamingFileId}
 				onRenamingChange={setRenamingFileId}
+				clipboard={clipboard}
 				depth={-1}
 			/>
 		</div>

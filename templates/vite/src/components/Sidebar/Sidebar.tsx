@@ -11,7 +11,6 @@ interface SidebarProps {
 	onWhiteboardSelect: (id: string) => void
 	selectedFileId: string | null
 	onSelectedFileChange: (id: string | null) => void
-	sidebarActive: boolean
 }
 
 export function Sidebar({
@@ -22,7 +21,6 @@ export function Sidebar({
 	onWhiteboardSelect,
 	selectedFileId,
 	onSelectedFileChange,
-	sidebarActive,
 }: SidebarProps) {
 	const [fileTree, setFileTree] = useState<FileTreeNode[]>([])
 	const [isLoading, setIsLoading] = useState(true)
@@ -140,7 +138,6 @@ export function Sidebar({
 						onRefresh={fetchFileTree}
 						selectedFileId={selectedFileId}
 						onSelectedFileChange={onSelectedFileChange}
-						sidebarActive={sidebarActive}
 					/>
 				)}
 

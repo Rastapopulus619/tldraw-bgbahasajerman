@@ -1369,6 +1369,41 @@
           "index": "aKKIUpnG",
           "typeName": "shape"
         },
+        "shape:v9QRokbhgA5EFBzLfsR5p": {
+          "x": 745.5916426208502,
+          "y": 549.7585626052629,
+          "rotation": 0,
+          "isLocked": false,
+          "opacity": 1,
+          "meta": {},
+          "id": "shape:v9QRokbhgA5EFBzLfsR5p",
+          "type": "draw",
+          "props": {
+            "segments": [
+              {
+                "type": "free",
+                "points": [
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.5
+                  }
+                ]
+              }
+            ],
+            "color": "color1_R1C1",
+            "fill": "none",
+            "dash": "draw",
+            "size": "m",
+            "isComplete": true,
+            "isClosed": false,
+            "isPen": false,
+            "scale": 1
+          },
+          "parentId": "page:page",
+          "index": "aPuTin8V",
+          "typeName": "shape"
+        },
         "shape:jnpKqnJ_1yw-7WJnvj4uk": {
           "x": 651.1223684754907,
           "y": 256.7955695419207,
@@ -2615,6 +2650,41 @@
           "meta": {},
           "id": "document:document",
           "typeName": "document"
+        },
+        "shape:avsnQbsdDslWC5sZz0ymB": {
+          "x": 395.0010599507275,
+          "y": 503.88046026596453,
+          "rotation": 0,
+          "isLocked": false,
+          "opacity": 1,
+          "meta": {},
+          "id": "shape:avsnQbsdDslWC5sZz0ymB",
+          "type": "draw",
+          "props": {
+            "segments": [
+              {
+                "type": "free",
+                "points": [
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0.5
+                  }
+                ]
+              }
+            ],
+            "color": "color1_R1C1",
+            "fill": "none",
+            "dash": "draw",
+            "size": "m",
+            "isComplete": true,
+            "isClosed": false,
+            "isPen": false,
+            "scale": 1
+          },
+          "parentId": "page:page",
+          "index": "aO9NcP7V",
+          "typeName": "shape"
         },
         "shape:E3oyZIcNQxToUqSybwTzd": {
           "x": 139.1666717529297,
@@ -4979,8 +5049,8 @@
   },
   "metadata": {
     "colorPalette": {},
-    "createdAt": "2025-12-08T02:10:18.647Z",
-    "lastModified": "2025-12-08T02:10:18.651Z",
+    "createdAt": "2025-12-08T10:54:04.923Z",
+    "lastModified": "2025-12-08T10:54:04.928Z",
     "boardName": "test-project/welcome2.tldr"
   }
 }

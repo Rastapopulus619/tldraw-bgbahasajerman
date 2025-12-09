@@ -532,3 +532,107 @@ if (sidebarActive) {
 - Frontend: Phase 4 - Delete operation handler
 - Backend: `server/routes/fileOperations.js` or `server/index.js`
 - File sorting: `server/utils/fileSystem.js` - `buildFileTree()` function
+
+---
+
+## DEFERRED FEATURES (For Phase 7 - Polish & Performance)
+
+The following features were identified during implementation but deferred to Phase 7 for final polish:
+
+### 1. Blue Drop Position Indicator Line
+
+**Status:** Deferred to Phase 7  
+**Priority:** Low (UX enhancement)
+
+**Description:**
+When dragging files/folders in the sidebar file tree, show a blue horizontal line indicating the exact insertion position (between items) where the file will be dropped.
+
+**Current Behavior:**
+- Folders highlight with blue overlay when dragged over
+- Works functionally but doesn't show exact insertion point
+
+**Why Deferred:**
+- Complex implementation requiring position tracking and DOM manipulation
+- Current drag-drop visual feedback (folder highlighting) is sufficient
+- Would require ~2-3 hours to implement properly
+- Better suited for polish phase after core features are complete
+
+**Implementation Notes for Phase 7:**
+- Track mouse Y position during drag
+- Calculate insertion index based on item heights
+- Render an absolutely positioned `<div>` with 2px blue line
+- Update position on dragover events
+- Remove on drop or drag end
+
+**Files to Modify:**
+- `FileTreeNode.tsx` - Add insertion indicator rendering
+- `FileTreeNode.css` - Style the blue indicator line
+- Consider using `react-beautiful-dnd` library for professional drag-drop experience
+
+---
+
+### 2. Replace Browser Alerts with Custom Modal Dialogs
+
+**Status:** Deferred to Phase 7  
+**Priority:** Medium (UX improvement)
+
+**Description:**
+Replace all browser `alert()` and `confirm()` calls with custom React modal components to prevent the "Don't allow localhost to prompt you again" browser warning.
+
+**Current Behavior:**
+- Using native `alert('Error message')` and `confirm('Are you sure?')`
+- Browser shows "Don't allow localhost:5181 to prompt you again" checkbox
+- If user accidentally checks this, all future alerts are blocked
+
+**Why Deferred:**
+- Works functionally for MVP
+- Custom modals require component creation and styling (~1-2 hours)
+- Phase 7 is dedicated to UX polish, perfect timing
+- Allows focus on core functionality first
+
+**Implementation Plan for Phase 7:**
+
+**Create Components:**
+1. `<AlertDialog>` - Simple message with OK button
+2. `<ConfirmDialog>` - Message with Cancel/Confirm buttons
+3. `<ModalProvider>` - Context provider for modal state management
+
+**Usage Pattern:**
+```typescript
+// Instead of:
+alert('Error: File not found')
+confirm('Delete this file?')
+
+// Use:
+showAlert({ title: 'Error', message: 'File not found' })
+showConfirm({ 
+  title: 'Delete File', 
+  message: 'Are you sure?',
+  onConfirm: () => deleteFile()
+})
+```
+
+**Files to Create:**
+- `src/components/Modals/AlertDialog.tsx`
+- `src/components/Modals/ConfirmDialog.tsx`
+- `src/components/Modals/ModalProvider.tsx`
+- `src/components/Modals/Modals.css`
+- `src/hooks/useModals.ts`
+
+**Files to Modify:**
+- `FileTree.tsx` - Replace all `alert()` and `confirm()` calls
+- `useFileOperations.ts` - Replace all `alert()` calls
+- `Sidebar.tsx` - Replace all `alert()` calls
+- `AppContainer.tsx` - Wrap with `<ModalProvider>`
+
+**Estimated Time:** 1-2 hours
+
+**Theme Integration:**
+- Use tldraw CSS variables for consistent styling
+- Support light/dark theme automatically
+- Match tldraw's modal styling patterns
+
+---
+
+**Note for AI Agent Continuing This Work:**
+These deferred features should be implemented in Phase 7 after Phases 5 (View System) and 6 (Search) are complete. They are quality-of-life improvements that enhance UX but are not blockers for core functionality.

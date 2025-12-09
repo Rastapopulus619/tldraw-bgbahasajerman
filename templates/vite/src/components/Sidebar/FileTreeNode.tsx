@@ -16,6 +16,7 @@ interface FileTreeNodeProps {
 	onRefresh: () => void
 	renamingFileId: string | null
 	onRenamingChange: (id: string | null) => void
+	clipboard: { path: string; operation: 'copy' | 'cut' } | null
 	depth: number
 }
 
@@ -32,6 +33,7 @@ export function FileTreeNode({
 	onRefresh,
 	renamingFileId,
 	onRenamingChange,
+	clipboard,
 	depth,
 }: FileTreeNodeProps) {
 	const [isExpanded, setIsExpanded] = useState(true)
@@ -59,13 +61,13 @@ export function FileTreeNode({
 	}, [isRenaming, node.name])
 
 	const handleClick = () => {
-		// Always select (both files and folders)
+		// Only select, don't expand/collapse
 		onFileSelect(node.path)
+	}
 
-		// Also toggle folder if it's a folder
-		if (isFolder) {
-			setIsExpanded(!isExpanded)
-		}
+	const handleChevronClick = (e: React.MouseEvent) => {
+		e.stopPropagation()
+		setIsExpanded(!isExpanded)
 	}
 
 	const handleDoubleClick = () => {
@@ -208,6 +210,22 @@ export function FileTreeNode({
 			disabled: isRootNode,
 		})
 
+		// Paste (only for folders, enabled if clipboard has data)
+		if (isFolder) {
+			items.push({
+				label: 'Paste',
+				action: async () => {
+					// Select this folder first, then trigger paste
+					onFileSelect(node.path)
+					const fileOps = (window as any).__sidebarFileOps
+					if (fileOps?.pasteToSelected) {
+						await fileOps.pasteToSelected()
+					}
+				},
+				disabled: !clipboard, // Disable if nothing in clipboard
+			})
+		}
+
 		// Cut removed per user request - using drag-drop for move operations
 
 		return items
@@ -233,7 +251,12 @@ export function FileTreeNode({
 				title={node.name}
 			>
 				{isFolder && (
-					<span className={`file-tree-node__icon ${isExpanded ? 'expanded' : ''}`}>▶</span>
+					<span
+						className={`file-tree-node__icon file-tree-node__icon--chevron ${isExpanded ? 'expanded' : ''}`}
+						onClick={handleChevronClick}
+					>
+						▶
+					</span>
 				)}
 				{!isFolder && <span className="file-tree-node__icon">📄</span>}
 
@@ -278,6 +301,7 @@ export function FileTreeNode({
 							onRefresh={onRefresh}
 							renamingFileId={renamingFileId}
 							onRenamingChange={onRenamingChange}
+							clipboard={clipboard}
 							depth={depth + 1}
 						/>
 					))}

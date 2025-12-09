@@ -94,7 +94,6 @@ export function AppContainer() {
 					onWhiteboardSelect={handleWhiteboardSelect}
 					selectedFileId={selectedFileId}
 					onSelectedFileChange={setSelectedFileId}
-					sidebarActive={sidebarActive}
 				/>
 			</div>
 			<div className="app-container__canvas" onClick={handleCanvasClick}>
