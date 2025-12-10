@@ -26,6 +26,9 @@ export function AppContainer() {
 	const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
 	const [editorInstance, setEditorInstance] = useState<any>(null)
 	const [selectedFileId, setSelectedFileId] = useState<string | null>(null)
+	const [clipboard, setClipboard] = useState<{ path: string; operation: 'copy' | 'cut' } | null>(
+		null
+	)
 
 	// Use whiteboard loader hook
 	const { store, isLoading, error, currentBoardId, loadWhiteboard } = useWhiteboardLoader()
@@ -34,6 +37,11 @@ export function AppContainer() {
 	useEffect(() => {
 		loadWhiteboard('welcome.tldr')
 	}, [loadWhiteboard])
+
+	// Debug selectedFileId
+	useEffect(() => {
+		console.log('selectedFileId changed to:', selectedFileId)
+	}, [selectedFileId])
 
 	// Auto-save hook
 	useAutoSave(editorInstance, currentBoardId || 'welcome.tldr')
@@ -94,6 +102,8 @@ export function AppContainer() {
 					onWhiteboardSelect={handleWhiteboardSelect}
 					selectedFileId={selectedFileId}
 					onSelectedFileChange={setSelectedFileId}
+					clipboard={clipboard}
+					onClipboardChange={setClipboard}
 				/>
 			</div>
 			<div className="app-container__canvas" onClick={handleCanvasClick}>

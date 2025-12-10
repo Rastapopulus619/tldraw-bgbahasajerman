@@ -11,6 +11,10 @@ interface FileTreeProps {
 	onRefresh: () => void
 	selectedFileId: string | null
 	onSelectedFileChange: (id: string | null) => void
+	clipboard: { path: string; operation: 'copy' | 'cut' } | null
+	onClipboardChange: (clipboard: { path: string; operation: 'copy' | 'cut' } | null) => void
+	expandedPaths: Set<string>
+	onToggleExpanded: (path: string) => void
 }
 
 export function FileTree({
@@ -20,8 +24,18 @@ export function FileTree({
 	onRefresh,
 	selectedFileId,
 	onSelectedFileChange,
+	clipboard,
+	onClipboardChange,
+	expandedPaths,
+	onToggleExpanded,
 }: FileTreeProps) {
-	const { rename, deleteFile, copy, clipboard } = useFileOperations(onRefresh)
+	const { rename, deleteFile } = useFileOperations(onRefresh)
+
+	const copy = (path: string) => {
+		console.log('Copy function called with:', path)
+		onClipboardChange({ path, operation: 'copy' })
+		console.log('Clipboard set to:', { path, operation: 'copy' })
+	}
 	const [renamingFileId, setRenamingFileId] = useState<string | null>(null)
 
 	// Helper: Flatten tree to list for navigation
@@ -39,6 +53,18 @@ export function FileTree({
 		result.push('')
 		traverse(nodesList)
 		return result
+	}
+
+	// Helper: Find node by path
+	const findNode = (nodesList: FileTreeNodeType[], path: string): FileTreeNodeType | null => {
+		for (const node of nodesList) {
+			if (node.path === path) return node
+			if (node.children) {
+				const found = findNode(node.children, path)
+				if (found) return found
+			}
+		}
+		return null
 	}
 
 	// Expose operations via window for keyboard shortcuts
@@ -68,12 +94,27 @@ export function FileTree({
 				}
 			},
 			expandSelected: () => {
-				// Trigger expand via FileTreeNode - needs implementation
-				console.log('Expand:', selectedFileId)
+				console.log('expandSelected called for:', selectedFileId)
+				console.log('Current expandedPaths before:', Array.from(expandedPaths))
+				if (selectedFileId) {
+					const node = findNode(nodes, selectedFileId)
+					console.log('Node found:', node)
+					if (node && node.type === 'folder') {
+						console.log('Expanding folder:', selectedFileId)
+						if (!expandedPaths.has(selectedFileId)) {
+							onToggleExpanded(selectedFileId)
+						}
+					} else {
+						console.log('Not a folder or not found')
+					}
+				}
 			},
 			collapseSelected: () => {
-				// Trigger collapse via FileTreeNode - needs implementation
-				console.log('Collapse:', selectedFileId)
+				console.log('collapseSelected called for:', selectedFileId)
+				console.log('Current expandedPaths before:', Array.from(expandedPaths))
+				if (selectedFileId && expandedPaths.has(selectedFileId)) {
+					onToggleExpanded(selectedFileId)
+				}
 			},
 			openSelected: () => {
 				if (selectedFileId && selectedFileId.endsWith('.tldr')) {
@@ -81,37 +122,66 @@ export function FileTree({
 				}
 			},
 			pasteToSelected: async () => {
-				if (!clipboard || !selectedFileId) return
+				if (!clipboard) return
 
 				// Smart destination logic
-				const findNode = (nodesList: FileTreeNodeType[], path: string): FileTreeNodeType | null => {
-					for (const node of nodesList) {
-						if (node.path === path) return node
-						if (node.children) {
-							const found = findNode(node.children, path)
-							if (found) return found
-						}
-					}
-					return null
-				}
-
-				const selectedNode = findNode(nodes, selectedFileId)
 				let destinationPath = ''
 
-				if (selectedNode) {
-					if (selectedNode.type === 'folder' || selectedNode.id === '__root__') {
-						destinationPath = selectedNode.path
-					} else {
-						const parts = selectedNode.path.split('/')
-						parts.pop()
-						destinationPath = parts.join('/') || ''
+				if (!selectedFileId || selectedFileId === '') {
+					// Paste to root
+					destinationPath = ''
+				} else {
+					const selectedNode = findNode(nodes, selectedFileId)
+					if (selectedNode) {
+						if (selectedNode.type === 'folder') {
+							destinationPath = selectedNode.path
+						} else {
+							const parts = selectedNode.path.split('/')
+							parts.pop()
+							destinationPath = parts.join('/') || ''
+						}
 					}
 				}
 
-				const fileName = clipboard.path.split('/').pop()
-				const fullDestination = destinationPath ? `${destinationPath}/${fileName}` : fileName
+				const fileName = clipboard.path.split('/').pop() || ''
+				let fullDestination = destinationPath ? `${destinationPath}/${fileName}` : fileName
+
+				// Check for naming conflicts
+				if (clipboard.operation === 'copy') {
+					if (findNode(nodes, fullDestination)) {
+						console.log('Conflict detected, auto-renaming...')
+						const parts = fileName.split('.')
+						const name = parts.slice(0, -1).join('.') || fileName
+						const ext = parts.length > 1 ? '.' + parts[parts.length - 1] : ''
+						let counter = 1
+						let newName = fileName
+						let newFull = destinationPath ? `${destinationPath}/${newName}` : newName
+						while (findNode(nodes, newFull)) {
+							newName = `${name} (${counter})${ext}`
+							newFull = destinationPath ? `${destinationPath}/${newName}` : newName
+							counter++
+							console.log('Trying name:', newName, 'path:', newFull)
+							if (counter > 100) {
+								alert('Too many duplicates, stopping')
+								return
+							}
+						}
+						fullDestination = newFull
+						console.log('Final destination after conflict resolution:', fullDestination)
+					}
+				} else if (clipboard.operation === 'cut') {
+					if (findNode(nodes, fullDestination)) {
+						alert('Destination already exists')
+						return
+					}
+				}
 
 				const endpoint = clipboard.operation === 'copy' ? '/api/files/copy' : '/api/files/move'
+				console.log('About to paste:', {
+					endpoint,
+					sourcePath: clipboard.path,
+					destinationPath: fullDestination,
+				})
 				try {
 					const response = await fetch(endpoint, {
 						method: 'POST',
@@ -123,10 +193,13 @@ export function FileTree({
 					})
 
 					const result = await response.json()
+					console.log('Paste API result:', result)
 
 					if (result.success) {
+						console.log('Paste succeeded, refreshing...')
 						onRefresh()
 					} else {
+						console.error('Paste failed:', result.error)
 						alert(`Paste failed: ${result.error}`)
 					}
 				} catch (error) {
@@ -175,6 +248,9 @@ export function FileTree({
 				onRenamingChange={setRenamingFileId}
 				clipboard={clipboard}
 				depth={-1}
+				isNodeExpanded={(path) => expandedPaths.has(path)}
+				onToggleNodeExpand={onToggleExpanded}
+				isPathExists={(path) => findNode(nodes, path) !== null}
 			/>
 		</div>
 	)

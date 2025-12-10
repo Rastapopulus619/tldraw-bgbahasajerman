@@ -11,6 +11,8 @@ interface SidebarProps {
 	onWhiteboardSelect: (id: string) => void
 	selectedFileId: string | null
 	onSelectedFileChange: (id: string | null) => void
+	clipboard: { path: string; operation: 'copy' | 'cut' } | null
+	onClipboardChange: (clipboard: { path: string; operation: 'copy' | 'cut' } | null) => void
 }
 
 export function Sidebar({
@@ -21,10 +23,40 @@ export function Sidebar({
 	onWhiteboardSelect,
 	selectedFileId,
 	onSelectedFileChange,
+	clipboard,
+	onClipboardChange,
 }: SidebarProps) {
 	const [fileTree, setFileTree] = useState<FileTreeNode[]>([])
 	const [isLoading, setIsLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
+	const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set())
+
+	// Initialize expanded paths with all folders on first load
+	useEffect(() => {
+		if (fileTree.length > 0 && expandedPaths.size === 0) {
+			const allFolders = new Set<string>()
+			const traverse = (nodes: FileTreeNode[]) => {
+				for (const node of nodes) {
+					if (node.type === 'folder') allFolders.add(node.path)
+					if (node.children) traverse(node.children)
+				}
+			}
+			traverse(fileTree)
+			setExpandedPaths(allFolders)
+		}
+	}, [fileTree, expandedPaths.size])
+
+	const toggleExpanded = (path: string) => {
+		setExpandedPaths((prev) => {
+			const newSet = new Set(prev)
+			if (newSet.has(path)) {
+				newSet.delete(path)
+			} else {
+				newSet.add(path)
+			}
+			return newSet
+		})
+	}
 
 	// Fetch file tree
 	const fetchFileTree = useCallback(async () => {
@@ -138,6 +170,10 @@ export function Sidebar({
 						onRefresh={fetchFileTree}
 						selectedFileId={selectedFileId}
 						onSelectedFileChange={onSelectedFileChange}
+						clipboard={clipboard}
+						onClipboardChange={onClipboardChange}
+						expandedPaths={expandedPaths}
+						onToggleExpanded={toggleExpanded}
 					/>
 				)}
 

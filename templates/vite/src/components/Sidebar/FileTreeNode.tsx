@@ -18,6 +18,9 @@ interface FileTreeNodeProps {
 	onRenamingChange: (id: string | null) => void
 	clipboard: { path: string; operation: 'copy' | 'cut' } | null
 	depth: number
+	isNodeExpanded: (path: string) => boolean
+	onToggleNodeExpand: (path: string) => void
+	isPathExists: (path: string) => boolean
 }
 
 export function FileTreeNode({
@@ -35,8 +38,10 @@ export function FileTreeNode({
 	onRenamingChange,
 	clipboard,
 	depth,
+	isNodeExpanded,
+	onToggleNodeExpand,
+	isPathExists,
 }: FileTreeNodeProps) {
-	const [isExpanded, setIsExpanded] = useState(true)
 	const [newName, setNewName] = useState(node.name)
 	const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null)
 	const [isDragOver, setIsDragOver] = useState(false)
@@ -45,6 +50,7 @@ export function FileTreeNode({
 	const isFolder = node.type === 'folder'
 	const isActive = node.path === currentWhiteboardId
 	const isSelected = node.path === selectedFileId
+	const isExpanded = isNodeExpanded(node.path)
 	const hasChildren = isFolder && node.children && node.children.length > 0
 	const isWelcomeBoard = node.name === 'welcome.tldr' && !isFolder
 	const isRootNode = node.id === '__root__'
@@ -60,14 +66,18 @@ export function FileTreeNode({
 		}
 	}, [isRenaming, node.name])
 
-	const handleClick = () => {
+	const handleClick = (e: React.MouseEvent) => {
+		// Don't select if clicking on input
+		if (e.target instanceof HTMLInputElement) {
+			return
+		}
 		// Only select, don't expand/collapse
 		onFileSelect(node.path)
 	}
 
 	const handleChevronClick = (e: React.MouseEvent) => {
 		e.stopPropagation()
-		setIsExpanded(!isExpanded)
+		onToggleNodeExpand(node.path)
 	}
 
 	const handleDoubleClick = () => {
@@ -118,13 +128,35 @@ export function FileTreeNode({
 		if (!sourcePath) return
 
 		// Build destination path
-		const fileName = sourcePath.split('/').pop()
-		const destinationPath = `${node.path}/${fileName}`
+		const fileName = sourcePath.split('/').pop() || ''
+		let destinationPath = node.path ? `${node.path}/${fileName}` : fileName
 
 		// Prevent dropping into itself
 		if (sourcePath === node.path || destinationPath.startsWith(sourcePath + '/')) {
 			alert('Cannot move folder into itself')
 			return
+		}
+
+		// Check for naming conflicts
+		if (isPathExists(destinationPath)) {
+			if (e.ctrlKey) {
+				// Auto rename for copy
+				const parts = fileName.split('.')
+				const name = parts.slice(0, -1).join('.') || fileName
+				const ext = parts.length > 1 ? '.' + parts[parts.length - 1] : ''
+				let counter = 1
+				let newName = fileName
+				let newDestination = node.path ? `${node.path}/${newName}` : newName
+				while (isPathExists(newDestination)) {
+					newName = `${name} (${counter})${ext}`
+					newDestination = node.path ? `${node.path}/${newName}` : newName
+					counter++
+				}
+				destinationPath = newDestination
+			} else {
+				alert('Destination already exists')
+				return
+			}
 		}
 
 		try {
@@ -157,6 +189,11 @@ export function FileTreeNode({
 	}
 
 	const handleRenameSubmit = async () => {
+		if (!newName.trim()) {
+			alert('Name cannot be empty or whitespace only')
+			onRenamingChange(null)
+			return
+		}
 		if (newName && newName !== node.name) {
 			try {
 				await onRename(node.path, newName)
@@ -181,6 +218,16 @@ export function FileTreeNode({
 			e.preventDefault()
 			handleRenameCancel()
 		}
+	}
+
+	const handleInputMouseDown = (e: React.MouseEvent) => {
+		e.stopPropagation() // Prevent file selection from interfering
+		console.log('Input mousedown - should allow cursor positioning')
+	}
+
+	const handleInputClick = (e: React.MouseEvent) => {
+		e.stopPropagation() // Prevent file selection from interfering
+		console.log('Input click - should allow cursor positioning')
 	}
 
 	const getContextMenuItems = (): ContextMenuItem[] => {
@@ -231,6 +278,10 @@ export function FileTreeNode({
 		return items
 	}
 
+	if (isSelected) {
+		console.log('Rendering selected node:', node.path, 'isExpanded from parent:', isExpanded)
+	}
+
 	return (
 		<div className="file-tree-node">
 			<div
@@ -261,15 +312,19 @@ export function FileTreeNode({
 				{!isFolder && <span className="file-tree-node__icon">📄</span>}
 
 				{isRenaming ? (
-					<input
-						ref={inputRef}
-						type="text"
-						className="file-tree-node__input"
-						value={newName}
-						onChange={(e) => setNewName(e.target.value)}
-						onBlur={handleRenameSubmit}
-						onKeyDown={handleRenameKeyDown}
-					/>
+					<span className="file-tree-node__input-wrapper" onClick={(e) => e.stopPropagation()}>
+						<input
+							ref={inputRef}
+							type="text"
+							className="file-tree-node__input"
+							value={newName}
+							onChange={(e) => setNewName(e.target.value)}
+							onKeyDown={handleRenameKeyDown}
+							onMouseDown={handleInputMouseDown}
+							onClick={handleInputClick}
+							autoFocus
+						/>
+					</span>
 				) : (
 					<span className="file-tree-node__name">{node.name}</span>
 				)}
@@ -303,6 +358,9 @@ export function FileTreeNode({
 							onRenamingChange={onRenamingChange}
 							clipboard={clipboard}
 							depth={depth + 1}
+							isNodeExpanded={isNodeExpanded}
+							onToggleNodeExpand={onToggleNodeExpand}
+							isPathExists={isPathExists}
 						/>
 					))}
 				</div>

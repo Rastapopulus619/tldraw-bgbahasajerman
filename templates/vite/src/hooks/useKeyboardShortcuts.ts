@@ -32,6 +32,14 @@ export function useKeyboardShortcuts({
 }: KeyboardShortcutsOptions) {
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
+			console.log(
+				'Key pressed:',
+				e.key,
+				'sidebarActive:',
+				sidebarActive,
+				'input focused:',
+				document.activeElement instanceof HTMLInputElement
+			)
 			const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0
 			const ctrlOrCmd = isMac ? e.metaKey : e.ctrlKey
 
@@ -89,37 +97,57 @@ export function useKeyboardShortcuts({
 					return
 				}
 
-				// Arrow key navigation
-				if (e.key === 'ArrowUp' && fileOps?.navigateUp) {
+				// Arrow key navigation (disabled during rename)
+				if (
+					e.key === 'ArrowUp' &&
+					fileOps?.navigateUp &&
+					!(document.activeElement instanceof HTMLInputElement)
+				) {
 					e.preventDefault()
 					e.stopPropagation()
 					fileOps.navigateUp()
 					return
 				}
 
-				if (e.key === 'ArrowDown' && fileOps?.navigateDown) {
+				if (
+					e.key === 'ArrowDown' &&
+					fileOps?.navigateDown &&
+					!(document.activeElement instanceof HTMLInputElement)
+				) {
 					e.preventDefault()
 					e.stopPropagation()
 					fileOps.navigateDown()
 					return
 				}
 
-				if (e.key === 'ArrowRight' && fileOps?.expandSelected) {
+				if (
+					e.key === 'ArrowRight' &&
+					fileOps?.expandSelected &&
+					!(document.activeElement instanceof HTMLInputElement)
+				) {
 					e.preventDefault()
 					e.stopPropagation()
 					fileOps.expandSelected()
 					return
 				}
 
-				if (e.key === 'ArrowLeft' && fileOps?.collapseSelected) {
+				if (
+					e.key === 'ArrowLeft' &&
+					fileOps?.collapseSelected &&
+					!(document.activeElement instanceof HTMLInputElement)
+				) {
 					e.preventDefault()
 					e.stopPropagation()
 					fileOps.collapseSelected()
 					return
 				}
 
-				// Enter: Open selected file
-				if (e.key === 'Enter' && fileOps?.openSelected) {
+				// Enter: Open selected file (disabled during rename)
+				if (
+					e.key === 'Enter' &&
+					fileOps?.openSelected &&
+					!(document.activeElement instanceof HTMLInputElement)
+				) {
 					e.preventDefault()
 					e.stopPropagation()
 					fileOps.openSelected()
@@ -128,8 +156,11 @@ export function useKeyboardShortcuts({
 
 				// Block ALL other keys from reaching tldraw when sidebar is focused
 				// This prevents accidental tool selection, drawing, etc.
-				// Only exception: modifier keys alone (Ctrl, Shift, Alt)
-				if (!['Control', 'Shift', 'Alt', 'Meta'].includes(e.key)) {
+				// Exceptions: modifier keys alone (Ctrl, Shift, Alt) and when an input is focused
+				if (
+					!['Control', 'Shift', 'Alt', 'Meta'].includes(e.key) &&
+					!(document.activeElement instanceof HTMLInputElement)
+				) {
 					e.stopPropagation()
 				}
 			}

@@ -66,8 +66,9 @@ export function useFileOperations(onRefresh: () => void) {
 	)
 
 	const copy = useCallback((path: string) => {
+		console.log('Copy function called with:', path)
 		setClipboard({ path, operation: 'copy' })
-		console.log('Copied:', path)
+		console.log('Copied:', path, 'clipboard set to:', { path, operation: 'copy' })
 	}, [])
 
 	const cut = useCallback((path: string) => {
@@ -77,6 +78,7 @@ export function useFileOperations(onRefresh: () => void) {
 
 	const paste = useCallback(
 		async (destinationPath: string) => {
+			console.log('Paste called, clipboard:', clipboard, 'destination:', destinationPath)
 			if (!clipboard) return
 
 			try {
@@ -101,6 +103,7 @@ export function useFileOperations(onRefresh: () => void) {
 					setClipboard(null)
 				}
 
+				console.log('Paste successful, clipboard after:', clipboard)
 				onRefresh()
 			} catch (error) {
 				const message = error instanceof Error ? error.message : 'Failed to paste file'
