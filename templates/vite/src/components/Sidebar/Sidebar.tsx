@@ -13,6 +13,8 @@ interface SidebarProps {
 	onSelectedFileChange: (id: string | null) => void
 	clipboard: { path: string; operation: 'copy' | 'cut' } | null
 	onClipboardChange: (clipboard: { path: string; operation: 'copy' | 'cut' } | null) => void
+	renamingFileId: string | null
+	onRenamingFileChange: (id: string | null) => void
 }
 
 export function Sidebar({
@@ -25,6 +27,8 @@ export function Sidebar({
 	onSelectedFileChange,
 	clipboard,
 	onClipboardChange,
+	renamingFileId,
+	onRenamingFileChange,
 }: SidebarProps) {
 	const [fileTree, setFileTree] = useState<FileTreeNode[]>([])
 	const [isLoading, setIsLoading] = useState(true)
@@ -56,6 +60,16 @@ export function Sidebar({
 			}
 			return newSet
 		})
+	}
+
+	// Handle clicks outside the file tree to exit rename mode
+	const handleSidebarClick = (e: React.MouseEvent) => {
+		// If clicking on header buttons or empty space (not on file tree), exit rename mode
+		const target = e.target as HTMLElement
+		const isFileTreeClick = target.closest('.file-tree-node')
+		if (!isFileTreeClick && renamingFileId) {
+			onRenamingFileChange(null)
+		}
 	}
 
 	// Fetch file tree
@@ -141,7 +155,7 @@ export function Sidebar({
 	}
 
 	return (
-		<div className={`sidebar ${isActive ? 'sidebar--active' : ''}`}>
+		<div className={`sidebar ${isActive ? 'sidebar--active' : ''}`} onClick={handleSidebarClick}>
 			<div className="sidebar__header">
 				<h2 className="sidebar__title">Files</h2>
 				<div className="sidebar__actions">
@@ -174,6 +188,8 @@ export function Sidebar({
 						onClipboardChange={onClipboardChange}
 						expandedPaths={expandedPaths}
 						onToggleExpanded={toggleExpanded}
+						renamingFileId={renamingFileId}
+						onRenamingFileChange={onRenamingFileChange}
 					/>
 				)}
 

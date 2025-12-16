@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useFileOperations } from '../../hooks/useFileOperations'
 import { FileTreeNode as FileTreeNodeType } from '../../types'
 import './FileTree.css'
@@ -15,6 +15,8 @@ interface FileTreeProps {
 	onClipboardChange: (clipboard: { path: string; operation: 'copy' | 'cut' } | null) => void
 	expandedPaths: Set<string>
 	onToggleExpanded: (path: string) => void
+	renamingFileId: string | null
+	onRenamingFileChange: (id: string | null) => void
 }
 
 export function FileTree({
@@ -28,6 +30,8 @@ export function FileTree({
 	onClipboardChange,
 	expandedPaths,
 	onToggleExpanded,
+	renamingFileId,
+	onRenamingFileChange,
 }: FileTreeProps) {
 	const { rename, deleteFile } = useFileOperations(onRefresh)
 
@@ -36,7 +40,6 @@ export function FileTree({
 		onClipboardChange({ path, operation: 'copy' })
 		console.log('Clipboard set to:', { path, operation: 'copy' })
 	}
-	const [renamingFileId, setRenamingFileId] = useState<string | null>(null)
 
 	// Helper: Flatten tree to list for navigation
 	const flattenTree = (nodesList: FileTreeNodeType[]): string[] => {
@@ -71,7 +74,7 @@ export function FileTree({
 	useEffect(() => {
 		;(window as any).__sidebarFileOps = {
 			startRename: () => {
-				if (selectedFileId) setRenamingFileId(selectedFileId)
+				if (selectedFileId) onRenamingFileChange(selectedFileId)
 			},
 			deleteSelected: () => {
 				if (selectedFileId) deleteFile(selectedFileId)
@@ -92,6 +95,54 @@ export function FileTree({
 				if (currentIndex < flatList.length - 1) {
 					onSelectedFileChange(flatList[currentIndex + 1])
 				}
+			},
+			renameNext: () => {
+				// Tab during rename: trigger commit via Enter event, then move to next
+				const activeInput = document.activeElement as HTMLInputElement
+				if (activeInput && activeInput.classList.contains('file-tree-node__input')) {
+					// Trigger Enter event to commit the rename
+					const enterEvent = new KeyboardEvent('keydown', {
+						key: 'Enter',
+						bubbles: true,
+						cancelable: true,
+					})
+					activeInput.dispatchEvent(enterEvent)
+				}
+
+				// Move to next item after a small delay
+				setTimeout(() => {
+					const flatList = flattenTree(nodes)
+					const currentIndex = flatList.indexOf(selectedFileId || '')
+					if (currentIndex < flatList.length - 1) {
+						const nextId = flatList[currentIndex + 1]
+						onSelectedFileChange(nextId)
+						setTimeout(() => onRenamingFileChange(nextId), 10)
+					}
+				}, 50)
+			},
+			renamePrevious: () => {
+				// Shift+Tab during rename: trigger commit via Enter event, then move to previous
+				const activeInput = document.activeElement as HTMLInputElement
+				if (activeInput && activeInput.classList.contains('file-tree-node__input')) {
+					// Trigger Enter event to commit the rename
+					const enterEvent = new KeyboardEvent('keydown', {
+						key: 'Enter',
+						bubbles: true,
+						cancelable: true,
+					})
+					activeInput.dispatchEvent(enterEvent)
+				}
+
+				// Move to previous item after a small delay
+				setTimeout(() => {
+					const flatList = flattenTree(nodes)
+					const currentIndex = flatList.indexOf(selectedFileId || '')
+					if (currentIndex > 0) {
+						const prevId = flatList[currentIndex - 1]
+						onSelectedFileChange(prevId)
+						setTimeout(() => onRenamingFileChange(prevId), 10)
+					}
+				}, 50)
 			},
 			expandSelected: () => {
 				console.log('expandSelected called for:', selectedFileId)
@@ -212,7 +263,7 @@ export function FileTree({
 		return () => {
 			delete (window as any).__sidebarFileOps
 		}
-	}, [selectedFileId, deleteFile, copy, clipboard, nodes, onRefresh])
+	}, [selectedFileId, deleteFile, copy, clipboard, nodes, onRefresh, onRenamingFileChange])
 
 	const handleFileSelect = (id: string) => {
 		onSelectedFileChange(id)
@@ -245,7 +296,7 @@ export function FileTree({
 				onCut={() => {}}
 				onRefresh={onRefresh}
 				renamingFileId={renamingFileId}
-				onRenamingChange={setRenamingFileId}
+				onRenamingChange={onRenamingFileChange}
 				clipboard={clipboard}
 				depth={-1}
 				isNodeExpanded={(path) => expandedPaths.has(path)}

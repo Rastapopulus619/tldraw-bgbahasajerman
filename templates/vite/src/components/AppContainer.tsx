@@ -29,6 +29,7 @@ export function AppContainer() {
 	const [clipboard, setClipboard] = useState<{ path: string; operation: 'copy' | 'cut' } | null>(
 		null
 	)
+	const [renamingFileId, setRenamingFileId] = useState<string | null>(null)
 
 	// Use whiteboard loader hook
 	const { store, isLoading, error, currentBoardId, loadWhiteboard } = useWhiteboardLoader()
@@ -72,6 +73,7 @@ export function AppContainer() {
 		onToggleSidebar: handleToggleSidebar,
 		onToggleFocus: handleToggleFocus,
 		sidebarActive,
+		isRenamingMode: renamingFileId !== null,
 	})
 
 	const handleSidebarClick = () => {
@@ -81,6 +83,10 @@ export function AppContainer() {
 	}
 
 	const handleCanvasClick = () => {
+		// Exit rename mode when clicking on canvas
+		if (renamingFileId) {
+			setRenamingFileId(null)
+		}
 		if (sidebarActive) {
 			setSidebarActive(false)
 		}
@@ -104,6 +110,8 @@ export function AppContainer() {
 					onSelectedFileChange={setSelectedFileId}
 					clipboard={clipboard}
 					onClipboardChange={setClipboard}
+					renamingFileId={renamingFileId}
+					onRenamingFileChange={setRenamingFileId}
 				/>
 			</div>
 			<div className="app-container__canvas" onClick={handleCanvasClick}>

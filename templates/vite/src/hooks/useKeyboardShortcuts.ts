@@ -4,6 +4,7 @@ interface KeyboardShortcutsOptions {
 	onToggleSidebar: () => void
 	onToggleFocus: () => void
 	sidebarActive: boolean
+	isRenamingMode: boolean
 }
 
 /**
@@ -29,6 +30,7 @@ export function useKeyboardShortcuts({
 	onToggleSidebar,
 	onToggleFocus,
 	sidebarActive,
+	isRenamingMode,
 }: KeyboardShortcutsOptions) {
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
@@ -63,6 +65,51 @@ export function useKeyboardShortcuts({
 
 			// Sidebar-specific shortcuts (only when sidebar is focused)
 			if (sidebarActive) {
+				// During rename mode, allow natural text editing but block navigation shortcuts
+				if (isRenamingMode) {
+					// Allow all text editing keys (arrows, Ctrl+C/V/X/A, Home, End, Backspace, Delete, etc.)
+					const isTextEditingKey =
+						e.key.startsWith('Arrow') || // Arrow keys for cursor movement
+						e.key === 'Home' ||
+						e.key === 'End' ||
+						e.key === 'Backspace' ||
+						e.key === 'Delete' ||
+						(ctrlOrCmd && ['c', 'v', 'x', 'a', 'z', 'y'].includes(e.key.toLowerCase())) || // Standard editing shortcuts
+						e.key === 'Enter' ||
+						e.key === 'Escape' ||
+						e.key.length === 1 // Regular character input
+
+					if (isTextEditingKey) {
+						// Let these through to the input naturally
+						return
+					}
+
+					// Block Tab/Shift+Tab during rename (for now - we'll implement this next)
+					if (e.key === 'Tab') {
+						e.preventDefault()
+						e.stopPropagation()
+						const fileOps = (window as any).__sidebarFileOps
+						if (e.shiftKey) {
+							fileOps?.renamePrevious?.()
+						} else {
+							fileOps?.renameNext?.()
+						}
+						return
+					}
+
+					// Block F2 and other navigation shortcuts during rename
+					if (e.key === 'F2') {
+						e.preventDefault()
+						e.stopPropagation()
+						return
+					}
+
+					// Block everything else
+					e.preventDefault()
+					e.stopPropagation()
+					return
+				}
+
 				const fileOps = (window as any).__sidebarFileOps
 
 				// F2: Rename
@@ -169,5 +216,5 @@ export function useKeyboardShortcuts({
 		// Use capture phase to intercept before tldraw gets the event
 		window.addEventListener('keydown', handleKeyDown, true)
 		return () => window.removeEventListener('keydown', handleKeyDown, true)
-	}, [onToggleSidebar, onToggleFocus, sidebarActive])
+	}, [onToggleSidebar, onToggleFocus, sidebarActive, isRenamingMode])
 }

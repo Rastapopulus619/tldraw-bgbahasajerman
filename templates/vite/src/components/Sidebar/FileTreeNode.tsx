@@ -71,6 +71,10 @@ export function FileTreeNode({
 		if (e.target instanceof HTMLInputElement) {
 			return
 		}
+		// If clicking on a different node while renaming, exit rename mode
+		if (renamingFileId && renamingFileId !== node.path) {
+			onRenamingChange(null)
+		}
 		// Only select, don't expand/collapse
 		onFileSelect(node.path)
 	}
