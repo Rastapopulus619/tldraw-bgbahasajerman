@@ -1,12 +1,166 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+**Purpose**: AI agent quick reference and navigation hub for starting coding sessions
+**Audience**: Claude Code and other AI assistants
+**Philosophy**: "What do I need to know to start coding RIGHT NOW?"
+
+This file provides fast orientation for AI agents working in this repository. For complete technical details, implementation history, and API specifications, see `MASTER_REFACTORING_LOG.md`.
+
+## Project: tldraw custom whiteboard application
+
+This is a customized fork of the tldraw monorepo - an infinite canvas SDK for React applications. The main development focus is a custom whiteboard application with advanced file management and color customization capabilities.
+
+**Documentation structure**:
+
+- **This file (CLAUDE.md)**: Quick start, current status, navigation
+- **MASTER_REFACTORING_LOG.md**: Complete project history, technical specs, API reference
+- **CONTEXT.md files**: Package-specific architecture (use `yarn context` to find them)
+
+## Current phase
+
+**Status**: Documentation restructure complete - Next: Build session-closing agent
+**Branch**: `feature/color-picker-modification`
+**Recent work**: Restructured CLAUDE.md as navigation hub, separated from MASTER_REFACTORING_LOG.md technical details
+**Immediate priority**: Design and implement session-closing agent for automatic documentation updates
+
+## Quick start
+
+### Running the custom application
+
+The custom vite template requires two servers running simultaneously:
+
+```bash
+# Terminal 1: Vite dev server (port 5424)
+yarn dev
+
+# Terminal 2: Express API server (port 3001)
+node templates/vite/server/index.js
+
+# Or use convenience command (if configured)
+yarn dev:full
+```
+
+### Essential commands reference
+
+**Development**: `yarn dev`, `yarn dev-template <name>`, `yarn context`
+**Type checking**: `yarn typecheck` (NEVER use bare `tsc`)
+**Testing**: `yarn test run` (in specific workspace), `yarn e2e`
+**Code quality**: `yarn lint`, `yarn format`, `yarn api-check`
 
 ## Repository overview
 
-This is the tldraw monorepo - an infinite canvas SDK for React applications. It's organized using yarn workspaces with packages for the core editor, UI components, shapes, tools, and supporting infrastructure.
+**Base**: tldraw monorepo - infinite canvas SDK for React
+**Organization**: Yarn workspaces with packages for core editor, UI components, shapes, tools, and infrastructure
+**Main development location**: `templates/vite/` - Custom whiteboard application
 
 **Important**: There are CONTEXT.md files throughout this repository designed specifically for AI agents. Always read the relevant CONTEXT.md files to understand packages and their architecture.
+
+## Key files and locations
+
+**Custom application core**:
+
+- `templates/vite/src/components/AppContainer.tsx` - Root component managing sidebar and canvas state
+- `templates/vite/src/components/Sidebar/` - File tree UI components
+- `templates/vite/src/hooks/` - Custom hooks (useWhiteboardLoader, useAutoSave, useKeyboardShortcuts, useFileOperations)
+
+**Backend**:
+
+- `templates/vite/server/index.js` - Express API server
+- `templates/vite/server/routes/` - API route handlers
+- `templates/vite/server/utils/` - File system and validation utilities
+
+**Configuration and data**:
+
+- `templates/vite/config/` - Color palette configuration files
+- `userdata/whiteboards/` - Stored whiteboard files (.tldr format)
+- `userdata/config/views/` - View configuration files (future feature)
+
+**Package architecture**: See CONTEXT.md files in `packages/editor/`, `packages/tldraw/`, `packages/store/`, etc.
+
+## Decisions made
+
+**Architecture choices**:
+
+- **Wrapper pattern**: Sidebar and Tldraw exist as independent sibling components within AppContainer (not parent-child) to maintain separation of concerns and independent state management
+- **Store lifecycle**: Create new store on each whiteboard load and dispose old store to prevent memory leaks when switching between boards
+- **Keyboard routing**: Use capture phase (`addEventListener(..., true)`) to intercept keyboard events before tldraw receives them, enabling proper sidebar/canvas focus management
+- **Theme propagation**: TldrawWrapper propagates theme changes to parent via callback rather than context to maintain wrapper independence
+
+**File format**:
+
+- Custom `.tldr` format embeds metadata (color palette, timestamps, board name, read-only flag) directly in file
+- File-based persistence in `/userdata/whiteboards/` for simplicity and portability over database
+- Auto-save with 2000ms debounce balances responsiveness with performance
+
+**API design**:
+
+- Express 5 query parameters (`?id=path`) instead of path parameters due to wildcard route limitations
+- Modular route structure (`server/routes/`) for maintainability
+- Separate validation layer (`server/utils/validation.js`) for security
+
+**Color system**:
+
+- Extended to 28 colors (7x4 grid) vs standard 13 for richer creative options
+- Position-based naming (`color1_R1C1` through `color28_R7C4`) for predictable ordering
+- HSL color picker with auto-generation of light/dark variants for accessibility
+- Per-whiteboard color palette storage enables board-specific color schemes
+
+**File management**:
+
+- VS Code-inspired sidebar for familiarity to developers
+- Protected `welcome.tldr` file prevents accidental deletion of onboarding content
+- Root directory visible and functional for better spatial awareness
+
+## Custom extensions in this repository
+
+### Key custom features
+
+**Extended color palette system**
+
+- 28 colors (vs standard 13) with position-based naming: `color1_R1C1` through `color28_R7C4`
+- Custom HSL color picker modal with auto-generation of light/dark variants
+- File-based persistence via Express API endpoints
+- Color palette embedded in `.tldr` file metadata
+- Save/reset palette buttons in hamburger menu (Preferences → Color palette)
+
+**Custom sidebar with file management**
+
+- VS Code-style collapsible sidebar with file tree navigation
+- File operations: rename (F2), delete, copy/paste (Ctrl+C/V), drag-and-drop
+- Keyboard shortcuts: Ctrl+B (toggle sidebar), Ctrl+Shift+E (toggle focus), Arrow keys (navigation)
+- Context menu for file operations
+- Folder expand/collapse with visual hierarchy
+- Root directory (`whiteboards/`) visible and functional
+- Protected `welcome.tldr` file (cannot be deleted or renamed)
+
+**Whiteboard persistence**
+
+- File-based storage in `/userdata/whiteboards/` directory
+- Auto-save with 2000ms debounce (via `useAutoSave.ts` hook)
+- Custom `.tldr` file format with embedded metadata (color palette, timestamps, board name, read-only flag)
+- Store lifecycle management to prevent memory leaks
+
+**Express backend API (port 3001)**
+
+- Routes use query parameters (not path parameters) due to Express 5 wildcard limitations
+  - Example: `/api/whiteboards/load?id=path/to/board.tldr`
+- Key endpoints:
+  - Whiteboards: `/api/whiteboards/load`, `/api/whiteboards/save`, `/api/whiteboards/delete`
+  - File operations: `/api/files/copy`, `/api/files/move`, `/api/files/rename`, `/api/files/tree`
+  - Colors: `/api/colors/custom`, `/api/colors/default`, `/api/colors/reset`, `/api/colors/save-as-default`
+- Modular structure: `server/routes/`, `server/utils/fileSystem.js`, `server/utils/validation.js`
+
+## Known issues and next steps
+
+**🚨 IMMEDIATE NEXT STEP**: Design and implement session-closing agent for documentation updates
+
+**Top current blockers**:
+
+1. Session-closing agent not yet implemented (needed to keep docs in sync)
+2. Renaming mode mouse click unresponsiveness in sidebar (Phase 4 refinement)
+3. Keyboard event routing needs final consolidation
+
+**Complete details**: See `MASTER_REFACTORING_LOG.md` Section 6 (Known Issues & Technical Debt) and Section 7 (Active Project: Next Steps)
 
 ## Essential commands
 
@@ -39,181 +193,11 @@ If the `typecheck` command is not found, it's because you're not running it from
 
 ## Architecture overview
 
-### Core packages structure
+**High-level summary**: This is a Yarn monorepo using tldraw SDK with custom extensions. Core packages: @tldraw/editor (engine), @tldraw/tldraw (full SDK), @tldraw/store (reactive DB), @tldraw/tlschema (types).
 
-**@tldraw/editor** - Foundational infinite canvas editor
+**Custom architecture**: Wrapper pattern with AppContainer managing Sidebar and TldrawWrapper as independent siblings. Store lifecycle creates new store on whiteboard load, keyboard routing uses capture phase.
 
-- No shapes, tools, or UI - just the core engine
-- State management using reactive signals (@tldraw/state)
-- Shape system via ShapeUtil, Tools via StateNode
-- Bindings system for shape relationships
-
-**@tldraw/tldraw** - Complete "batteries included" SDK
-
-- Builds on editor with full UI, shapes, and tools
-- Default shape utilities (text, draw, geo, arrow, etc.)
-- Complete tool set (select, hand, eraser, etc.)
-- Responsive UI system with customizable components
-
-**@tldraw/store** - Reactive client-side database
-
-- Document persistence with IndexedDB
-- Reactive updates using signals
-- Migration system for schema changes
-
-**@tldraw/tlschema** - Type definitions and validators
-
-- Shape, binding, and record type definitions
-- Validation schemas and migrations
-- Shared data structures
-
-### Key architectural patterns
-
-**Reactive state management**
-
-- Uses @tldraw/state for reactive signals (Atom, Computed)
-- All editor state is reactive and observable
-- Automatic dependency tracking prevents unnecessary re-renders
-
-**Shape system**
-
-- Each shape type has a ShapeUtil class defining behavior
-- ShapeUtil handles geometry, rendering, interactions
-- Extensible - custom shapes via new ShapeUtil implementations
-
-**Tools as state machines**
-
-- Tools implemented as StateNode hierarchies
-- Event-driven with pointer, keyboard, tick handlers
-- Complex tools have child states (e.g., SelectTool has Brushing, Translating, etc.)
-
-**Bindings system**
-
-- Relationships between shapes (arrows to shapes, etc.)
-- BindingUtil classes define binding behavior
-- Automatic updates when connected shapes change
-
-## Testing patterns
-
-**Vitest tests**
-
-- Unit tests: name test files after the file being tested (e.g., `LicenseManager.test.ts`)
-- Integration tests: use `src/test/feature-name.test.ts` format
-- Test in tldraw workspace if you need default shapes/tools
-
-**Running tests**
-
-- Run from specific workspace directory: `cd packages/editor && yarn test run`
-- Filter with additional args: `yarn test run --grep "selection"`
-- Avoid `yarn test` from root (slow and hard to filter)
-
-**Playwright E2E tests**
-
-- Located in `apps/examples/e2e/` and `apps/dotcom/client/e2e/`
-- Use `yarn e2e` and `yarn e2e-dotcom` commands
-
-## Development workspace structure
-
-```
-apps/
-├── examples/          # SDK examples and demos
-├── docs/             # Documentation site (tldraw.dev)
-├── dotcom/           # tldraw.com application
-│   ├── client/       # Frontend React app
-│   ├── sync-worker/  # Multiplayer backend
-│   └── asset-upload-worker/
-└── vscode/           # VSCode extension
-
-packages/
-├── editor/           # Core editor engine
-├── tldraw/           # Complete SDK with UI
-├── store/            # Reactive database
-├── tlschema/         # Type definitions
-├── state/            # Reactive signals library
-├── sync/             # Multiplayer SDK
-├── utils/            # Shared utilities
-├── validate/         # Lightweight validation library
-├── assets/           # Icons, fonts, translations
-└── create-tldraw/    # npm create tldraw CLI
-
-templates/            # Starter templates for different frameworks
-```
-
-## Build system (LazyRepo)
-
-Uses `lazyrepo` for incremental builds with caching:
-
-- `yarn build` builds only what changed
-- Workspace dependencies handled automatically
-- Caching based on file inputs/outputs
-- Parallel execution where possible
-
-## Key development notes
-
-**TypeScript**
-
-- Uses workspace references for fast incremental compilation
-- Run `yarn typecheck` before commits
-- API surface validated with Microsoft API Extractor
-
-**Monorepo management**
-
-- Yarn workspaces with berry (yarn 4.x)
-- Use `yarn` not `npm` - packageManager field enforces this
-- Dependencies managed at workspace level where possible
-
-**Asset management**
-
-- Icons, fonts, translations in `/assets` (managed centrally)
-- Run `yarn refresh-assets` after asset changes
-- Assets bundled into packages during build
-- Automatic optimization and deduplication
-
-**Example development**
-
-- Main development happens in `apps/examples`
-- Examples showcase SDK capabilities
-- See `apps/examples/writing-examples.md` for guidelines
-
-## Creating new components
-
-**Custom shapes**
-
-1. Create ShapeUtil class extending base ShapeUtil
-2. Implement required methods (getGeometry, component, indicator)
-3. Register in editor via shapeUtils prop
-
-**Custom tools**
-
-1. Create StateNode class with tool logic
-2. Define state machine with onEnter/onExit/event handlers
-3. Register in editor via tools prop
-
-**UI customization**
-
-- Every tldraw UI component can be overridden
-- Pass custom components via `components` prop
-- See existing components for patterns
-
-## Integration notes
-
-**With external apps**
-
-- Import CSS: `import 'tldraw/tldraw.css'` (full) or `import '@tldraw/editor/editor.css'` (editor only)
-- Requires React 18+ and modern bundler
-- Support for Vite, Next.js, and other React frameworks
-
-**Collaboration**
-
-- Use @tldraw/sync for multiplayer
-- WebSocket-based real-time synchronization
-- See templates/sync-cloudflare for implementation example
-
-**Licensing**
-
-- SDK has "Made with tldraw" watermark by default
-- Business license removes watermark
-- See tldraw.dev for licensing details
+**Complete details**: See root `CONTEXT.md` for monorepo architecture and package-specific `CONTEXT.md` files throughout repository (use `yarn context` to find them)
 
 ## Writing style guidelines
 
@@ -245,6 +229,33 @@ NEVER create files unless they're absolutely necessary for achieving your goal.
 ALWAYS prefer editing an existing file to creating a new one.
 NEVER proactively create documentation files (\*.md) or README files. Only create documentation files if explicitly requested by the User.
 
-# cursor-rules-integration
+# IDE and development conventions
 
-When writing examples, be sure to read the `./apps/examples/writing-examples.md` file for proper example patterns and conventions.
+**Cursor IDE**: When writing examples, be sure to read the `./apps/examples/writing-examples.md` file for proper example patterns and conventions.
+
+## Reference documents
+
+**Project tracking**:
+
+- `MASTER_REFACTORING_LOG.md` - Complete development history and refactoring log
+- Git commit history - Detailed change tracking (see recent commits in git status above)
+
+**Development guidelines**:
+
+- `./apps/examples/writing-examples.md` - Example code patterns and conventions
+- CONTEXT.md files throughout repository - Package-specific architecture details
+
+**Agent specifications**:
+
+- `.claude/specs/session-closing-agent-spec.md` - Session-closing agent design and implementation guide
+
+**Configuration files**:
+
+- `templates/vite/config/customColors.json` - Current custom color palette
+- `templates/vite/config/defaultColors.json` - Default color palette fallback
+- `.cursorrules` - Cursor IDE specific rules (if present)
+
+**External documentation**:
+
+- tldraw.dev - Official tldraw SDK documentation
+- CONTEXT.md files - AI-specific package documentation throughout the repository
